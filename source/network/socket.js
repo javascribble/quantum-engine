@@ -1,7 +1,9 @@
 import { systems } from '../application/host';
 
-systems.push(updateSocket);
+export function enableNetwork() {
+    systems.push(updateNetwork);
+}
 
-function updateSocket(deltaTime) {
+function updateNetwork(deltaTime) {
     // TODO: Add web sockets.
 }

@@ -1,14 +1,15 @@
 ﻿import { publish } from '../application/events';
 
-addEventListener('mousedown', mouseDown);
-addEventListener('mousemove', mouseMove);
-addEventListener('mouseup', mouseUp);
-addEventListener('mousewheel', mouseWheel);
-addEventListener('contextmenu', contextMenu);
-
 export const defaultMouseControls = {
 };
 
+export function enableMouse() {
+    addEventListener('mousedown', mouseDown);
+    addEventListener('mousemove', mouseMove);
+    addEventListener('mouseup', mouseUp);
+    addEventListener('mousewheel', mouseWheel);
+    addEventListener('contextmenu', contextMenu);
+}
 
 function mouseDown(event) {
     // TODO: Use pointer lock API.
