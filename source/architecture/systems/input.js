@@ -12,5 +12,3 @@ export function registerTestSystem() {
 
 function updateInputSystem(deltaTime) {
 }
-
-// TODO: Update dirty properties in a system periodically.

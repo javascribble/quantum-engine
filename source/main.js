@@ -15,6 +15,8 @@ export * from './network/loader';
 export * from './network/resources';
 export * from './network/socket';
 export * from './network/worker';
+export * from './output/audio';
+export * from './output/video';
 export * from './storage/local';
 export * from './utilities/arrays';
 export * from './utilities/maps';
