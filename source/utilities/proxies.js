@@ -1,3 +1,13 @@
+export function captureShallowObjectChanges(object) {
+    return new Proxy(object, {
+        set(target, property, value) {
+            target.changed = true;
+            target[property] = value;
+            return true;
+        }
+    });
+}
+
 export function createAssignPropertyTrap(handler) {
     return {
         set(target, property, value) {

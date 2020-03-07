@@ -1,11 +1,16 @@
 import { createAssignPropertyTrap, createDefinePropertyTrap, createDeletePropertyTrap } from '../utilities/proxies';
+import { getOrAddMapValue } from '../utilities/maps';
 
-export const componentSystems = new Map();
+const componentSystems = new Map();
 const componentObserver = {
-    ...createAssignPropertyTrap(addComponent),
-    ...createDefinePropertyTrap(addComponent),
-    ...createDeletePropertyTrap(deleteComponent)
+    ...createAssignPropertyTrap(addEntityComponent),
+    ...createDefinePropertyTrap(addEntityComponent),
+    ...createDeletePropertyTrap(deleteEntityComponent)
 };
+
+export function registerComponentSystem(component, system) {
+    getOrAddMapValue(componentSystems, component, () => new Set()).add(system);
+}
 
 export function createEntity() {
     return new Proxy({}, componentObserver);
@@ -17,13 +22,13 @@ export function deleteEntity(entity) {
     }
 }
 
-function addComponent(entity, component) {
+function addEntityComponent(entity, component) {
     for (const system of componentSystems.get(component)) {
         system.add(entity);
     }
 }
 
-function deleteComponent(entity, component) {
+function deleteEntityComponent(entity, component) {
     for (const system of componentSystems.get(component)) {
         system.delete(entity);
     }
