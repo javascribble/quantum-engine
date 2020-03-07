@@ -1,5 +1,5 @@
-export function clamp(value, min, max) {
-    return value >= max ? max : value <= min ? min : value;
+export function clamp(number, min, max) {
+    return number >= max ? max : number <= min ? min : number;
 }
 
 export function lerp(min, max, ratio) {
