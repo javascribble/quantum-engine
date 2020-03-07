@@ -4,6 +4,32 @@ var engine = (function (exports) {
     const userAgent = navigator.userAgent;
     const serviceWorker = navigator.serviceWorker;
 
+    const isTv = userAgent.match(/webOS/i);
+
+    const isMobile =
+        userAgent.match(/Android/i) ||
+        userAgent.match(/iPhone/i) ||
+        userAgent.match(/iPad/i) ||
+        userAgent.match(/iPod/i) ||
+        userAgent.match(/BlackBerry/i) ||
+        userAgent.match(/Windows Phone/i);
+
+    const events = new Map();
+
+    function subscribe(topic, subscriber) {
+        events.get(topic).add(subscriber);
+    }
+
+    function unsubscribe(topic, subscriber) {
+        events.get(topic).delete(subscriber);
+    }
+
+    function publish(topic, value) {
+        for (const subscriber of events.get(topic)) {
+            subscriber(value);
+        }
+    }
+
     let previousTime = performance.now();
     let frame = 0;
 
@@ -25,6 +51,18 @@ var engine = (function (exports) {
 
         previousTime = currentTime;
         frame = requestAnimationFrame(update);
+    }
+
+    function generateNormalizedRandomNumber() {
+        return Math.random() * 2 - 1;
+    }
+
+    function clamp(value, min, max) {
+        return value >= max ? max : value <= min ? min : value;
+    }
+
+    function lerp(min, max, ratio) {
+        return min + (min - max) * ratio;
     }
 
     function createAssignPropertyTrap(handler) {
@@ -99,34 +137,230 @@ var engine = (function (exports) {
         }
     }
 
-    const entities = new Set();
+    function registerSystems() {
 
-    function registerTestSystem() {
-        registerComponentSystem('node', entities);
-        systems.push(updateTestSystem);
     }
 
-    function updateTestSystem(deltaTime) {
-        if (entities.size > 0) {
-            console.log(entities.size);
-            entities.clear();
+    systems.push(updateGamepads);
+
+    addEventListener('ongamepadconnected', gamepadConnected);
+    addEventListener('ongamepaddisconnected', gamepadDisconnected);
+
+    const defaultGamepadControls = {
+        UP: 'PAD_UP',
+        DOWN: 'PAD_DOWN',
+        LEFT: 'PAD_LEFT',
+        RIGHT: 'PAD_RIGHT',
+        ACTION1: 'PAD_FACE_1',
+        ACTION2: 'PAD_FACE_2',
+        ACTION3: 'PAD_FACE_3',
+        ACTION4: 'PAD_FACE_4',
+        SPECIAL1: 'PAD_L_SHOULDER_1',
+        SPECIAL2: 'PAD_R_SHOULDER_1',
+        SPECIAL3: 'PAD_L_SHOULDER_2',
+        SPECIAL4: 'PAD_R_SHOULDER_2',
+        SPECIAL5: 'PAD_L_STICK_BUTTON',
+        SPECIAL6: 'PAD_R_STICK_BUTTON',
+        SPECIAL7: 'PAD_VENDOR',
+        ANALOG1: 'PAD_L_STICK_X',
+        ANALOG2: 'PAD_L_STICK_Y',
+        ANALOG3: 'PAD_R_STICK_X',
+        ANALOG4: 'PAD_R_STICK_Y',
+        SELECT: 'PAD_SELECT',
+        START: 'PAD_START'
+    };
+
+    const gamepads = new Set(navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads());
+
+    function gamepadConnected(event) {
+        gamepads.add(event.gamepad);
+    }
+
+    function gamepadDisconnected(event) {
+        gamepads.delete(event.gamepad);
+    }
+
+    function updateGamepads(deltaTime) {
+        for (const gamepad of gamepads) {
+            //gamepad.buttons
+            //gamepad.axes
         }
     }
 
-    function registerSystems() {
-        registerTestSystem();
-        let entity = createEntity();
-        entity.node = "test";
+    addEventListener('keydown', keyboardKeyDown);
+    addEventListener('keyup', keyboardKeyUp);
+
+    const defaultKeyboardControls = {
+        UP: 'ArrowUp',
+        DOWN: 'ArrowDown',
+        LEFT: 'ArrowLeft',
+        RIGHT: 'ArrowRight',
+        ENTER: 'Enter'
+    };
+
+    function keyboardKeyDown(event) {
+        publish(event.code, event);
     }
 
+    function keyboardKeyUp(event) {
+        publish(event.code, event);
+    }
+
+    addEventListener('mousedown', mouseDown);
+    addEventListener('mousemove', mouseMove);
+    addEventListener('mouseup', mouseUp);
+    addEventListener('mousewheel', mouseWheel);
+    addEventListener('contextmenu', contextMenu);
+
+    const defaultMouseControls = {
+    };
+
+
+    function mouseDown(event) {
+        // TODO: Use pointer lock API.
+        //let canvas = event.target;
+        //let center = canvas.center;
+        //let bounds = canvas.getBoundingClientRect();
+        //let x = (event.clientX - bounds.left - center.x) / center.x;
+        //let y = (center.y - (event.clientY - bounds.top)) / center.y;
+    }
+
+    function mouseMove(event) {
+    }
+
+    function mouseUp(event) {
+    }
+
+    function mouseWheel(event) {
+
+    }
+
+    function contextMenu(event) {
+        event.preventDefault();
+    }
+
+    addEventListener('touchstart', touchStart);
+    addEventListener('touchmove', touchMove);
+    addEventListener('touchend', touchEnd);
+    addEventListener('touchcancel', touchCancel);
+
+    const defaultTouchControls = {
+    };
+
+    function touchStart(event) {
+        //this.x = event.targetTouches[0].pageX - canvas.offsetLeft;
+        //this.y = event.targetTouches[0].pageY - canvas.offsetTop;
+    }
+
+    function touchMove(event) {
+    }
+
+    function touchEnd(event) {
+    }
+
+    function touchCancel(event) {
+
+    }
+
+    function loadBlob(url) {
+        return fetch(url).then(response => response.blob());
+    }
+
+    function loadJson(url) {
+        return fetch(url).then(response => response.json());
+    }
+
+    function loadText(url) {
+        return fetch(url).then(response => response.text());
+    }
+
+    function loadFormData(url) {
+        return fetch(url).then(response => response.formData());
+    }
+
+    function loadArrayBuffer(url) {
+        return fetch(url).then(response => response.arrayBuffer());
+    }
+
+    function loadImage(url) {
+        // TODO: Change to use blob.
+        return new Promise(function (resolve, reject) {
+            let image = new Image();
+            image.onload = function () { resolve(image); };
+            image.src = url;
+        });
+    }
+
+    const resourceOptions = {
+        path: '/resources',
+        extensions: {
+            json: loadJson,
+            png: loadImage,
+            mtl: loadText,
+            obj: loadText,
+            glsl: loadText,
+            bin: loadBlob
+        }
+    };
+
+    function loadResource(file) {
+        let extension = file.substring(file.lastIndexOf('.') + 1);
+        return resourceOptions.extensions[extension](`${resourceOptions.path}/${file}`);
+    }
+
+    async function loadResources(resources, resourceLoader) {
+        for (const resource in resources) {
+            resources[resource] = await resourceLoader(resources[resource]);
+        }
+    }
+
+    addEventListener('online', onlineListener);
+    addEventListener('offline', offlineListener);
+
+    function onlineListener() {
+
+    }
+
+    function offlineListener() {
+
+    }
+
+    systems.push(updateSocket);
+
+    function updateSocket(deltaTime) {
+        // TODO: Add web sockets.
+    }
+
+    exports.clamp = clamp;
     exports.createEntity = createEntity;
+    exports.defaultGamepadControls = defaultGamepadControls;
+    exports.defaultKeyboardControls = defaultKeyboardControls;
+    exports.defaultMouseControls = defaultMouseControls;
+    exports.defaultTouchControls = defaultTouchControls;
     exports.deleteEntity = deleteEntity;
+    exports.events = events;
+    exports.generateNormalizedRandomNumber = generateNormalizedRandomNumber;
+    exports.isMobile = isMobile;
+    exports.isTv = isTv;
+    exports.lerp = lerp;
+    exports.loadArrayBuffer = loadArrayBuffer;
+    exports.loadBlob = loadBlob;
+    exports.loadFormData = loadFormData;
+    exports.loadImage = loadImage;
+    exports.loadJson = loadJson;
+    exports.loadResource = loadResource;
+    exports.loadResources = loadResources;
+    exports.loadText = loadText;
+    exports.publish = publish;
     exports.registerComponentSystem = registerComponentSystem;
     exports.registerSystems = registerSystems;
+    exports.resourceOptions = resourceOptions;
     exports.serviceWorker = serviceWorker;
     exports.start = start;
     exports.stop = stop;
+    exports.subscribe = subscribe;
     exports.systems = systems;
+    exports.unsubscribe = unsubscribe;
     exports.userAgent = userAgent;
 
     return exports;
