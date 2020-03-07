@@ -1,19 +1,25 @@
 import { firstSubstring } from '../../utilities/string';
 import { setElementAnchor } from '../../../../application/browser';
-import { createCanvas, getContext, resizeCanvas } from './canvas';
+import { createCanvas, resizeCanvas, defaultCanvasOptions } from '../canvas';
 
-export const defaultVideoContextOptions = {
-    extensions: ['ANGLE_instanced_arrays']
+export const defaultWebGLOptions = {
+    extensions: ['ANGLE_instanced_arrays'],
+    canvasOptions: defaultCanvasOptions
 }
 
-export function createVideoContext(options = defaultVideoContextOptions) {
-    let context = getContext(createCanvas());
+export function createCanvas3dContext(options = defaultWebGLOptions) {
+    let canvas = createCanvas();
+    let context =
+        canvas.getContext('webgl2', options.canvasOptions) ||
+        canvas.getContext('webgl', options.canvasOptions) ||
+        canvas.getContext('experimental-webgl', options.canvasOptions);
+
     context.extensions = options.extensions;
     applyOptionsAndExtensions(context);
     return context;
 }
 
-export function applyOptionsAndExtensions(context) {    
+export function applyOptionsAndExtensions(context) {
     context.enable(context.DEPTH_TEST);
     context.enable(context.BLEND);
     context.blendFunc(context.ONE, context.ONE_MINUS_SRC_ALPHA);

@@ -1,3 +1,5 @@
+import { createCanvas } from '../canvas';
+
 export async function testWebGPU() {
     const positions = new Float32Array([
         1.0, -1.0, 0.0,
@@ -17,7 +19,7 @@ export async function testWebGPU() {
     let device = await adapter.requestDevice();
     let queue = device.defaultQueue;
 
-    let canvas = document.createElement('canvas');
+    let canvas = createCanvas();
     document.body.appendChild(canvas);
 
     const context = canvas.getContext('gpupresent');
