@@ -1,16 +1,9 @@
 import { loadResource, loadResources } from "../../../../network/resources";
 
 export async function loadResourceGroup(resourceGroup) {
-    if (resourceGroup.audio) {
-        let audioResources = resourceGroup.audio;
-    }
-
-    if (resourceGroup.video) {
-        let videoResources = resourceGroup.video;
-        await loadResources(videoResources.programs, loadProgram);
-        await loadResources(videoResources.buffers, loadBuffer);
-        await loadResources(videoResources.textures, loadTexture);
-    }
+    await loadResources(resourceGroup.programs, loadProgram);
+    await loadResources(resourceGroup.buffers, loadBuffer);
+    await loadResources(resourceGroup.textures, loadTexture);
 }
 
 export async function loadProgram(resource) {

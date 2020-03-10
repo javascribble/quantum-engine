@@ -17,8 +17,11 @@ export function loadResource(file) {
     return resourceOptions.extensions[extension](`${resourceOptions.path}/${file}`);
 }
 
-export async function loadResources(resources, resourceLoader) {
-    for (const resource in resources) {
-        resources[resource] = await resourceLoader(resources[resource]);
+export async function loadResources(files, loader) {
+    let resources = [];
+    for (const file of files) {
+        resources.push(await loader(file));
     }
+
+    return resources;
 }

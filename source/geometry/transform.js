@@ -1,7 +1,7 @@
 import { createVector2 } from './vector2';
 import { createVector3 } from './vector3';
 import { createMatrix4, setMatrix4Translation, multiplyMatrix4 } from './matrix4';
-import { captureShallowObjectChanges } from '../Decorators/proxy';
+import { captureShallowObjectChanges } from '../utilities/proxies';
 
 export function createTransform2() {
     return {

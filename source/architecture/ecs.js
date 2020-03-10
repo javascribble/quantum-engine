@@ -18,7 +18,7 @@ export function createEntity() {
 
 export function deleteEntity(entity) {
     for (const component in entity) {
-        deleteComponent(entity, component);
+        deleteEntityComponent(entity, component);
     }
 }
 

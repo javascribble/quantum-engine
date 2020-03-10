@@ -5,8 +5,8 @@ const entities = new Set();
 
 // TODO: Pull configured keybindings.
 
-export function registerInpSystem() {
-    registerComponentSystem('input', entities);
+export function registerInputSystem() {
+    registerComponentSystem('sprite', entities);
     systems.push(updateInputSystem);
 }
 
