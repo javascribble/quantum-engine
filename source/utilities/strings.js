@@ -1,3 +1,7 @@
+export function splitNewLines(string) {
+    return string.split('\n');
+}
+
 export function removeNewLines(string) {
     return string.replace(/\n/g, '');
 };

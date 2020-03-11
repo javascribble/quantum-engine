@@ -1,6 +1,7 @@
-import { lastArrayElement } from '../../../utilities/arrays';
+import { lastArrayElement } from '../../utilities/arrays';
 
-export async function parseMtl(words) {
+export async function loadMaterial(resource) {
+    let words = await loadResource(resource);
     switch (words.pop()) {
         case 'newmtl':
             materials.push(new Material(words.pop()));

@@ -1,9 +1,9 @@
-import { loadResource, loadResources } from "../../../../network/resources";
+import { loadResource, loadResources } from "../network/resources";
 
-export async function loadResourceGroup(resourceGroup) {
-    await loadResources(resourceGroup.programs, loadProgram);
-    await loadResources(resourceGroup.buffers, loadBuffer);
-    await loadResources(resourceGroup.textures, loadTexture);
+export async function loadVideoResources(resources) {
+    await loadResources(resources.programs, loadProgram);
+    await loadResources(resources.buffers, loadBuffer);
+    await loadResources(resources.textures, loadTexture);
 }
 
 export async function loadProgram(resource) {

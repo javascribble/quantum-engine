@@ -9,7 +9,7 @@ export const resourceOptions = {
         obj: loadText,
         glsl: loadText,
         bin: loadBlob
-    }
+    }   
 };
 
 export function loadResource(file) {

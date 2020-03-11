@@ -1,15 +1,16 @@
-import { lastArrayElement } from '../../../utilities/arrays';
-import { loadResource } from '../../../network/resources';
+import { splitNewLines } from '../../utilities/strings';
+import { loadResource } from '../../network/resources';
+import { loadMaterial } from './material';
 
 const materials = [];
 const meshes = [];
 
-export async function parse(name) {
-    await parseText(await loadMeshResource(name), parseObj);
+export async function loadMesh(resource) {
+    await parseText(await loadResource(name), parseObj);
 }
 
 async function parseText(text, wordParser) {
-    let lines = text.split('\n').filter(isValid);
+    let lines = splitNewLines(text).filter(isValid);
     for (const line of lines) {
         await wordParser(line.split(' ').reverse());
     }
@@ -19,7 +20,7 @@ async function parseObj(words) {
     let mesh = lastElement(meshes);
     switch (words.pop()) {
         case 'mtllib':
-            await parseText(await loadMaterialResource(words.pop()), parseMtl);
+            await parseText(await loadMaterial(words.pop()));
             break;
         case 'usemtl':
             let materialName = words.pop();
