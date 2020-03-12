@@ -1,16 +1,10 @@
-import { firstSubstring } from '../utilities/string';
-import { setElementAnchor } from '../../application/browser';
-import { createCanvas, resizeCanvas, defaultCanvasOptions } from './canvas';
+import { getWebGLContext, createCanvas, resizeCanvas } from '../canvas';
+import { firstSubstring } from '../../../utilities/strings';
 
-export const defaultWebGLOptions = {
-    extensions: ['ANGLE_instanced_arrays'],
-    canvasOptions: defaultCanvasOptions
-}
+export const webGLExtensions = ['ANGLE_instanced_arrays'];
 
-export function createCanvas3dContext(options = defaultWebGLOptions) {
-    let canvas = createCanvas();
-
-
+export function createWebGLContext() {
+    let context = getWebGLContext(createCanvas());
     applyOptionsAndExtensions(context);
     return context;
 }
@@ -22,7 +16,7 @@ export function applyOptionsAndExtensions(context) {
     context.pixelStorei(context.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
     context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, true);
 
-    for (const extensionName of defaultVideoContextOptions.extensions) {
+    for (const extensionName of webGLExtensions) {
         let vendorName = firstSubstring(extensionName, extensionName.indexOf('_'));
         let extension = context.getExtension(extensionName);
         for (const memberName in extension) {
@@ -32,10 +26,6 @@ export function applyOptionsAndExtensions(context) {
             context[memberNameWithoutVendorName] = isConstant ? extension[memberName] : extension[memberName].bind(extension);
         }
     }
-}
-
-export function setContextAnchor(context, anchor) {
-    setElementAnchor(context.canvas, anchor);
 }
 
 export function resizeContext(context, scale) {

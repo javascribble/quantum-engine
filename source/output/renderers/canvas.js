@@ -12,19 +12,19 @@ export function createCanvas() {
     return document.createElement('canvas');
 }
 
-export function createCanvasContext(options) {
+export function getCanvasContext(canvas, options = defaultCanvasOptions) {
     return canvas.getContext('2d', options);
 }
 
-export function createWebGLContext(options) {
+export function getWebGLContext(canvas, options = defaultCanvasOptions) {
     return canvas.getContext('webgl2', options)
         || canvas.getContext('webgl', options)
         || canvas.getContext('experimental-webgl', options);
 }
 
-export function createWebGPUContext(options) {
-    return canvas.getContext('gpu', options)
-        || canvas.getContext('gpupresent', options);
+export function getWebGPUContext(canvas) {
+    return canvas.getContext('gpu')
+        || canvas.getContext('gpupresent');
 }
 
 export function resizeCanvas(canvas, scale) {

@@ -1,4 +1,4 @@
-import { loadResource, loadResources } from "../network/resources";
+import { loadResource, loadResources } from "../../../network/resources";
 
 export async function loadVideoResources(resources) {
     await loadResources(resources.programs, loadProgram);
