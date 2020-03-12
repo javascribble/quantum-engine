@@ -1,20 +1,14 @@
-import { systems } from '../../application/host';
-import { registerComponentSystem } from '../ecs';
+import { createWebGPUContext } from '../canvas';
 import { loadArrayBuffer } from '../../network/loader';
 import { loadResource, resourceOptions } from '../../network/resources';
 
 resourceOptions.extensions['spv'] = async resource => new Uint32Array(await loadArrayBuffer(resource));
 
-const controller = {
-    add: scene => { },
-    delete: scene => { }
-};
-
-export async function registerWebGPUSystem() {
+export async function createRenderer() {
     const adapter = await navigator.gpu.requestAdapter();
     const device = await adapter.requestDevice();
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('gpupresent');
+    const context = createWebGPUContext();
+    const canvas = context.canvas;
     document.body.appendChild(canvas);
 
     const swapChainDescriptor = {
@@ -35,6 +29,8 @@ export async function registerWebGPUSystem() {
     program.vertexStage.module = device.createShaderModule({ code: await loadResource(program.vertexStage.module) });
     program.fragmentStage.module = device.createShaderModule({ code: await loadResource(program.fragmentStage.module) });
     const pipeline = device.createRenderPipeline(program);
+
+    const renderPass = await loadResource('webgpuRenderPass.json');
 
     const depthSize = {
         width: canvas.width,
@@ -61,36 +57,35 @@ export async function registerWebGPUSystem() {
         stencilLoadValue: 'load',
         stencilStoreOp: 'store'
     };
-        
-    function updateWebGPUSystem(deltaTime) {
-        const colorTexture = swapChain.getCurrentTexture();
-        const colorTextureView = colorTexture.createView();
-        const colorAttachments = [{
-            attachment: colorTextureView,
-            loadValue: { r: 0, g: 0, b: 0, a: 1 },
-            storeOp: 'store'
-        }];
 
-        const renderPassDescriptor = {
-            depthStencilAttachment,
-            colorAttachments
-        };
+    const colorTexture = swapChain.getCurrentTexture();
+    const colorTextureView = colorTexture.createView();
+    const colorAttachments = [{
+        attachment: colorTextureView,
+        loadValue: { r: 0, g: 0, b: 0, a: 1 },
+        storeOp: 'store'
+    }];
 
-        let commandEncoder = device.createCommandEncoder();
-        let passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
-        passEncoder.setPipeline(pipeline);
-        passEncoder.setViewport(0, 0, canvas.width, canvas.height, 0, 1);
-        passEncoder.setScissorRect(0, 0, canvas.width, canvas.height);
-        passEncoder.setVertexBuffer(0, positionBuffer);
-        passEncoder.setVertexBuffer(1, colorBuffer);
-        passEncoder.setIndexBuffer(indexBuffer);
-        passEncoder.drawIndexed(3, 1, 0, 0, 0);
-        passEncoder.endPass();
-        device.defaultQueue.submit([commandEncoder.finish()]);
-    }
+    const renderPassDescriptor = {
+        depthStencilAttachment,
+        colorAttachments
+    };
 
-    systems.push(updateWebGPUSystem);
-    registerComponentSystem('scene', controller);
+    let commandEncoder = device.createCommandEncoder();
+    let passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+    passEncoder.setPipeline(pipeline);
+    passEncoder.setViewport(0, 0, canvas.width, canvas.height, 0, 1);
+    passEncoder.setScissorRect(0, 0, canvas.width, canvas.height);
+    passEncoder.setVertexBuffer(0, positionBuffer);
+    passEncoder.setVertexBuffer(1, colorBuffer);
+    passEncoder.setIndexBuffer(indexBuffer);
+    passEncoder.drawIndexed(4, 1, 0, 0, 0);
+    passEncoder.endPass();
+    device.defaultQueue.submit([commandEncoder.finish()]);
+}
+
+export function renderScenes(renderer, deltaTime) {
+
 }
 
 function createBuffer(device, array, usage) {
@@ -99,16 +94,4 @@ function createBuffer(device, array, usage) {
     typedArray.set(array);
     buffer.unmap();
     return buffer;
-}
-
-function resizeCanvas(canvas, scale) {
-    const scaledWidth = canvas.clientWidth * scale;
-    const scaledHeight = canvas.clientHeight * scale;
-    if (canvas.width !== scaledWidth || canvas.height !== scaledHeight) {
-        canvas.width = scaledWidth;
-        canvas.height = scaledHeight;
-        return true;
-    }
-
-    return false;
 }

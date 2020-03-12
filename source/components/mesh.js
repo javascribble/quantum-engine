@@ -1,6 +1,6 @@
-import { splitNewLines } from '../../utilities/strings';
-import { loadResource } from '../../network/resources';
 import { loadMaterial } from './material';
+import { loadResource } from '../network/resources';
+import { splitNewLines } from '../utilities/strings';
 
 const materials = [];
 const meshes = [];

@@ -9,7 +9,9 @@ export function unsubscribe(topic, subscriber) {
 }
 
 export function publish(topic, value) {
-    for (const subscriber of events.get(topic)) {
-        subscriber(value);
+    if (events.has(topic)) {
+        for (const subscriber of events.get(topic)) {
+            subscriber(value);
+        }
     }
 }

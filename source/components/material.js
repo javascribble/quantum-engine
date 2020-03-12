@@ -1,4 +1,4 @@
-import { lastArrayElement } from '../../utilities/arrays';
+import { lastArrayElement } from '../utilities/arrays';
 
 export async function loadMaterial(resource) {
     let words = await loadResource(resource);

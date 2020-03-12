@@ -1,5 +1,6 @@
-import { createAssignPropertyTrap, createDefinePropertyTrap, createDeletePropertyTrap } from '../utilities/proxies';
+import { systems } from './host';
 import { getOrAddMapValue } from '../utilities/maps';
+import { createAssignPropertyTrap, createDefinePropertyTrap, createDeletePropertyTrap } from '../utilities/proxies';
 
 const componentSystems = new Map();
 const componentObserver = {
@@ -7,6 +8,11 @@ const componentObserver = {
     ...createDefinePropertyTrap(addEntityComponent),
     ...createDeletePropertyTrap(deleteEntityComponent)
 };
+
+export function registerComponentSystemUpdate(component, system, update) {
+    registerComponentSystem(component, system);
+    systems.push(update);
+}
 
 export function registerComponentSystem(component, system) {
     getOrAddMapValue(componentSystems, component, () => new Set()).add(system);

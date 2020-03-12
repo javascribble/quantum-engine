@@ -1,6 +1,5 @@
-﻿import { userAgent } from './aliases';
-
-export function getDeviceProfile() {
+﻿export function getDeviceProfile() {
+    const userAgent = navigator.userAgent;
     return {
         isTv: userAgent.match(/webOS/i),
         isMobile:
