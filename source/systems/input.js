@@ -1,5 +1,4 @@
 import { registerSystem } from '../application/architecture';
-import { inputComponent } from '../components/input';
 
 export function registerInputSystem() {
     // TODO: Pull configured keybindings.
@@ -7,5 +6,5 @@ export function registerInputSystem() {
     function updateInputSystem(deltaTime) {
     }
 
-    registerSystem(inputComponent, inputs, updateInputSystem);
+    //registerSystem(inputComponent, inputs, updateInputSystem);
 }

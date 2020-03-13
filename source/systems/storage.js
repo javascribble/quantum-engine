@@ -1,11 +1,10 @@
 import { registerSystem } from '../application/architecture';
-import { storageComponent } from '../components/storage';
 
 export function registerLocalStorageSystem() {
     const stores = new Set();    
     function updateStorageSystem(deltaTime) {
-        // TODO: Update dirty properties in a system periodically.
+        // TODO: Update dirty properties periodically.
     }
 
-    registerSystem(storageComponent, stores, updateStorageSystem);
+    //registerSystem(storageComponent, stores, updateStorageSystem);
 }
