@@ -35,6 +35,7 @@ export * from './output/scene';
 export * from './output/video';
 export * from './storage/local';
 export * from './systems/input';
+export * from './systems/renderable';
 export * from './systems/storage';
 export * from './systems/webgl';
 export * from './systems/webgpu';
