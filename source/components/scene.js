@@ -1,0 +1,1 @@
+export const sceneComponent = 'scene';

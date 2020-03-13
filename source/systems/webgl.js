@@ -1,8 +1,8 @@
-import { registerComponentSystemUpdate } from '../application/architecture';
+import { registerSystem } from '../application/architecture';
+import { sceneComponent } from '../components/scene';
 import { createWebGLVideo } from '../output/video';
 
 export async function registerWebGLSystem() {
     const video = createWebGLVideo();
-    setElementParent(video.canvas, document.body);
-    registerComponentSystemUpdate('renderable', video.renderable, video.render);
+    registerSystem(sceneComponent, video.renderable, video.render);
 }

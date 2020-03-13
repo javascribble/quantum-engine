@@ -3,40 +3,40 @@ import { applyProgram, deleteProgram } from './handles/programs';
 import { applyBuffer, deleteBuffer } from './handles/buffers';
 import { applyTexture, deleteTexture } from './handles/textures';
 
-export function allocateVideoHandles(video, resources) {
-    applyHandles(video.context, video.resources, resources.programs, applyProgramAndShaders);
-    applyHandles(video.context, video.resources, resources.buffers, applyBuffer);
-    applyHandles(video.context, video.resources, resources.textures, applyTexture);
+export function allocateHandles(context, cache, resources) {
+    applyHandles(context, cache, resources.programs, applyProgramAndShaders);
+    applyHandles(context, cache, resources.buffers, applyBuffer);
+    applyHandles(context, cache, resources.textures, applyTexture);
 }
 
-export function deallocateVideoHandles(video, resources) {
-    deleteHandles(video.context, video.resources, resources.programs, deleteProgramAndShaders);
-    deleteHandles(video.context, video.resources, resources.buffers, deleteBuffer);
-    deleteHandles(video.context, video.resources, resources.textures, deleteTexture);
+export function deallocateHandles(context, cache, resources) {
+    deleteHandles(context, cache, resources.programs, deleteProgramAndShaders);
+    deleteHandles(context, cache, resources.buffers, deleteBuffer);
+    deleteHandles(context, cache, resources.textures, deleteTexture);
 }
 
-function applyHandles(context, activeResources, newResources, applicationMethod) {
-    for (const resourceName in newResources) {
-        if (activeResources.hasOwnProperty(resourceName)) {
-            activeResources[resourceName].references++;
+function applyHandles(context, cache, resources, applicationMethod) {
+    for (const resourceName in resources) {
+        if (cache.hasOwnProperty(resourceName)) {
+            cache[resourceName].references++;
         } else {
             let newResource = {
-                ...newResources[resourceName],
+                ...resources[resourceName],
                 references: 1
             };
             
             applicationMethod(newResource, context);
-            activeResources[resourceName] = newResource;
+            cache[resourceName] = newResource;
         }
     }
 }
 
-function deleteHandles(context, activeResources, deletedResources, deletionMethod) {
-    for (const resourceName in deletedResources) {
-        let activeResource = activeResources[resourceName];
+function deleteHandles(context, cache, resources, deletionMethod) {
+    for (const resourceName in resources) {
+        const activeResource = cache[resourceName];
         if (activeResource.references-- === 0) {
             deletionMethod(activeResource, context);
-            delete activeResources[resourceName];
+            delete cache[resourceName];
         }
     }
 }

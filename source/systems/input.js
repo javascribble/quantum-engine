@@ -1,11 +1,11 @@
-import { registerComponentSystemUpdate } from '../application/architecture';
+import { registerSystem } from '../application/architecture';
+import { inputComponent } from '../components/input';
 
 export function registerInputSystem() {
     // TODO: Pull configured keybindings.
-    const entities = new Set();
-
+    const inputs = new Set();
     function updateInputSystem(deltaTime) {
     }
 
-    registerComponentSystemUpdate('input', entities, updateInputSystem);
+    registerSystem(inputComponent, inputs, updateInputSystem);
 }

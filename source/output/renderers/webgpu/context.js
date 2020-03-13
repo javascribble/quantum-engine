@@ -1,15 +1,16 @@
-import { createWebGPUContext } from '../canvas';
-import { loadArrayBuffer } from '../../network/loader';
-import { loadResource, resourceOptions } from '../../network/resources';
+import { getWebGPUContext, createCanvas } from '../canvas';
+import { setElementParent } from '../../../application/browser';
+import { loadResource, resourceOptions } from '../../../network/resources';
+import { loadArrayBuffer } from '../../../network/loader';
 
 resourceOptions.extensions['spv'] = async resource => new Uint32Array(await loadArrayBuffer(resource));
 
-export async function createRenderer() {
+export async function createWebGPUContext(options) {
     const adapter = await navigator.gpu.requestAdapter();
     const device = await adapter.requestDevice();
-    const context = createWebGPUContext();
-    const canvas = context.canvas;
-    document.body.appendChild(canvas);
+    const canvas = createCanvas();
+    const context = getWebGPUContext(canvas);
+    setElementParent(canvas, options.parent);
 
     const swapChainDescriptor = {
         device: device,
@@ -71,8 +72,8 @@ export async function createRenderer() {
         colorAttachments
     };
 
-    let commandEncoder = device.createCommandEncoder();
-    let passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+    const commandEncoder = device.createCommandEncoder();
+    const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
     passEncoder.setPipeline(pipeline);
     passEncoder.setViewport(0, 0, canvas.width, canvas.height, 0, 1);
     passEncoder.setScissorRect(0, 0, canvas.width, canvas.height);
@@ -82,15 +83,13 @@ export async function createRenderer() {
     passEncoder.drawIndexed(4, 1, 0, 0, 0);
     passEncoder.endPass();
     device.defaultQueue.submit([commandEncoder.finish()]);
-}
 
-export function renderScenes(renderer, deltaTime) {
-
+    return context;
 }
 
 function createBuffer(device, array, usage) {
-    let [buffer, bufferMapped] = device.createBufferMapped({ size: array.byteLength, usage });
-    let typedArray = array instanceof Uint16Array ? new Uint16Array(bufferMapped) : new Float32Array(bufferMapped)
+    const [buffer, bufferMapped] = device.createBufferMapped({ size: array.byteLength, usage });
+    const typedArray = array instanceof Uint16Array ? new Uint16Array(bufferMapped) : new Float32Array(bufferMapped)
     typedArray.set(array);
     buffer.unmap();
     return buffer;

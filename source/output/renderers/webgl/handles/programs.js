@@ -1,5 +1,5 @@
 ﻿export function createProgram(context, vertexShader, fragmentShader) {
-    let program = {
+    const program = {
         vertexShader,
         fragmentShader
     };
@@ -14,7 +14,7 @@ export function applyProgram(program, context) {
 }
 
 export function restoreProgram(program, context) {
-    let handle = program.handle = context.createProgram();
+    const handle = program.handle = context.createProgram();
     context.attachShader(handle, program.vertexShader.handle);
     context.attachShader(handle, program.fragmentShader.handle);
     context.linkProgram(handle);
@@ -36,10 +36,10 @@ export function deleteProgram(program, context) {
 }
 
 function addAccessors(context, program, handle, memberType, accessMember, accessLocation, getSetter) {
-    let members = context.getProgramParameter(handle, memberType);
+    const members = context.getProgramParameter(handle, memberType);
     for (let i = 0; i < members; i++) {
-        let member = accessMember.call(context, handle, i);
-        let name = member.name;
+        const member = accessMember.call(context, handle, i);
+        const name = member.name;
         if (name) {
             program[name] = getSetter(context, accessLocation.call(context, handle, name), member.type);
         }
@@ -77,13 +77,13 @@ function encloseAttributeSetter(context, setter, location, type, bytes, slots) {
     return function (attribute) {
         if (attribute.divisor) {
             for (let i = 0; i < slots; i++) {
-                let incrementalLocation = location + i;
+                const incrementalLocation = location + i;
                 context.enableVertexAttribArray(incrementalLocation);
                 context.vertexAttribDivisor(incrementalLocation, attribute.divisor);
             }
 
-            let attributeComponents = attribute.components / slots;
-            let attributeOffset = attributeComponents * bytes;
+            const attributeComponents = attribute.components / slots;
+            const attributeOffset = attributeComponents * bytes;
             for (let i = 0; i < slots; i++) {
                 setter(location + i, attributeComponents, type, false, attribute.stride, attribute.offset + i * attributeOffset);
             }

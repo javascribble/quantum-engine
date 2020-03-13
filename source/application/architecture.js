@@ -9,13 +9,9 @@ const componentObserver = {
     ...createDeletePropertyTrap(deleteEntityComponent)
 };
 
-export function registerComponentSystemUpdate(component, system, update) {
-    registerComponentSystem(component, system);
-    systems.push(update);
-}
-
-export function registerComponentSystem(component, system) {
-    getOrAddMapValue(componentSystems, component, () => new Set()).add(system);
+export function registerSystem(componentName, componentSet, update) {
+    getOrAddMapValue(componentSystems, componentName, () => new Set()).add(componentSet);
+    update && systems.push(update);
 }
 
 export function createEntity() {
@@ -30,12 +26,12 @@ export function deleteEntity(entity) {
 
 function addEntityComponent(entity, component) {
     for (const system of componentSystems.get(component)) {
-        system.add(entity);
+        system.add(entity[component]);
     }
 }
 
 function deleteEntityComponent(entity, component) {
     for (const system of componentSystems.get(component)) {
-        system.delete(entity);
+        system.delete(entity[component]);
     }
 }

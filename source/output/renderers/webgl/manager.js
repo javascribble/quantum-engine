@@ -11,8 +11,8 @@ addEventListener('webglcontextcreationerror', contextCreationError);
 
 const contexts = new Map();
 
-export function createManagedWebGLContext() {
-    let context = createWebGLContext();
+export function createManagedWebGLContext(options) {
+    const context = createWebGLContext(options);
     context.shaders = new Set();
     context.programs = new Set();
     context.buffers = new Set();

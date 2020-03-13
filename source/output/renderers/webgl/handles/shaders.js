@@ -1,5 +1,5 @@
 ﻿export function createShader(context, source, type) {
-    let shader = {
+    const shader = {
         source,
         type
     };
@@ -14,7 +14,7 @@ export function applyShader(shader, context) {
 }
 
 export function restoreShader(shader, context) {
-    let handle = shader.handle = context.createShader(shader.type);
+    const handle = shader.handle = context.createShader(shader.type);
     context.shaderSource(handle, shader.source);
     context.compileShader(handle);
     if (!context.getShaderParameter(handle, context.COMPILE_STATUS)) {

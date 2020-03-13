@@ -1,4 +1,4 @@
-export function createVector4(x = 0, y = 0, z = 0, w = 1) {
+function create(x = 0, y = 0, z = 0, w = 1) {
     return {
         x,
         y,
@@ -14,3 +14,7 @@ export function createVector4(x = 0, y = 0, z = 0, w = 1) {
         set a(value) { this.w = value; },
     };
 }
+
+export const v4 = {
+    create
+};

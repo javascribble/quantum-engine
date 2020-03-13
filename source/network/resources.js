@@ -12,16 +12,21 @@ export const resourceOptions = {
     }   
 };
 
-export function loadResource(file) {
-    let extension = file.substring(file.lastIndexOf('.') + 1);
-    return resourceOptions.extensions[extension](`${resourceOptions.path}/${file}`);
+export async function loadResource(resource) {
+    const extension = resource.substring(resource.lastIndexOf('.') + 1);
+    const loader = resourceOptions.extensions[extension];
+    return await loader(`${resourceOptions.path}/${resource}`);
 }
 
-export async function loadResources(files, loader) {
-    let resources = [];
-    for (const file of files) {
-        resources.push(await loader(file));
-    }
+export async function loadResources(resources, loader = loadResource) {
+    if(Array.isArray(resources)) {
+        return resources.map(async resource => await loader(resource));
+    } else {
+        let resourceObject = {};
+        for(const resource in resources) {
+            resourceObject[resource] = await loader(resources[resource]);
+        }
 
-    return resources;
+        return resourceObject;
+    }
 }

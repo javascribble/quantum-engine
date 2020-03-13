@@ -4,15 +4,15 @@ import { useProgram } from './handles/programs';
 import { bindBuffer, bufferData } from './handles/buffers';
 import { bindTexture, bufferTexture } from './handles/textures';
 
-export function createWebGLRenderer(renderables, options) {
+export function createWebGLRenderer(context, renderable, options) {
     const state = {};
-    const context = createManagedWebGLContext();
+    const strategy = renderable.strategy;
     return function renderWebGLContext(deltaTime) {
         resizeContext(context, options.scale);
         context.clear(context.DEPTH_BUFFER_BIT);
-        for (const property in renderables) {
-            let pass = strategy[property];
-            let program = pass.program;
+        for (const property in strategy) {
+            const pass = strategy[property];
+            const program = pass.program;
             if (state.program !== program) {
                 useProgram(program, context);
                 state.program = program;

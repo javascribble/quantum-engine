@@ -10,20 +10,20 @@ export async function loadMesh(resource) {
 }
 
 async function parseText(text, wordParser) {
-    let lines = splitNewLines(text).filter(isValid);
+    const lines = splitNewLines(text).filter(isValid);
     for (const line of lines) {
         await wordParser(line.split(' ').reverse());
     }
 }
 
 async function parseObj(words) {
-    let mesh = lastElement(meshes);
+    const mesh = lastElement(meshes);
     switch (words.pop()) {
         case 'mtllib':
             await parseText(await loadMaterial(words.pop()));
             break;
         case 'usemtl':
-            let materialName = words.pop();
+            const materialName = words.pop();
             for (const material of materials) {
                 if (material.name === materialName) {
                     //mesh.colorComponents.push(material.color); 
@@ -46,7 +46,7 @@ async function parseObj(words) {
             break;
         case 'f':
             for (let i = 0; i < 3; i++) {
-                let indices = words.pop().split('/');
+                const indices = words.pop().split('/');
                 mesh.normalIndices.push(parseFloat(indices.pop()));
                 mesh.colorIndices.push(parseFloat(indices.pop()));
                 mesh.vertexIndices.push(parseFloat(indices.pop()));

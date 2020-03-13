@@ -21,8 +21,8 @@ export function loadArrayBuffer(url) {
 export function loadImage(url) {
     // TODO: Change to use blob.
     return new Promise(function (resolve, reject) {
-        let image = new Image();
-        image.onload = function () { resolve(image); };
+        const image = new Image();
+        image.onload = () => resolve(image);
         image.src = url;
     });
 }

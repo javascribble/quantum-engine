@@ -1,8 +1,8 @@
-import { registerComponentSystemUpdate } from '../application/architecture';
+import { registerSystem } from '../application/architecture';
+import { sceneComponent } from '../components/scene';
 import { createWebGPUVideo } from '../output/video';
 
 export async function registerWebGPUSystem() {
-    const video = createWebGPUVideo();
-    setElementParent(video.canvas, document.body);
-    registerComponentSystemUpdate('renderable', video.renderable, video.render);
+    const video = await createWebGPUVideo();
+    registerSystem(sceneComponent, video.renderable, video.render);
 }

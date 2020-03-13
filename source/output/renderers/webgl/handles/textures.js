@@ -1,5 +1,5 @@
 ﻿export function createTexture(context, parameters, target, format, type, data) {
-    let texture = {
+    const texture = {
         parameters,
         target,
         format,

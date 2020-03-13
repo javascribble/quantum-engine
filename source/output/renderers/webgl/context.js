@@ -1,10 +1,13 @@
 import { getWebGLContext, createCanvas, resizeCanvas } from '../canvas';
+import { setElementParent } from '../../../application/browser';
 import { firstSubstring } from '../../../utilities/strings';
 
 export const webGLExtensions = ['ANGLE_instanced_arrays'];
 
-export function createWebGLContext() {
-    let context = getWebGLContext(createCanvas());
+export function createWebGLContext(options) {
+    const canvas = createCanvas();
+    const context = getWebGLContext(canvas);
+    setElementParent(canvas, options.parent);
     applyOptionsAndExtensions(context);
     return context;
 }
@@ -17,12 +20,12 @@ export function applyOptionsAndExtensions(context) {
     context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, true);
 
     for (const extensionName of webGLExtensions) {
-        let vendorName = firstSubstring(extensionName, extensionName.indexOf('_'));
-        let extension = context.getExtension(extensionName);
+        const vendorName = firstSubstring(extensionName, extensionName.indexOf('_'));
+        const extension = context.getExtension(extensionName);
         for (const memberName in extension) {
-            let isConstant = memberName.includes('_');
-            let vendorNameTrimIndex = memberName.indexOf(vendorName) - (isConstant ? 1 : 0);
-            let memberNameWithoutVendorName = firstSubstring(memberName, vendorNameTrimIndex);
+            const isConstant = memberName.includes('_');
+            const vendorNameTrimIndex = memberName.indexOf(vendorName) - (isConstant ? 1 : 0);
+            const memberNameWithoutVendorName = firstSubstring(memberName, vendorNameTrimIndex);
             context[memberNameWithoutVendorName] = isConstant ? extension[memberName] : extension[memberName].bind(extension);
         }
     }
