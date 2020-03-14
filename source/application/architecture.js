@@ -14,8 +14,8 @@ export function registerSystem(componentName, componentSet, update) {
     update && systems.push(update);
 }
 
-export function createEntity() {
-    return new Proxy({}, componentObserver);
+export function createEntity(object = {}) {
+    return new Proxy(object, componentObserver);
 }
 
 export function deleteEntity(entity) {
@@ -25,13 +25,13 @@ export function deleteEntity(entity) {
 }
 
 function addEntityComponent(entity, component) {
-    for (const system of componentSystems.get(component)) {
-        system.add(entity[component]);
+    if(componentSystems.has(component)) {
+        componentSystems.get(component).forEach(system => system.add(entity[component]));
     }
 }
 
 function deleteEntityComponent(entity, component) {
-    for (const system of componentSystems.get(component)) {
-        system.delete(entity[component]);
+    if (componentSystems.has(component)) {
+        componentSystems.get(component).forEach(system => system.delete(entity[component]));
     }
 }
