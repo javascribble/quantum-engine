@@ -14,8 +14,8 @@
   },
   "scripts": {
     "serve": "serve ./build",
-    "build": "rollup -c ./config/adonai-engine.rollup.config.js",
-    "watch": "rollup -w -c ./config/adonai-engine.rollup.config.js",
+    "build": "rollup -c ./adonai-engine.rollup.config.js",
+    "watch": "rollup -w -c ./adonai-engine.rollup.config.js",
     "start": "npm-run-all --parallel serve watch",
     "postversion": "npm publish --access public"
   },
