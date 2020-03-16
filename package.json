@@ -13,7 +13,7 @@
     "serve": "^11.3.0"
   },
   "scripts": {
-    "serve": "serve ./",
+    "serve": "serve ./build",
     "build": "rollup -c ./adonai-engine.rollup.config.js",
     "watch": "rollup -w -c ./adonai-engine.rollup.config.js",
     "start": "npm-run-all --parallel serve watch",

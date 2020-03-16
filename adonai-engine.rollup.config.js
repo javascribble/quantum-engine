@@ -2,7 +2,7 @@ import { terser } from "rollup-plugin-terser";
 
 const defaults = {
 	name: 'engine',
-	format: 'iife'
+	format: 'es'
 };
 
 export default {
@@ -18,7 +18,7 @@ export default {
 			file: './build/adonai-engine.min.js',
 			plugins: [
 				terser()
-			]			
+			]
 		}
 	]
 };
