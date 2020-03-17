@@ -25,7 +25,8 @@ function registerMovementSystem() {
 async function initialize() {
 	engine.initialize2dPreset();
 	registerMovementSystem();
-	engine.registerWebGLSystem();
+	//engine.registerWebGLSystem();
+	await engine.registerWebGPUSystem();
 	engine.start();
 	
 	const scene = await engine.loadScene('scene.json');
