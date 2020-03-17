@@ -2,7 +2,7 @@
   "name": "@adonaigames/engine",
   "description": "simple game engine",
   "author": "Adonai Games",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "MIT",
   "main": "source/main.js",
   "dependencies": {},
