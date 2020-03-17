@@ -1,0 +1,63 @@
+{
+    "vertexStage": {
+		"module": "triangle.vert.spv",
+		"entryPoint": "main"
+	},
+    "fragmentStage": {
+		"module": "triangle.frag.spv",
+		"entryPoint": "main"
+	},
+	"primitiveTopology": "triangle-strip",
+    "vertexState": {
+		"indexFormat": "uint16",
+        "vertexBuffers": [
+			{
+				"attributes": [
+					{
+						"shaderLocation": 0,
+						"offset": 0,
+						"format": "float3"
+					}
+				],
+				"arrayStride": 12,
+				"stepMode": "vertex"			
+			},
+			{
+				"attributes": [
+					{
+						"shaderLocation": 1,
+						"offset": 0,
+						"format": "float3"
+					}
+				],
+				"arrayStride": 12,
+				"stepMode": "vertex"
+			}
+		]
+	},
+    "colorStates": [
+		{
+			"format": "bgra8unorm",
+			"alphaBlend": {
+				"srcFactor": "src-alpha",
+				"dstFactor": "one-minus-src-alpha",
+				"operation": "add"
+			},
+			"colorBlend": {
+				"srcFactor": "src-alpha",
+				"dstFactor": "one-minus-src-alpha",
+				"operation": "add"
+			},
+			"writeMask": 15
+		}
+	],
+	"depthStencilState": {
+        "depthWriteEnabled": true,
+        "depthCompare": "less",
+        "format": "depth24plus-stencil8"
+    },
+	"rasterizationState": {
+        "frontFace": "cw",
+        "cullMode": "none"
+    }
+}

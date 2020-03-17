@@ -1,6 +1,12 @@
 import { loadResource, loadResources } from '../imports';
 
-export async function loadVideoResources(resources) {
+export async function loadScene(resource) {
+    const scene = await loadResource(resource);
+    await loadSceneResources(scene.resources);
+    return scene;
+}
+
+export async function loadSceneResources(resources) {
     resources.programs = await loadResources(resources.programs, loadProgram);
     resources.buffers = await loadResources(resources.buffers, loadBuffer);
     resources.textures = await loadResources(resources.textures, loadTexture);

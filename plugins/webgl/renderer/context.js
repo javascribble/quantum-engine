@@ -1,12 +1,10 @@
-import { setElementParent, firstSubstring } from '../imports';
-import { getWebGLContext, createCanvas, resizeCanvas } from './canvas';
+import { firstSubstring } from '../imports';
+import { createCanvas, getContext, resizeCanvas } from './canvas';
 
-export const webGLExtensions = ['ANGLE_instanced_arrays'];
+export const extensionNames = ['ANGLE_instanced_arrays'];
 
-export function createWebGLContext(options) {
-    const canvas = createCanvas();
-    const context = getWebGLContext(canvas);
-    setElementParent(canvas, options.parent);
+export function createWebGLContext() {
+    const context = getContext(createCanvas());
     applyOptionsAndExtensions(context);
     return context;
 }
@@ -18,14 +16,13 @@ export function applyOptionsAndExtensions(context) {
     context.pixelStorei(context.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
     context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, true);
 
-    for (const extensionName of webGLExtensions) {
+    for (const extensionName of extensionNames) {
         const vendorName = firstSubstring(extensionName, extensionName.indexOf('_'));
         const extension = context.getExtension(extensionName);
-        for (const memberName in extension) {
-            const isConstant = memberName.includes('_');
-            const vendorNameTrimIndex = memberName.indexOf(vendorName) - (isConstant ? 1 : 0);
-            const memberNameWithoutVendorName = firstSubstring(memberName, vendorNameTrimIndex);
-            context[memberNameWithoutVendorName] = isConstant ? extension[memberName] : extension[memberName].bind(extension);
+        for (const member in extension) {
+            const isConstant = member.includes('_');
+            const memberNameWithoutVendorName = firstSubstring(member, member.indexOf(vendorName) - (isConstant ? 1 : 0));
+            context[memberNameWithoutVendorName] = isConstant ? extension[member] : extension[member].bind(extension);
         }
     }
 }

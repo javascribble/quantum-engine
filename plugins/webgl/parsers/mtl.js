@@ -1,4 +1,4 @@
-import { lastArrayElement } from '../imports';
+import { lastArrayElement } from '../webgl/imports';
 
 export async function loadMaterial(resource) {
     const words = await loadResource(resource);
