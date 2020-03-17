@@ -1,5 +1,5 @@
 import { registerSystem, setElementParent, defaultVideoOptions, m3 } from '../imports';
-import { createRenderable, renderableComponent } from '../components/renderable';
+import { createSprite, spriteComponent } from '../components/sprite';
 import { createManagedWebGLContext } from '../renderer/manager';
 import { createWebGLRenderer } from '../renderer/renderer';
 import { applyShader, deleteShader } from '../handles/shaders';
@@ -29,7 +29,7 @@ export async function registerWebGLSystem(options = defaultVideoOptions) {
         }
     }
 
-    registerSystem(renderableComponent, renderables, updateRenderables);
+    registerSystem(spriteComponent, renderables, updateRenderables);
 }
 
 function createWebGLRenderable(context) {
@@ -62,7 +62,7 @@ function createWebGLRenderable(context) {
 
             for (let i = 0; i < count; i++) {
                 const entity = entities[i];
-                entity.renderable = createRenderable(entity.transform, resources.dynamicBuffer, i);
+                entity.sprite = createSprite(entity.transform, resources.dynamicBuffer, i);
             }
         },
         delete(scene) {

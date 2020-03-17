@@ -1,7 +1,4 @@
-import { getWebGPUContext, createCanvas } from '../canvas';
-import { setElementParent } from '../../../application/browser';
-import { loadResource, resourceOptions } from '../../../network/resources';
-import { loadArrayBuffer } from '../../../network/loader';
+import { createCanvas, getWebGPUContext, setElementParent, loadArrayBuffer, loadResource, resourceOptions } from '../imports';
 
 resourceOptions.extensions['spv'] = async resource => new Uint32Array(await loadArrayBuffer(resource));
 
