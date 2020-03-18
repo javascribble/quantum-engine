@@ -1,8 +1,11 @@
 engine.resourceOptions.path = '/test/resources';
+engine.enableEngineDefaults();
+engine.start();
+initialize();
 
-function registerMovementSystem() {
+async function initialize() {
 	const transforms = new Set();
-	function updateMovementSystem(deltaTime) {
+	function updateTest(deltaTime) {
 		if (deltaTime > 17) {
 			console.log(deltaTime);
 		}
@@ -19,15 +22,9 @@ function registerMovementSystem() {
 		}
 	}
 
-	engine.registerSystem(engine.transformComponent, transforms, updateMovementSystem);
-}	
-
-async function initialize() {
-	engine.initialize2dPreset();
-	registerMovementSystem();
-	await engine.registerVideoRenderingSystem();
-	engine.start();
-	
+	engine.registerSystem(engine.transformComponent, transforms, updateTest);	
+	await engine.registerVideoSystem();
+		
 	const scene = await engine.loadScene('scene.json');
 	const count = 100;
 	for (let i = 0; i < count; i++) {
@@ -48,5 +45,3 @@ async function initialize() {
 	const root = engine.createEntity();
 	root.scene = scene;
 }
-
-initialize();

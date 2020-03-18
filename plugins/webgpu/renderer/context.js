@@ -1,6 +1,7 @@
 import { createCanvas, getWebGPUContext, setElementParent, loadArrayBuffer, loadResource, resourceOptions } from '../imports';
+import { createBuffer } from '../handles/buffers';
 
-resourceOptions.extensions['spv'] = async resource => new Uint32Array(await loadArrayBuffer(resource));
+resourceOptions.extensions.spv = async resource => new Uint32Array(await loadArrayBuffer(resource));
 
 export async function createWebGPUContext(options) {
     const adapter = await navigator.gpu.requestAdapter();
@@ -80,14 +81,5 @@ export async function createWebGPUContext(options) {
     passEncoder.drawIndexed(4, 1, 0, 0, 0);
     passEncoder.endPass();
     device.defaultQueue.submit([commandEncoder.finish()]);
-
     return context;
-}
-
-function createBuffer(device, array, usage) {
-    const [buffer, bufferMapped] = device.createBufferMapped({ size: array.byteLength, usage });
-    const typedArray = array instanceof Uint16Array ? new Uint16Array(bufferMapped) : new Float32Array(bufferMapped)
-    typedArray.set(array);
-    buffer.unmap();
-    return buffer;
 }

@@ -1,20 +1,20 @@
-function create(x = 0, y = 0, z = 0, w = 1) {
-    return {
-        x,
-        y,
-        z,
-        w,
-        get r() { return this.x; },
-        set r(value) { this.x = value; },
-        get g() { return this.y; },
-        set g(value) { this.y = value; },
-        get b() { return this.z; },
-        set b(value) { this.z = value; },
-        get a() { return this.w; },
-        set a(value) { this.w = value; },
-    };
+const components = 4;
+
+function create(type = Float32Array) {
+    const v4 = new type(components);
+    setIdentity(v4);
+    return v4;
 }
 
-export const v4 = {
-    create
+function setIdentity(v4) {
+    v4[0] = 0;
+    v4[1] = 0;
+    v4[2] = 0;
+    v4[3] = 1;
+}
+
+export const vector4 = {
+    components,
+    create,
+    setIdentity
 };

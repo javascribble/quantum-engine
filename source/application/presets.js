@@ -5,7 +5,7 @@ import { enableTouch } from '../input/touch';
 import { enableNetwork } from '../network/socket';
 import { enableOfflineSupport } from '../network/worker';
 
-export function initialize2dPreset() {
+export function enableEngineDefaults() {
     enableGamepads();
     enableKeyboard();
     enableMouse();

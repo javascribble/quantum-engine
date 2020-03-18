@@ -6,13 +6,13 @@ export async function loadScene(resource) {
     return scene;
 }
 
-export async function loadSceneResources(resources) {
+async function loadSceneResources(resources) {
     resources.programs = await loadResources(resources.programs, loadProgram);
     resources.buffers = await loadResources(resources.buffers, loadBuffer);
     resources.textures = await loadResources(resources.textures, loadTexture);
 }
 
-export async function loadProgram(resource) {
+async function loadProgram(resource) {
     const programResource = await loadResource(resource);
 
     programResource.vertexShader = {
@@ -26,13 +26,13 @@ export async function loadProgram(resource) {
     return programResource;
 }
 
-export async function loadBuffer(resource) {
+async function loadBuffer(resource) {
     const bufferResource = await loadResource(resource);
     bufferResource.data = new Float32Array(bufferResource.data);
     return bufferResource;
 }
 
-export async function loadTexture(resource) {
+async function loadTexture(resource) {
     const textureResource = await loadResource(resource);
     textureResource.data = await loadResource(textureResource.data);
     return textureResource;

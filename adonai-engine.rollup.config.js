@@ -1,19 +1,19 @@
 import { terser } from "rollup-plugin-terser";
 import multi from '@rollup/plugin-multi-entry';
 
-const mainInputFile = './source/main.js';
-const webglInputFile = './plugins/webgl/exports.js';
-const webgpuInputFile = './plugins/webgpu/exports.js';
-const webaudioInputFile = './plugins/webaudio/exports.js';
+const main = './source/main.js';
+const math = './plugins/math/exports.js';
+const webgl = './plugins/webgl/exports.js';
+const webgpu = './plugins/webgpu/exports.js';
+const webaudio = './plugins/webaudio/exports.js';
 const bundles = [
-	{ extension: '', input: mainInputFile },
-	{ extension: '.webgl', input: [mainInputFile, webaudioInputFile, webglInputFile] },
-	{ extension: '.webgpu', input: [mainInputFile, webaudioInputFile, webgpuInputFile] }
+	{ extension: '', input: main },
+	{ extension: '.webgl', input: [main, math, webaudio, webgl] },
+	{ extension: '.webgpu', input: [main, math, webaudio, webgpu] }
 ];
 
-const outputFile = './build/adonai-engine';
 const output = (extension, plugins = []) => ({
-	file: `${outputFile}${extension}.js`,
+	file: `./build/adonai-engine${extension}.js`,
 	name: 'engine',
 	format: 'iife',
 	plugins

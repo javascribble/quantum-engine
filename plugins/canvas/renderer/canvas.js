@@ -27,7 +27,7 @@ export function getWebGPUContext(canvas) {
         || canvas.getContext('gpupresent');
 }
 
-export function resizeCanvas(canvas, scale) {
+export function resizeCanvas(canvas, scale = devicePixelRatio) {
     const scaledWidth = canvas.clientWidth * scale;
     const scaledHeight = canvas.clientHeight * scale;
     if (canvas.width !== scaledWidth || canvas.height !== scaledHeight) {

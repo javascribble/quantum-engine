@@ -1,4 +1,4 @@
-import { registerSystem, setElementParent, defaultVideoOptions, m3 } from '../imports';
+import { registerSystem, setElementParent, matrix3 } from '../imports';
 import { createSprite, spriteComponent } from '../components/sprite';
 import { createManagedWebGLContext } from '../renderer/manager';
 import { createWebGLRenderer } from '../renderer/renderer';
@@ -7,7 +7,7 @@ import { applyProgram, deleteProgram } from '../handles/programs';
 import { applyBuffer, deleteBuffer } from '../handles/buffers';
 import { applyTexture, deleteTexture } from '../handles/textures';
 
-export async function registerVideoRenderingSystem(options = defaultVideoOptions) {
+export async function registerSpriteSystem(options) {
     const context = createManagedWebGLContext(options);
     const renderable = createWebGLRenderable(context);
     setElementParent(context.canvas, options.parent);
@@ -22,7 +22,7 @@ export async function registerVideoRenderingSystem(options = defaultVideoOptions
             const transform = renderable.transform;
             if (transform.changed) {
                 const buffer = renderable.buffer;
-                copy(transform, buffer.data, renderable.index * m3.components);
+                copy(transform, buffer.data, renderable.index * matrix3.components);
                 transform.changed = false;
                 buffer.changed = true;
             }
@@ -46,7 +46,7 @@ function createWebGLRenderable(context) {
             const count = entities.length;
 
             // TODO: This needs to be resized when an entity (not a scene) is deleted.
-            resources.dynamicBuffer.data = new Float32Array(m3.components * count);
+            resources.dynamicBuffer.data = new Float32Array(matrix3.components * count);
             resources.dynamicBuffer.changed = true;
 
             // TODO: This is hardcoded and should be replaced with a strategy that figures out render passes.
