@@ -7,7 +7,7 @@ import { applyProgram, deleteProgram } from '../handles/programs';
 import { applyBuffer, deleteBuffer } from '../handles/buffers';
 import { applyTexture, deleteTexture } from '../handles/textures';
 
-export async function registerWebGLSystem(options = defaultVideoOptions) {
+export async function registerVideoRenderingSystem(options = defaultVideoOptions) {
     const context = createManagedWebGLContext(options);
     const renderable = createWebGLRenderable(context);
     setElementParent(context.canvas, options.parent);

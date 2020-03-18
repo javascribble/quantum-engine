@@ -1,5 +1,5 @@
-import { captureShallowObjectChanges } from '../utilities/proxies';
-import { v3 } from '../geometry/vector3';
+import { captureShallowObjectChanges } from '../../../source/utilities/proxies';
+import { v3 } from '../../plugins/math/vector3';
 
 export const transformComponent = 'transform';
 
