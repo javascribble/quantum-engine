@@ -1,4 +1,4 @@
-import { registerSystem, setElementParent, matrix3 } from '../imports';
+import { registerSystem, matrix3 } from '../imports';
 import { createSprite, spriteComponent } from '../components/sprite';
 import { createManagedWebGLContext } from '../renderer/manager';
 import { createWebGLRenderer } from '../renderer/renderer';
@@ -10,7 +10,6 @@ import { applyTexture, deleteTexture } from '../handles/textures';
 export async function registerSpriteSystem(options) {
     const context = createManagedWebGLContext(options);
     const renderable = createWebGLRenderable(context);
-    setElementParent(context.canvas, options.parent);
     const render = createWebGLRenderer(context, renderable, options);
 
     // TODO: Make scene an entity rather than a component.

@@ -48,7 +48,7 @@
 				"dstFactor": "one-minus-src-alpha",
 				"operation": "add"
 			},
-			"writeMask": 15
+			"writeMask": "ALL"
 		}
 	],
 	"depthStencilState": {

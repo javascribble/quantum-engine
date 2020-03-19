@@ -1,9 +1,5 @@
-import { loadResource, splitNewLines } from '../imports';
-import { parseArray, isValidLine } from '../utilities/parsing';
-
-export async function loadMtl(resource) {
-    return await parseMtl(await loadResource(resource));
-}
+import { splitNewLines } from '../imports';
+import { isValidLine } from '../utilities/strings';
 
 export async function parseMtl(text) {
     let material;

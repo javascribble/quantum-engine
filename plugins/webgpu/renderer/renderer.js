@@ -1,5 +1,8 @@
+import { resizeCanvas } from '../imports';
+
 export function createWebGPURenderer(context, renderable, options) {
-    return function renderWebGLContext(deltaTime) {
+    //resizeCanvas(context.canvas);
+    return function renderWebGPUContext(deltaTime) {
 
     }
 }

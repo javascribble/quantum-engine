@@ -1,0 +1,8 @@
+{
+	"arrayLayerCount": 1,
+	"mipLevelCount": 1,
+	"sampleCount": 1,
+	"dimension": "2d",
+	"format": "depth24plus-stencil8",
+	"usage": [ "OUTPUT_ATTACHMENT", "COPY_SRC" ]
+}

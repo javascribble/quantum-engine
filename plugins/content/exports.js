@@ -1,1 +1,2 @@
-export * from './resources/model';
+export * from './loaders/model';
+export * from './loaders/shader';

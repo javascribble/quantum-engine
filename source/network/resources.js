@@ -5,9 +5,7 @@ export const resourceOptions = {
     extensions: {
         json: loadJson,
         png: loadImage,
-        mtl: loadText,
-        obj: loadText,
-        glsl: loadText,
+        txt: loadText,
         bin: loadBlob
     }   
 };

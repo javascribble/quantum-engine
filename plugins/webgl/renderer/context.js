@@ -1,9 +1,12 @@
-import { createCanvas, getWebGLContext, resizeCanvas, firstSubstring } from '../imports';
+import { createCanvas, getWebGLContext, resizeCanvas, setElementParent, firstSubstring } from '../imports';
 
 export const extensionNames = ['ANGLE_instanced_arrays'];
 
-export function createWebGLContext() {
-    const context = getWebGLContext(createCanvas());
+export function createWebGLContext(options) {
+    const canvas = createCanvas();
+    setElementParent(canvas, options.parent);
+    
+    const context = getWebGLContext(canvas, options);
     applyOptionsAndExtensions(context);
     return context;
 }

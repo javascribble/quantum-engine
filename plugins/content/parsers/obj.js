@@ -1,10 +1,6 @@
 import { loadResource, splitNewLines } from '../imports';
-import { parseArray, isValidLine } from '../utilities/parsing';
-import { loadMtl } from './mtl';
-
-export async function loadObj(resource) {
-    return await parseObj(await loadResource(resource));
-}
+import { isValidLine } from '../utilities/strings';
+import { parseMtl } from './mtl';
 
 export async function parseObj(text) {
     let mesh;
@@ -15,8 +11,7 @@ export async function parseObj(text) {
         const words = line.split(' ');
         switch (words.shift()) {
             case 'mtllib':
-                words.shift();
-                //materials = materials.concat(await loadMtl());
+                materials = materials.concat(parseMtl(await loadResource(words.shift())));
                 break;
             case 'usemtl':
                 const materialName = words.shift();

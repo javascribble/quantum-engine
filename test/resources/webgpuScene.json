@@ -1,0 +1,14 @@
+﻿{
+	"entities": [],
+	"resources": {
+		"programs": {
+			"defaultProgram": "webgpuProgram.json"
+		},
+		"buffers": {
+			"staticBuffer": "webgpuStaticBuffers.json"
+		},
+		"textures": {
+			"depthTexture": "webgpuDepthTexture.json"
+		}
+	}
+}

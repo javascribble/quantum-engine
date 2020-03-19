@@ -1,6 +1,6 @@
 import { defaultVideoOptions } from '../imports';
-import { createWebGPUContext } from '../renderer/context';
+import { registerSpriteSystem } from './sprite';
 
 export async function registerVideoSystem(options = defaultVideoOptions) {
-    await createWebGPUContext(options);
+    await registerSpriteSystem(options);
 }
