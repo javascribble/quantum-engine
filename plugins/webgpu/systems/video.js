@@ -1,6 +1,13 @@
-import { defaultVideoOptions } from '../imports';
-import { registerSpriteSystem } from './sprite';
+import { registerSystem, defaultVideoOptions } from '../imports';
+import { createWebGPURenderer } from '../renderer/renderer';
+import { createWebGPURenderable } from '../renderer/renderable';
+import { createManagedWebGPUContext } from '../renderer/manager';
 
-export async function registerVideoSystem(options = defaultVideoOptions) {
-    await registerSpriteSystem(options);
+export async function registerSpriteSystem(options = defaultVideoOptions) {
+    const context = await createManagedWebGPUContext(options);
+    const renderable = await createWebGPURenderable(context);
+    const render = createWebGPURenderer(context, renderable, options);
+
+    // TODO: Make scene an entity rather than a component.
+    registerSystem('scene', renderable, render);
 }

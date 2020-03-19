@@ -6,7 +6,7 @@ export function createWebGLContext(options) {
     const canvas = createCanvas();
     setElementParent(canvas, options.parent);
     
-    const context = getWebGLContext(canvas, options);
+    const context = getWebGLContext(canvas);
     applyOptionsAndExtensions(context);
     return context;
 }
