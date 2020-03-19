@@ -1,17 +1,18 @@
-﻿import { publish } from '../application/events';
+﻿import { addListener, preventDefault } from '../application/browser';
+import { publish } from '../application/events';
 
 export const defaultMouseControls = {
 };
 
-export function enableMouse() {
-    addEventListener('mousedown', mouseDown);
-    addEventListener('mousemove', mouseMove);
-    addEventListener('mouseup', mouseUp);
-    addEventListener('mousewheel', mouseWheel);
-    addEventListener('contextmenu', contextMenu);
+export const enableMouse = () => {
+    addListener('mousedown', mouseDown);
+    addListener('mousemove', mouseMove);
+    addListener('mouseup', mouseUp);
+    addListener('mousewheel', mouseWheel);
+    addListener('contextmenu', contextMenu);
 }
 
-function mouseDown(event) {
+const mouseDown = (event) => {
     // TODO: Use pointer lock API.
     //let canvas = event.target;
     //let center = canvas.center;
@@ -20,16 +21,13 @@ function mouseDown(event) {
     //let y = (center.y - (event.clientY - bounds.top)) / center.y;
 }
 
-function mouseMove(event) {
+const mouseMove = (event) => {
 }
 
-function mouseUp(event) {
+const mouseUp = (event) => {
 }
 
-function mouseWheel(event) {
-
+const mouseWheel = (event) => {
 }
 
-function contextMenu(event) {
-    event.preventDefault();
-}
+const contextMenu = (event) => preventDefault(event);

@@ -1,6 +1,8 @@
-export function defineObservedProperty(object, property, target, handler) {
-    Object.defineProperty(object, property, {
-        get: () => { return target[property]; },
+export const defineProperty = Object.defineProperty;
+
+export const defineObservedProperty = (object, property, target, handler) => {
+    defineProperty(object, property, {
+        get: () => target[property],
         set: (value) => {
             handler(value, target[property]);
             target[property] = value;
@@ -8,9 +10,9 @@ export function defineObservedProperty(object, property, target, handler) {
     });
 }
 
-export function defineLinkedProperty(object, property, target) {
-    Object.defineProperty(object, property, {
-        get: () => { return target[property]; },
-        set: (value) => { target[property] = value; }
+export const defineLinkedProperty = (object, property, target) => {
+    defineProperty(object, property, {
+        get: () => target[property],
+        set: (value) => target[property] = value
     });
 }

@@ -10,13 +10,13 @@ export const resourceOptions = {
     }   
 };
 
-export async function loadResource(resource) {
+export const loadResource = async (resource) => {
     const extension = resource.substring(resource.lastIndexOf('.') + 1);
     const loader = resourceOptions.extensions[extension];
     return await loader(`${resourceOptions.path}/${resource}`);
 }
 
-export async function loadResources(resources, loader = loadResource) {
+export const loadResources = async (resources, loader = loadResource) => {
     if(Array.isArray(resources)) {
         return resources.map(async resource => await loader(resource));
     } else {

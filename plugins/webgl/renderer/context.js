@@ -2,16 +2,16 @@ import { createCanvas, getWebGLContext, resizeCanvas, setElementParent, firstSub
 
 export const extensionNames = ['ANGLE_instanced_arrays'];
 
-export function createWebGLContext(options) {
+export const createWebGLContext = (options) => {
     const canvas = createCanvas();
     setElementParent(canvas, options.parent);
-    
+
     const context = getWebGLContext(canvas);
     applyOptionsAndExtensions(context);
     return context;
 }
 
-export function applyOptionsAndExtensions(context) {
+export const applyOptionsAndExtensions = (context) => {
     context.enable(context.DEPTH_TEST);
     context.enable(context.BLEND);
     context.blendFunc(context.ONE, context.ONE_MINUS_SRC_ALPHA);
@@ -29,7 +29,7 @@ export function applyOptionsAndExtensions(context) {
     }
 }
 
-export function resizeContext(context, scale) {
+export const resizeContext = (context, scale) => {
     if (resizeCanvas(context.canvas, scale)) {
         context.viewport(0, 0, context.drawingBufferWidth, context.drawingBufferHeight);
     }

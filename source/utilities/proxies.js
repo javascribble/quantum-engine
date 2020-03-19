@@ -1,4 +1,6 @@
-export function captureShallowObjectChanges(object) {
+import { defineProperty } from './objects';
+
+export const captureShallowObjectChanges = (object) => {
     return new Proxy(object, {
         set(target, property, value) {
             target.changed = true;
@@ -8,7 +10,7 @@ export function captureShallowObjectChanges(object) {
     });
 }
 
-export function createAssignPropertyTrap(handler) {
+export const createAssignPropertyTrap = (handler) => {
     return {
         set(target, property, value) {
             target[property] = value;
@@ -18,17 +20,17 @@ export function createAssignPropertyTrap(handler) {
     };
 }
 
-export function createDefinePropertyTrap(handler) {
+export const createDefinePropertyTrap = (handler) => {
     return {
         defineProperty(target, property, descriptor) {
-            Object.defineProperty(target, property, descriptor);
+            defineProperty(target, property, descriptor);
             handler(target, property);
             return true;
         },
     };
 }
 
-export function createDeletePropertyTrap(handler) {
+export const createDeletePropertyTrap = (handler) => {
     return {
         deleteProperty(target, property) {
             handler(target, property);

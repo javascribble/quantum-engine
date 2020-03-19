@@ -3,12 +3,12 @@ import { createBuffer } from '../handles/buffers';
 import { createProgram } from '../handles/programs';
 import { resizeCanvas } from '../../canvas/exports';
 
-export async function createWebGPURenderable(context) {
+export const createWebGPURenderable = async (context) => {
     const device = context.device;
     const canvas = context.canvas;
 
     const renderPassDescriptor = await loadResource('webgpuRenderPass.json');
-    
+
     return {
         add(renderable) {
             resizeCanvas(canvas);

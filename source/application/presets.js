@@ -5,7 +5,7 @@ import { enableTouch } from '../input/touch';
 import { enableNetwork } from '../network/socket';
 import { enableOfflineSupport } from '../network/worker';
 
-export function enableEngineDefaults() {
+export const enableEngineDefaults = () => {
     enableGamepads();
     enableKeyboard();
     enableMouse();

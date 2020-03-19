@@ -1,17 +1,15 @@
-let previousTime = performance.now();
+import { getTimestamp } from './browser';
+
+let previousTime = getTimestamp();
 let frame = 0;
 
 export const systems = [];
 
-export function start() {
-    update(performance.now());
-}
+export const start = () => update(getTimestamp());
 
-export function stop() {
-    cancelAnimationFrame(frame);
-}
+export const stop = () => cancelAnimationFrame(frame);
 
-function update(currentTime) {
+const update = (currentTime) => {
     let deltaTime = currentTime - previousTime;
     for (const system of systems) {
         system(deltaTime);

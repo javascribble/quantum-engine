@@ -1,12 +1,12 @@
 const components = 4;
 
-function create(type = Float32Array) {
+const create = (type = Float32Array) => {
     const v4 = new type(components);
     setIdentity(v4);
     return v4;
 }
 
-function setIdentity(v4) {
+const setIdentity = (v4) => {
     v4[0] = 0;
     v4[1] = 0;
     v4[2] = 0;

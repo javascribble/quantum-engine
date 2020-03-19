@@ -1,3 +1,1 @@
-export function isValidLine(line) {
-    return line && /\S/.test(line) && !line.startsWith('#');
-}
+export const isValidLine = (line) => line && /\S/.test(line) && !line.startsWith('#');

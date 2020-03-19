@@ -1,8 +1,6 @@
-import { loadResource, loadText, loadArrayBuffer, resourceOptions } from '../imports';
+import { loadText, loadArrayBuffer, resourceOptions } from '../imports';
+
+const loadSPIRVShader = async (resource) => new Uint32Array(await loadArrayBuffer(resource));
 
 resourceOptions.extensions.spv = loadSPIRVShader;
 resourceOptions.extensions.glsl = loadText;
-
-async function loadSPIRVShader(resource) {
-    return new Uint32Array(await loadArrayBuffer(resource));
-}

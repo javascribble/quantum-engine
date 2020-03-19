@@ -1,17 +1,13 @@
-import { start, stop } from '../imports';
+import { start, stop, addListener } from '../imports';
 import { restoreShader } from '../handles/shaders';
 import { restoreProgram } from '../handles/programs';
 import { restoreBuffer } from '../handles/buffers';
 import { restoreTexture } from '../handles/textures';
 import { createWebGLContext, applyOptionsAndExtensions } from './context';
 
-addEventListener('webglcontextlostevent', contextLost);
-addEventListener('webglcontextrestored', contextRestored);
-addEventListener('webglcontextcreationerror', contextCreationError);
-
 const contexts = new Map();
 
-export function createManagedWebGLContext(options) {
+export const createManagedWebGLContext = (options) => {
     const context = createWebGLContext(options);
     context.shaders = new Set();
     context.programs = new Set();
@@ -21,11 +17,9 @@ export function createManagedWebGLContext(options) {
     return context;
 }
 
-function contextLost() {
-    stop();
-}
+const contextLost = () => stop();
 
-function contextRestored() {
+const contextRestored = () => {
     for (const context of contexts) {
         applyOptionsAndExtensions(context);
         context.shaders.forEach(shader => restoreShader(shader, context));
@@ -37,5 +31,9 @@ function contextRestored() {
     start();
 }
 
-function contextCreationError() {
+const contextCreationError = () => {
 }
+
+addListener('webglcontextlostevent', contextLost);
+addListener('webglcontextrestored', contextRestored);
+addListener('webglcontextcreationerror', contextCreationError);

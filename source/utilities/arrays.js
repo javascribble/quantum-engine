@@ -1,11 +1,5 @@
-﻿export function lastArrayElement(array) {
-    return array[array.length - 1];
-}
+﻿export const lastArrayElement = (array) => array[array.length - 1];
 
-export function insertArrayElement(array, element, index) {
-    array.splice(index, 0, element);
-}
+export const insertArrayElement = (array, element, index) => array.splice(index, 0, element);
 
-export function removeArrayElement(array, element) {
-    array.splice(array.indexOf(element), 1);
-}
+export const removeArrayElement = (array, element) => array.splice(array.indexOf(element), 1);

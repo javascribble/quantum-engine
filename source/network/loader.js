@@ -1,26 +1,16 @@
-﻿export function loadBlob(url) {
-    return fetch(url).then(response => response.blob());
-}
+﻿export const loadBlob = (url) => fetch(url).then(response => response.blob());
 
-export function loadJson(url) {
-    return fetch(url).then(response => response.json());
-}
+export const loadJson = (url) => fetch(url).then(response => response.json());
 
-export function loadText(url) {
-    return fetch(url).then(response => response.text());
-}
+export const loadText = (url) => fetch(url).then(response => response.text());
 
-export function loadFormData(url) {
-    return fetch(url).then(response => response.formData());
-}
+export const loadFormData = (url) => fetch(url).then(response => response.formData());
 
-export function loadArrayBuffer(url) {
-    return fetch(url).then(response => response.arrayBuffer());
-}
+export const loadArrayBuffer = (url) => fetch(url).then(response => response.arrayBuffer());
 
-export function loadImage(url) {
+export const loadImage = (url) => {
     // TODO: Change to use blob.
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         const image = new Image();
         image.onload = () => resolve(image);
         image.src = url;

@@ -2,13 +2,13 @@ import { vector3 } from './vector3';
 
 const components = 16;
 
-function create(type = Float32Array) {
+const create = (type = Float32Array) => {
     const m4 = new type(components);
     setIdentity(m4);
     return m4;
 }
 
-function orthographic(left = -100, right = 100, bottom = -100, top = 100, near = 0, far = -1) {
+const orthographic = (left = -100, right = 100, bottom = -100, top = 100, near = 0, far = -1) => {
     const x = 1 / (right - left);
     const y = 1 / (top - bottom);
     const z = 1 / (far - near);
@@ -23,7 +23,7 @@ function orthographic(left = -100, right = 100, bottom = -100, top = 100, near =
     return m4;
 }
 
-function perspective(radians = Math.PI / 2, aspect = 1, near = 0, far = 100) {
+const perspective = (radians = Math.PI / 2, aspect = 1, near = 0, far = 100) => {
     const d = 1 / Math.tan(radians / 2);
     const r = 1 / (near - far);
 
@@ -37,7 +37,7 @@ function perspective(radians = Math.PI / 2, aspect = 1, near = 0, far = 100) {
     return m4;
 }
 
-function setIdentity(m4) {
+const setIdentity = (m4) => {
     m4[0] = 1;
     m4[1] = 0;
     m4[2] = 0;
@@ -56,13 +56,13 @@ function setIdentity(m4) {
     m4[15] = 1;
 }
 
-function setTranslation(m4, v3) {
+const setTranslation = (m4, v3) => {
     m4[12] = v3.x;
     m4[13] = v3.y;
     m4[14] = v3.z;
 }
 
-function setRotation(m4, v3) {
+const setRotation = (m4, v3) => {
     // TODO: 3d rotation.
     const s = Math.sin(v3.z);
     const c = Math.cos(v3.z);
@@ -72,13 +72,13 @@ function setRotation(m4, v3) {
     m4[5] = c;
 }
 
-function setScale(m4, v3) {
+const setScale = (m4, v3) => {
     m4[0] = v3.x;
     m4[5] = v3.y;
     m4[10] = v3.z;
 }
 
-function multiply(m4a, m4b, m4c) {
+const multiply = (m4a, m4b, m4c) => {
     const a00 = m4a[0];
     const a01 = m4a[1];
     const a02 = m4a[2];
@@ -130,7 +130,7 @@ function multiply(m4a, m4b, m4c) {
     m4c[15] = a03 * b30 + a13 * b31 + a23 * b32 + a33 * b33;
 }
 
-function lookAt(m4, point, eye, up) {
+const lookAt = (m4, point, eye, up) => {
     const z = vector3.normalize(vector3.subtract(eye, point));
     const x = vector3.normalize(vector3.crossProduct(up, z));
     const y = vector3.normalize(vector3.crossProduct(z, x));
@@ -150,7 +150,7 @@ function lookAt(m4, point, eye, up) {
     m4[12] = -vector3.dotProduct(x, eye);
     m4[13] = -vector3.dotProduct(y, eye);
     m4[14] = -vector3.dotProduct(z, eye);
-    m4[15] = 1;  
+    m4[15] = 1;
 }
 
 export const matrix4 = {

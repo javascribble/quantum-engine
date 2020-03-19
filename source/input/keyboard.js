@@ -1,4 +1,5 @@
-﻿import { publish } from '../application/events';
+﻿import { addListener } from '../application/browser';
+import { publish } from '../application/events';
 
 export const defaultKeyboardControls = {
     UP: 'ArrowUp',
@@ -8,15 +9,11 @@ export const defaultKeyboardControls = {
     ENTER: 'Enter'
 };
 
-export function enableKeyboard() {
-    addEventListener('keydown', keyboardKeyDown);
-    addEventListener('keyup', keyboardKeyUp);
+export const enableKeyboard = () => {
+    addListener('keydown', keyboardKeyDown);
+    addListener('keyup', keyboardKeyUp);
 }
 
-function keyboardKeyDown(event) {
-    publish(event.code, event);
-}
+const keyboardKeyDown = (event) => publish(event.code, event);
 
-function keyboardKeyUp(event) {
-    publish(event.code, event);
-}
+const keyboardKeyUp = (event) => publish(event.code, event);

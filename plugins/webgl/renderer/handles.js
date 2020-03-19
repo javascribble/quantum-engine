@@ -3,19 +3,19 @@ import { applyProgram, deleteProgram } from '../handles/programs';
 import { applyBuffer, deleteBuffer } from '../handles/buffers';
 import { applyTexture, deleteTexture } from '../handles/textures';
 
-export function allocateHandles(context, cache, resources) {
+export const allocateHandles = (context, cache, resources) => {
     applyHandles(context, cache, resources.programs, applyProgramAndShaders);
     applyHandles(context, cache, resources.buffers, applyBuffer);
     applyHandles(context, cache, resources.textures, applyTexture);
 }
 
-export function deallocateHandles(context, cache, resources) {
+export const deallocateHandles = (context, cache, resources) => {
     deleteHandles(context, cache, resources.programs, deleteProgramAndShaders);
     deleteHandles(context, cache, resources.buffers, deleteBuffer);
     deleteHandles(context, cache, resources.textures, deleteTexture);
 }
 
-function applyHandles(context, cache, resources, applicationMethod) {
+const applyHandles = (context, cache, resources, applicationMethod) => {
     for (const resourceName in resources) {
         if (cache.hasOwnProperty(resourceName)) {
             cache[resourceName].references++;
@@ -31,7 +31,7 @@ function applyHandles(context, cache, resources, applicationMethod) {
     }
 }
 
-function deleteHandles(context, cache, resources, deletionMethod) {
+const deleteHandles = (context, cache, resources, deletionMethod) => {
     for (const resourceName in resources) {
         const activeResource = cache[resourceName];
         if (activeResource.references-- === 0) {
@@ -41,7 +41,7 @@ function deleteHandles(context, cache, resources, deletionMethod) {
     }
 }
 
-function applyProgramAndShaders(program, context) {
+const applyProgramAndShaders = (program, context) => {
     program.vertexShader.type = context.VERTEX_SHADER;
     program.fragmentShader.type = context.FRAGMENT_SHADER;
     applyShader(program.vertexShader, context);
@@ -49,7 +49,7 @@ function applyProgramAndShaders(program, context) {
     applyProgram(program, context);
 }
 
-function deleteProgramAndShaders(program, context) {
+const deleteProgramAndShaders = (program, context) => {
     deleteShader(program.vertexShader, context);
     deleteShader(program.fragmentShader, context);
     deleteProgram(program, context);

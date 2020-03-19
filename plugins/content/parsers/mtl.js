@@ -1,7 +1,7 @@
 import { splitNewLines } from '../imports';
 import { isValidLine } from '../utilities/strings';
 
-export async function parseMtl(text) {
+export const parseMtl = async (text) => {
     let material;
     const materials = [];
     const lines = splitNewLines(text).filter(isValidLine);

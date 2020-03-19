@@ -1,4 +1,4 @@
-﻿export function createShader(context, source, type) {
+﻿export const createShader = (context, source, type) => {
     const shader = {
         source,
         type
@@ -8,12 +8,12 @@
     return shader;
 }
 
-export function applyShader(shader, context) {
+export const applyShader = (shader, context) => {
     restoreShader(shader, context);
     context.shaders.add(shader);
 }
 
-export function restoreShader(shader, context) {
+export const restoreShader = (shader, context) => {
     const handle = shader.handle = context.createShader(shader.type);
     context.shaderSource(handle, shader.source);
     context.compileShader(handle);
@@ -22,7 +22,7 @@ export function restoreShader(shader, context) {
     }
 }
 
-export function deleteShader(shader, context) {
+export const deleteShader = (shader, context) => {
     context.shaders.delete(shader);
     context.deleteShader(shader.handle);
 }

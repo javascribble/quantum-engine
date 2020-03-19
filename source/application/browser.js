@@ -1,6 +1,14 @@
-export function setElementParent(element, parent) {
-    if (element.parentNode) {
-        element.parentNode.removeChild(element);
+export const addListener = addEventListener;
+export const removeListener = removeEventListener;
+
+export const getTimestamp = () => performance.now();
+
+export const preventDefault = (event) => event.preventDefault();
+
+export const setElementParent = (element, parent) => {
+    let currentParent = element.parentNode;
+    if (currentParent) {
+        currentParent.removeChild(element);
     }
 
     if (parent) {

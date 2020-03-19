@@ -1,11 +1,13 @@
-export function saveLocalState(state) {
+const storage = localStorage;
+
+export const saveLocal = (state) => {
     for (const name in state) {
-        state[name] = localStorage.getKey(name);
+        state[name] = storage.getKey(name);
     }
 }
 
-export function loadLocalState(state) {
+export const loadLocal = (state) => {
     for (const name in state) {
-        localStorage.setKey(name, state[name]);
+        storage.setKey(name, state[name]);
     }
 }

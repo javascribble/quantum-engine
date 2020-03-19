@@ -1,9 +1,9 @@
 import { registerSystem } from '../application/architecture';
 
-export function registerInputSystem() {
+export const registerInputSystem = () => {
     // TODO: Pull configured keybindings.
     const inputs = new Set();
-    function updateInputSystem(deltaTime) {
+    const updateInputSystem = (deltaTime) => {
     }
 
     //registerSystem(inputComponent, inputs, updateInputSystem);

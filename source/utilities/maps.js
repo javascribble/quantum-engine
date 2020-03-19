@@ -1,4 +1,4 @@
-export function getOrAddMapValue(map, key, factory) {
+export const getOrAddMapValue = (map, key, factory) => {
     if (map.has(key)) {
         return map.get(key);
     } else {

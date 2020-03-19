@@ -1,26 +1,26 @@
-﻿import { publish } from '../application/events';
+﻿import { addListener } from '../application/browser';
+import { publish } from '../application/events';
 
 export const defaultTouchControls = {
 };
 
-export function enableTouch() {
-    addEventListener('touchstart', touchStart);
-    addEventListener('touchmove', touchMove);
-    addEventListener('touchend', touchEnd);
-    addEventListener('touchcancel', touchCancel);
+export const enableTouch = () => {
+    addListener('touchstart', touchStart);
+    addListener('touchmove', touchMove);
+    addListener('touchend', touchEnd);
+    addListener('touchcancel', touchCancel);
 }
 
-function touchStart(event) {
+const touchStart = (event) => {
     //this.x = event.targetTouches[0].pageX - canvas.offsetLeft;
     //this.y = event.targetTouches[0].pageY - canvas.offsetTop;
 }
 
-function touchMove(event) {
+const touchMove = (event) => {
 }
 
-function touchEnd(event) {
+const touchEnd = (event) => {
 }
 
-function touchCancel(event) {
-
+const touchCancel = (event) => {
 }

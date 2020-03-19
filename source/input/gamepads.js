@@ -1,4 +1,5 @@
-﻿import { publish } from '../application/events';
+﻿import { addListener } from '../application/browser';
+import { publish } from '../application/events';
 import { systems } from '../application/host';
 
 export const defaultGamepadControls = {
@@ -25,19 +26,19 @@ export const defaultGamepadControls = {
     START: 'PAD_START'
 };
 
-export function enableGamepads() {
+export const enableGamepads = () => {
     const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
 
-    addEventListener('ongamepadconnected', event => gamepads.add(event.gamepad));
-    addEventListener('ongamepaddisconnected', event => gamepads.delete(event.gamepad));
+    addListener('ongamepadconnected', event => gamepads.add(event.gamepad));
+    addListener('ongamepaddisconnected', event => gamepads.delete(event.gamepad));
 
-    function updateGamepads(deltaTime) {
+    const updateGamepads = (deltaTime) => {
         for (const gamepad of gamepads) {
             //gamepad.buttons
             //gamepad.axes
             //publish
         }
     }
-    
+
     systems.push(updateGamepads);
 }

@@ -3,9 +3,9 @@ import { useProgram } from '../handles/programs';
 import { bindBuffer, bufferData } from '../handles/buffers';
 import { bindTexture, bufferTexture } from '../handles/textures';
 
-export function createWebGLRenderer(context, renderable, options) {
+export const createWebGLRenderer = (context, renderable, options) => {
     const state = {};
-    return function renderWebGLContext(deltaTime) {
+    return (deltaTime) => {
         resizeContext(context, options.scale);
         context.clear(context.DEPTH_BUFFER_BIT);
         for (const pass of renderable.passes) {

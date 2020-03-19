@@ -8,26 +8,15 @@ export const defaultCanvasOptions = {
     preserveDrawingBuffer: false
 };
 
-export function createCanvas() {
-    return document.createElement('canvas');
-}
+export const createCanvas = () => document.createElement('canvas');
 
-export function getCanvasContext(canvas, options = defaultCanvasOptions) {
-    return canvas.getContext('2d', options);
-}
+export const getCanvasContext = (canvas, options = defaultCanvasOptions) => canvas.getContext('2d', options);
 
-export function getWebGLContext(canvas, options = defaultCanvasOptions) {
-    return canvas.getContext('webgl2', options)
-        || canvas.getContext('webgl', options)
-        || canvas.getContext('experimental-webgl', options);
-}
+export const getWebGLContext = (canvas, options = defaultCanvasOptions) => canvas.getContext('webgl2', options) || canvas.getContext('webgl', options);
 
-export function getWebGPUContext(canvas) {
-    return canvas.getContext('gpu')
-        || canvas.getContext('gpupresent');
-}
+export const getWebGPUContext = (canvas) => canvas.getContext('gpupresent');
 
-export function resizeCanvas(canvas, scale = devicePixelRatio) {
+export const resizeCanvas = (canvas, scale = devicePixelRatio) => {
     const scaledWidth = canvas.clientWidth * scale;
     const scaledHeight = canvas.clientHeight * scale;
     if (canvas.width !== scaledWidth || canvas.height !== scaledHeight) {

@@ -1,6 +1,8 @@
-export function enableOfflineSupport() {
-   addEventListener('online', onlineListener);
-   addEventListener('offline', offlineListener);
+import { addListener } from '../application/browser';
+
+export const enableOfflineSupport = () => {
+   addListener('online', onlineListener);
+   addListener('offline', offlineListener);
 
    const serviceWorker = navigator.serviceWorker;
    if (serviceWorker) {
@@ -8,10 +10,8 @@ export function enableOfflineSupport() {
    }   
 }
 
-function onlineListener() {
-
+const onlineListener = () => {
 }
 
-function offlineListener() {
-
+const offlineListener = () => {
 }

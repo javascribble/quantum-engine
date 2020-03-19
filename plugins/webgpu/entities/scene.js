@@ -1,18 +1,18 @@
 import { loadResource, loadResources } from '../imports';
 
-export async function loadScene(resource) {
+export const loadScene = async (resource) => {
     const scene = await loadResource(resource);
     await loadSceneResources(scene.resources);
     return scene;
 }
 
-async function loadSceneResources(resources) {
+const loadSceneResources = async (resources) => {
     resources.programs = await loadResources(resources.programs, loadProgram);
     resources.buffers = await loadResources(resources.buffers, loadBuffer);
     resources.textures = await loadResources(resources.textures, loadTexture);
 }
 
-async function loadProgram(resource) {
+const loadProgram = async (resource) => {
     const programResource = await loadResource(resource);
 
     programResource.vertexStage.module = await loadResource(programResource.vertexStage.module);
@@ -25,14 +25,14 @@ async function loadProgram(resource) {
     return programResource;
 }
 
-async function loadBuffer(resource) {
+const loadBuffer = async (resource) => {
     const bufferResource = await loadResource(resource);
     return bufferResource;
 }
 
-async function loadTexture(resource) {
+const loadTexture = async (resource) => {
     const textureResource = await loadResource(resource);
-    
+
     let usageFlag = 0;
     for (const textureUsage of textureResource.usage) {
         usageFlag |= GPUTextureUsage[textureUsage];

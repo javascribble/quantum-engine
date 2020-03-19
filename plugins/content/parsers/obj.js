@@ -2,7 +2,7 @@ import { loadResource, splitNewLines } from '../imports';
 import { isValidLine } from '../utilities/strings';
 import { parseMtl } from './mtl';
 
-export async function parseObj(text) {
+export const parseObj = async (text) => {
     let mesh;
     let meshes = [];
     let materials = [];

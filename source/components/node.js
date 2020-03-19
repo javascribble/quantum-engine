@@ -1,5 +1,3 @@
-export function createNode(parent) {
-    return {
-        parent
-    };
-}
+export const createNode = (parent) => ({
+    parent
+});

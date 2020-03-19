@@ -7,6 +7,4 @@ export * from './geometry/shapes';
 export * from './geometry/vector2';
 export * from './geometry/vector3';
 export * from './geometry/vector4';
-export * from './utilities/animation';
-export * from './utilities/generation';
-export * from './utilities/validation';
+export * from './utilities/numbers';

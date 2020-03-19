@@ -1,2 +1,2 @@
-export function createTexture(device) {
+export const createTexture = (device) => {
 }

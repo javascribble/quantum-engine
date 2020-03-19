@@ -4,7 +4,7 @@ import { createSprite, spriteComponent } from '../components/sprite';
 import { createManagedWebGLContext } from '../renderer/manager';
 import { createWebGLRenderer } from '../renderer/renderer';
 
-export async function registerVideoSystem(options = defaultVideoOptions) {
+export const registerVideoSystem = async (options = defaultVideoOptions) => {
     const context = createManagedWebGLContext(options);
     const renderable = createWebGLRenderable(context);
     const render = createWebGLRenderer(context, renderable, options);
@@ -13,7 +13,7 @@ export async function registerVideoSystem(options = defaultVideoOptions) {
     registerSystem('scene', renderable, render);
 
     const renderables = new Set();
-    function updateRenderables(deltaTime) {
+    const updateRenderables = (deltaTime) => {
         let index = 0;
         let firstChangedRenderable = null;
         for (const renderable of renderables) {
@@ -42,7 +42,7 @@ export async function registerVideoSystem(options = defaultVideoOptions) {
     registerSystem(spriteComponent, renderables, updateRenderables);
 }
 
-function createWebGLRenderable(context) {
+const createWebGLRenderable = (context) => {
     const passes = [];
     const resources = {};
     return {
@@ -83,7 +83,7 @@ function createWebGLRenderable(context) {
     };
 }
 
-function copy(transform, array, index) {
+const copy = (transform, array, index) => {
     // TODO: Only multiply the parts that have changed.
     const translation = transform.translation;
     const rotation = transform.rotation;

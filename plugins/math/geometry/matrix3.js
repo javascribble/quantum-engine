@@ -1,12 +1,12 @@
 const components = 9;
 
-function create(type = Float32Array) {
+const create = (type = Float32Array) => {
     const m3 = new type(components);
     setIdentity(m3);
     return m3;
-}
+};
 
-function orthographic(width = 100, height = 100) {
+const orthographic = (width = 100, height = 100) => {
     const m3 = create();
     m3[0] = 2 / width;
     m3[4] = 2 / height;
@@ -15,7 +15,7 @@ function orthographic(width = 100, height = 100) {
     return m3;
 }
 
-function setIdentity(m3) {
+const setIdentity = (m3) => {
     m3[0] = 1;
     m3[1] = 0;
     m3[2] = 0;
@@ -27,12 +27,12 @@ function setIdentity(m3) {
     m3[8] = 1;
 }
 
-function setTranslation(m3, v2) {
+const setTranslation = (m3, v2) => {
     m3[6] = v2[0];
     m3[7] = v2[1];
 }
 
-function setRotation(m3, radians) {
+const setRotation = (m3, radians) => {
     const s = Math.sin(radians);
     const c = Math.cos(radians);
     m3[0] = c;
@@ -41,12 +41,12 @@ function setRotation(m3, radians) {
     m3[4] = c;
 }
 
-function setScale(m3, v2) {
+const setScale = (m3, v2) => {
     m3[0] = v2[0];
     m3[4] = v2[1];
 }
 
-function multiply(m3a, m3b, m3c) {
+const multiply = (m3a, m3b, m3c) => {
     const a00 = m3a[0];
     const a01 = m3a[1];
     const a02 = m3a[2];
