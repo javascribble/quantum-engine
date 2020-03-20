@@ -1,12 +1,16 @@
 {
 	"folders": [
 		{
-			"name": "plugins",
-			"path": "plugins"
+			"name": "editor",
+			"path": "editor"
 		},
 		{
-			"name": "source",
-			"path": "source"
+			"name": "engine",
+			"path": "engine"
+		},
+		{
+			"name": "plugins",
+			"path": "plugins"
 		}
 	]
 }

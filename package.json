@@ -34,7 +34,8 @@
   ],
   "files": [
     "build/",
-    "plugins/",
-    "source/"
+    "editor/",
+	"engine/",
+    "plugins/"
   ]
 }
