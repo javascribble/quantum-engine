@@ -1,10 +1,9 @@
 {
-  "name": "@adonaigames/engine",
+  "name": "whitestone",
   "description": "simple game engine",
   "author": "Adonai Games",
-  "version": "1.0.9",
+  "version": "0.0.9",
   "license": "MIT",
-  "main": "source/main.js",
   "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-multi-entry": "^3.0.0",
@@ -15,21 +14,22 @@
   },
   "scripts": {
     "serve": "serve ./",
-    "build": "rollup -c adonai-engine.rollup.config.js",
-    "watch": "rollup -w -c adonai-engine.rollup.config.js",
+    "build": "rollup -c whitestone.rollup.config.js",
+    "watch": "rollup -w -c whitestone.rollup.config.js",
     "start": "npm-run-all --parallel serve watch",
     "postversion": "npm publish --access public"
   },
-  "homepage": "https://github.com/adonaigames/engine#readme",
+  "homepage": "https://github.com/adonaigames/whitestone#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adonaigames/engine.git"
+    "url": "git+https://github.com/adonaigames/whitestone.git"
   },
   "bugs": {
-    "url": "https://github.com/adonaigames/engine/issues"
+    "url": "https://github.com/adonaigames/whitestone/issues"
   },
   "keywords": [
     "game",
+	"editor",
     "engine"
   ],
   "files": [
