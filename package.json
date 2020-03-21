@@ -2,7 +2,7 @@
   "name": "whitestone",
   "description": "simple game engine",
   "author": "Adonai Games",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
@@ -29,7 +29,7 @@
   },
   "keywords": [
     "game",
-	"editor",
+    "editor",
     "engine"
   ],
   "files": [
