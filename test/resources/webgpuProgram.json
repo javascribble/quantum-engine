@@ -1,13 +1,4 @@
 {
-    "vertexStage": {
-		"module": "triangle.vert.spv",
-		"entryPoint": "main"
-	},
-    "fragmentStage": {
-		"module": "triangle.frag.spv",
-		"entryPoint": "main"
-	},
-	"primitiveTopology": "triangle-strip",
     "vertexState": {
 		"indexFormat": "uint16",
         "vertexBuffers": [

@@ -25,7 +25,7 @@ async function initialize() {
 	engine.registerSystem(engine.transformComponent, transforms, updateTest);	
 	await engine.registerVideoSystem();
 		
-	const scene = await engine.loadScene('scene.json');
+	const scene = await engine.loadScene('webgpuScene.json');
 	const count = 100;
 	for (let i = 0; i < count; i++) {
 		const transform = engine.createTransform();

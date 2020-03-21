@@ -7,6 +7,7 @@ export const loadScene = async (resource) => {
 }
 
 const loadSceneResources = async (resources) => {
+    resources.shaders = await loadResources(resources.shaders);
     resources.programs = await loadResources(resources.programs, loadProgram);
     resources.buffers = await loadResources(resources.buffers, loadBuffer);
     resources.textures = await loadResources(resources.textures, loadTexture);
@@ -14,9 +15,6 @@ const loadSceneResources = async (resources) => {
 
 const loadProgram = async (resource) => {
     const programResource = await loadResource(resource);
-
-    programResource.vertexStage.module = await loadResource(programResource.vertexStage.module);
-    programResource.fragmentStage.module = await loadResource(programResource.fragmentStage.module);
 
     for (const colorState of programResource.colorStates) {
         colorState.writeMask = GPUColorWrite[colorState.writeMask];

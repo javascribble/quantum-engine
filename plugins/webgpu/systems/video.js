@@ -1,13 +1,17 @@
-import { registerSystem, defaultVideoOptions } from '../imports';
-import { createWebGPURenderer } from '../renderer/renderer';
-import { createWebGPURenderable } from '../renderer/renderable';
-import { createManagedWebGPUContext } from '../renderer/manager';
+import { createCanvas, getWebGPUContext, setElementParent, registerSystem, defaultVideoOptions } from '../imports';
+import { createRenderer } from '../graphics/renderer';
 
 export const registerVideoSystem = async (options = defaultVideoOptions) => {
-    const context = await createManagedWebGPUContext(options);
-    const renderable = await createWebGPURenderable(context);
-    const render = createWebGPURenderer(context, renderable, options);
+    const canvas = createCanvas();
+    setElementParent(canvas, options.parent);
+
+    const adapter = await navigator.gpu.requestAdapter();
+    const device = await adapter.requestDevice();
+
+    const context = getWebGPUContext(canvas);
+
+    const renderer = await createRenderer(device, canvas, context, options);
 
     // TODO: Make scene an entity rather than a component.
-    registerSystem('scene', renderable, render);
+    registerSystem('scene', renderer.renderables, renderer.render);
 }

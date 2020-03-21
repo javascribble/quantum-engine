@@ -27,9 +27,7 @@ export const registerSystem = (componentName, componentSet, update) => {
     update && systems.push(update);
 }
 
-export const createEntity = (object = {}) => {
-    return new Proxy(object, componentObserver);
-}
+export const createEntity = (object = {}) => new Proxy(object, componentObserver);
 
 export const deleteEntity = (entity) => {
     for (const component in entity) {
