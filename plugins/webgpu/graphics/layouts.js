@@ -1,5 +1,4 @@
-export const defaultPipelineLayoutOptions = {
-    bindGroupLayouts: []
+export const defaultPipelineLayoutOptions = {    
 };
 
 export const createPipelineLayout = (device, options) => device.createPipelineLayout({

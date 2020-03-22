@@ -1,15 +1,19 @@
 ﻿{
 	"entities": [],
-	"resources": {
+	"resources": {		
+		"shaders": {
+			"defaultVertexShader": "triangle.vert.spv",
+			"defaultFragmentShader": "triangle.frag.spv"
+		},
 		"programs": {
-			"defaultProgram": "program.json"
+			"defaultProgram": "webgpuProgram.json"
 		},
 		"buffers": {
-			"staticBuffer": "staticBuffer.json",
+			"staticBuffer": "webgpuStaticBuffers.json",
 			"dynamicBuffer": "dynamicBuffer.json"
 		},
 		"textures": {
-			"defaultTexture": "texture.json"
+			"depthTexture": "webgpuDepthTexture.json"
 		}
 	}
 }

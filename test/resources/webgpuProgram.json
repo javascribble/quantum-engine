@@ -1,33 +1,50 @@
 {
+	"primitiveTopology": "triangle-strip",
     "vertexState": {
 		"indexFormat": "uint16",
         "vertexBuffers": [
 			{
+				"arrayStride": 16,
+				"stepMode": "vertex",			
 				"attributes": [
 					{
 						"shaderLocation": 0,
 						"offset": 0,
-						"format": "float3"
-					}
-				],
-				"arrayStride": 12,
-				"stepMode": "vertex"			
-			},
-			{
-				"attributes": [
+						"format": "float2"
+					},
 					{
 						"shaderLocation": 1,
+						"offset": 8,
+						"format": "float2"
+					}
+				]
+			},
+			{
+				"arrayStride": 36,
+				"stepMode": "instance",
+				"attributes": [
+					{
+						"shaderLocation": 2,
 						"offset": 0,
 						"format": "float3"
+					},
+					{
+						"shaderLocation": 3,
+						"offset": 12,
+						"format": "float3"
+					},
+					{
+						"shaderLocation": 4,
+						"offset": 24,
+						"format": "float3"
 					}
-				],
-				"arrayStride": 12,
-				"stepMode": "vertex"
-			}
+				]
+			}			
 		]
 	},
     "colorStates": [
 		{
+			"writeMask": "ALL",		
 			"format": "bgra8unorm",
 			"alphaBlend": {
 				"srcFactor": "src-alpha",
@@ -38,8 +55,7 @@
 				"srcFactor": "src-alpha",
 				"dstFactor": "one-minus-src-alpha",
 				"operation": "add"
-			},
-			"writeMask": "ALL"
+			}
 		}
 	],
 	"depthStencilState": {

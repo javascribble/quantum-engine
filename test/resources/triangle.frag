@@ -1,9 +1,12 @@
 #version 450
 
-layout (location = 0) in vec3 inColor;
-layout (location = 0) out vec4 outColor;
+layout(location=0) in vec2 fragmentCoordinate;
+layout(location=0) out vec4 fragmentColor;
+
+layout(set=0, binding=1) uniform sampler textureSampler;
+layout(set=0, binding=2) uniform texture2D textureData;
 
 void main() 
 {
-  outColor = vec4(inColor, 1.0);
+    fragmentColor = texture(sampler2D(textureData, textureSampler), fragmentCoordinate);
 }
