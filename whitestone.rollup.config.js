@@ -28,6 +28,8 @@ export default bundles.map(bundle => {
 	return {
 		input: bundle.input,
 		output: debug ? development(bundle) : production(bundle),
-		plugins: [multi()]
+		plugins: [
+			multi()
+		]
 	}
 });

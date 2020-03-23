@@ -6,12 +6,11 @@ const create = (type = Float32Array) => {
     return m3;
 };
 
-const orthographic = (width = 100, height = 100) => {
+const orthographic = (size = 100, aspect = 1) => {
+    const scale = 1 / size;
     const m3 = create();
-    m3[0] = 2 / width;
-    m3[4] = 2 / height;
-    m3[6] = -1;
-    m3[7] = -1;
+    m3[0] = scale / aspect;
+    m3[4] = scale;
     return m3;
 }
 

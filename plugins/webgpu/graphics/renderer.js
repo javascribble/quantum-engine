@@ -1,10 +1,11 @@
-import { loadResource, resizeCanvas, matrix3, matrix4 } from '../imports';
-import { createBuffer, vertexBufferUsage, indexBufferUsage, copyDestinationBufferUsage } from './buffers';
-import { createShader } from './shaders';
-import { createShaderModule } from './modules';
-import { createProgram } from './programs';
+import { loadResource, resizeCanvas, matrix4 } from '../imports';
+import { createBuffer, bufferData, vertexBufferUsage, indexBufferUsage, copyDestinationBufferUsage } from './buffers';
+import { createSprite } from '../components/sprite';
 import { createPipelineLayout } from './layouts';
+import { createShaderModule } from './modules';
 import { configureSwapChain } from './chains';
+import { createProgram } from './programs';
+import { createShader } from './shaders';
 
 export const createRenderer = async (device, canvas, context, options) => {
     const swapChain = await configureSwapChain(context, { device, format: await context.getSwapChainPreferredFormat(device) });
@@ -18,7 +19,7 @@ export const createRenderer = async (device, canvas, context, options) => {
     const renderables = {
         add(scene) {
             const resources = scene.resources;
-            const buffers = resources.buffers.staticBuffer;
+            const buffers = resources.buffers;
 
             const sampler = device.createSampler({
                 minFilter: "linear",
@@ -60,15 +61,11 @@ export const createRenderer = async (device, canvas, context, options) => {
             device.defaultQueue.submit([textureLoadEncoder.finish()]);
 
             const vertexUniformBuffer = device.createBuffer({
-                size: 36,
+                size: 64,
                 usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
             });
 
-            const viewProjectionMatrix = new Float32Array([
-                0.02, 0, 0,
-                0, 0.02, 0,
-                -1, -1, 0
-            ]);
+            const viewProjectionMatrix = matrix4.orthographic(100, canvas.width / canvas.height);
 
             vertexUniformBuffer.setSubData(0, viewProjectionMatrix);
 
@@ -131,30 +128,41 @@ export const createRenderer = async (device, canvas, context, options) => {
             };
 
             renderPassDescriptor.depthStencilAttachment.attachment = device.createTexture(depthTextureDescriptor).createView();
-            renderPassDescriptor.colorAttachments[0].attachment = swapChain.getCurrentTexture().createView();
 
-            const modelTransformations = new Float32Array([
-                1, 0, 0,
-                0, 1, 0,
-                10, 10, 1
-            ]);
+            const entities = scene.entities;
+            const count = entities.length;
+            const modelTransformations = new Float32Array(count * 6);
 
-            const vertexBuffer = createBuffer(device, new Float32Array(buffers.data), vertexBufferUsage | copyDestinationBufferUsage);
-            const indexBuffer = createBuffer(device, new Uint16Array(buffers.indices), indexBufferUsage | copyDestinationBufferUsage);
-            const instanceBuffer = createBuffer(device, modelTransformations, vertexBufferUsage | copyDestinationBufferUsage);
+            for (let i = 0; i < count; i++) {
+                const entity = entities[i];
+                entity.sprite = createSprite(entity.transform, { data: modelTransformations }, i);
+            }
 
-            const commandEncoder = device.createCommandEncoder();
-            const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
-            passEncoder.setPipeline(pipeline);
-            passEncoder.setBindGroup(0, uniformBindGroup);
-            passEncoder.setViewport(0, 0, canvas.width, canvas.height, 0, 1);
-            passEncoder.setScissorRect(0, 0, canvas.width, canvas.height);
-            passEncoder.setVertexBuffer(0, vertexBuffer);
-            passEncoder.setVertexBuffer(1, instanceBuffer);
-            passEncoder.setIndexBuffer(indexBuffer);
-            passEncoder.drawIndexed(4, 1, 0, 0, 0);
-            passEncoder.endPass();
-            device.defaultQueue.submit([commandEncoder.finish()]);
+            const staticData = new Float32Array(buffers.staticBuffer.data);
+
+            const vertexBuffers = [
+                {
+                    data: staticData,
+                    handle: createBuffer(device, staticData, vertexBufferUsage | copyDestinationBufferUsage)
+                },
+                {
+                    data: modelTransformations,
+                    handle: createBuffer(device, modelTransformations, vertexBufferUsage | copyDestinationBufferUsage)
+                }
+            ];
+
+            const indexData = new Uint16Array(buffers.staticBuffer.indices);
+            const indexBuffer = createBuffer(device, indexData, indexBufferUsage | copyDestinationBufferUsage);
+            bufferData(indexBuffer, indexData);
+
+            strategy.commands.push({
+                uniformBindGroup,
+                vertexBuffers,
+                indexBuffer,
+                pipeline,
+                canvas,
+                count
+            });
         },
         delete(scene) {
         }
@@ -164,6 +172,29 @@ export const createRenderer = async (device, canvas, context, options) => {
         renderables,
         render(deltaTime) {
             resizeCanvas(canvas, options.scale);
+
+            renderPassDescriptor.colorAttachments[0].attachment = swapChain.getCurrentTexture().createView();
+
+            for (const command of strategy.commands) {
+                const commandEncoder = device.createCommandEncoder();
+                const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+                passEncoder.setPipeline(command.pipeline);
+                passEncoder.setBindGroup(0, command.uniformBindGroup);
+                passEncoder.setViewport(0, 0, command.canvas.width, command.canvas.height, 0, 1);
+                passEncoder.setScissorRect(0, 0, command.canvas.width, command.canvas.height);
+
+                const vertexBuffers = command.vertexBuffers;
+                for (let i = 0; i < vertexBuffers.length; i++) {
+                    const vertexBuffer = vertexBuffers[i];
+                    bufferData(vertexBuffer.handle, vertexBuffer.data);
+                    passEncoder.setVertexBuffer(i, vertexBuffer.handle);
+                }
+
+                passEncoder.setIndexBuffer(command.indexBuffer);
+                passEncoder.drawIndexed(4, command.count, 0, 0, 0);
+                passEncoder.endPass();
+                device.defaultQueue.submit([commandEncoder.finish()]);
+            }
         }
     }
 }

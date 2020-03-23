@@ -8,18 +8,12 @@ const create = (type = Float32Array) => {
     return m4;
 }
 
-const orthographic = (left = -100, right = 100, bottom = -100, top = 100, near = 0, far = -1) => {
-    const x = 1 / (right - left);
-    const y = 1 / (top - bottom);
-    const z = 1 / (far - near);
-
+const orthographic = (size = 100, aspect = 1) => {
+    const scale = 1 / size;
     const m4 = create();
-    m4[0] = 2 * x;
-    m4[5] = 2 * y;
-    m4[10] = 2 * -z;
-    m4[12] = -(right + left) * x;
-    m4[13] = -(top + bottom) * y;
-    m4[14] = -(far + near) * z;
+    m4[0] = scale / aspect;
+    m4[5] = scale;
+    m4[10] = scale;
     return m4;
 }
 

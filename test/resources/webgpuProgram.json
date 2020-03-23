@@ -20,23 +20,28 @@
 				]
 			},
 			{
-				"arrayStride": 36,
+				"arrayStride": 24,
 				"stepMode": "instance",
 				"attributes": [
 					{
 						"shaderLocation": 2,
 						"offset": 0,
-						"format": "float3"
+						"format": "float2"
 					},
 					{
 						"shaderLocation": 3,
-						"offset": 12,
-						"format": "float3"
+						"offset": 8,
+						"format": "float"
 					},
 					{
 						"shaderLocation": 4,
-						"offset": 24,
-						"format": "float3"
+						"offset": 12,
+						"format": "float2"
+					},
+					{
+						"shaderLocation": 5,
+						"offset": 20,
+						"format": "float"
 					}
 				]
 			}			

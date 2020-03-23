@@ -1,19 +1,24 @@
 #version 450
 
 layout(location=0) in vec2 vertexCoordinate; 
-layout(location=1) in vec2 vertexPosition; 
-layout(location=2) in vec3 modelTransforma;
-layout(location=3) in vec3 modelTransformb;
-layout(location=4) in vec3 modelTransformc;
+layout(location=1) in vec2 vertexTranslation; 
+layout(location=2) in vec2 modelTranslation;
+layout(location=3) in float modelRotation;
+layout(location=4) in vec2 modelScale;
+layout(location=5) in float modelDepth;
 layout(location=0) out vec2 fragmentCoordinate; 
 
 layout(set=0, binding=0) uniform Uniforms {
-	mat3 projectionView;
+	mat4 projectionView;
 };
 
 void main() 
 {
-    fragmentCoordinate = vertexCoordinate;
+	float s = sin(modelRotation);
+	float c = cos(modelRotation);
+    vec2 scaledTranslation = vertexTranslation * modelScale;
+    vec2 rotatedTranslation = vec2(scaledTranslation.x * c + scaledTranslation.y * s, scaledTranslation.y * c - scaledTranslation.x * s);
+	gl_Position = projectionView * vec4(rotatedTranslation + modelTranslation, 1, 1);
 	
-	gl_Position = vec4((mat3(0.02, 0, 0, 0, 0.02, 0, -1, -1, 0) * mat3(1, 0, 0, 0, 1, 0, 10, 10, 1) * vec3(vertexPosition, 1)).xy , 0, 1);
+	fragmentCoordinate = vertexCoordinate;
 }

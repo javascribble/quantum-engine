@@ -50,6 +50,8 @@ const createWebGLRenderable = (context) => {
         add(scene) {
             allocateHandles(context, resources, scene.resources);
 
+            scene.resources.programs.defaultProgram.uniforms[0].value = matrix3.orthographic();
+
             // TODO: Make this more flexible.
             const buffer = resources.dynamicBuffer;
             const entities = scene.entities;

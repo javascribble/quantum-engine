@@ -12,8 +12,8 @@ async function initialize() {
 
 		for (const transform of transforms) {
 			const translation = transform.translation;
-			translation.x = (translation.x + 0.1) % 100;
-			translation.y = (translation.y + 0.1) % 100;
+			translation.x = Math.random() * 200 - 100;
+			translation.y = Math.random() * 200 - 100;
 
 			const rotation = transform.rotation;
 			rotation.z = (rotation.z + 0.01) % 6.28319;
@@ -25,12 +25,12 @@ async function initialize() {
 	engine.registerSystem(engine.transformComponent, transforms, updateTest);	
 	await engine.registerVideoSystem();
 		
-	const scene = await engine.loadScene('scene.json');
+	const scene = await engine.loadScene('webgpuScene.json');
 	const count = 100;
 	for (let i = 0; i < count; i++) {
 		const transform = engine.createTransform();
-		transform.translation.x = Math.random() * 100;
-		transform.translation.y = Math.random() * 100;
+		transform.translation.x = Math.random() * 200 - 100;
+		transform.translation.y = Math.random() * 200 - 100;
 		transform.translation.z = Math.random() - 1;
 		transform.rotation.z = engine.convertDegreesToRadians(45);
 		transform.scale.x = 2;//Math.random() * 2;
