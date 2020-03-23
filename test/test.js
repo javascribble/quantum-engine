@@ -26,7 +26,7 @@ async function initialize() {
 	await engine.registerVideoSystem();
 		
 	const scene = await engine.loadScene('webgpuScene.json');
-	const count = 100;
+	const count = 20000;
 	for (let i = 0; i < count; i++) {
 		const transform = engine.createTransform();
 		transform.translation.x = Math.random() * 200 - 100;

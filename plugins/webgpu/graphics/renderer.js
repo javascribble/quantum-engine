@@ -1,11 +1,12 @@
 import { loadResource, resizeCanvas, matrix4 } from '../imports';
-import { createBuffer, bufferData, vertexBufferUsage, indexBufferUsage, copyDestinationBufferUsage } from './buffers';
+import { createCopyBuffer, bufferData, createVertexBuffer, createIndexBuffer } from './buffers';
 import { createSprite } from '../components/sprite';
 import { createPipelineLayout } from './layouts';
 import { createShaderModule } from './modules';
 import { configureSwapChain } from './chains';
 import { createProgram } from './programs';
 import { createShader } from './shaders';
+import { createSampler } from './samplers';
 
 export const createRenderer = async (device, canvas, context, options) => {
     const swapChain = await configureSwapChain(context, { device, format: await context.getSwapChainPreferredFormat(device) });
@@ -21,10 +22,7 @@ export const createRenderer = async (device, canvas, context, options) => {
             const resources = scene.resources;
             const buffers = resources.buffers;
 
-            const sampler = device.createSampler({
-                minFilter: "linear",
-                magFilter: "linear"
-            });
+            const sampler = createSampler(device);
 
             let textureDataCanvas = document.createElement("canvas");
             let textureDataCtx = textureDataCanvas.getContext("2d");
@@ -33,10 +31,7 @@ export const createRenderer = async (device, canvas, context, options) => {
             textureDataCtx.drawImage(textureResource, 0, 0);
             const textureData = textureDataCtx.getImageData(0, 0, textureResource.width, textureResource.height).data;
 
-            const textureDataBuffer = device.createBuffer({
-                size: textureData.byteLength,
-                usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.COPY_SRC
-            });
+            const textureDataBuffer = createCopyBuffer(device, textureData.byteLength);
 
             textureDataBuffer.setSubData(0, textureData);
 
@@ -47,27 +42,27 @@ export const createRenderer = async (device, canvas, context, options) => {
             });
 
             const textureLoadEncoder = device.createCommandEncoder();
-            textureLoadEncoder.copyBufferToTexture({
-                buffer: textureDataBuffer,
-                rowPitch: textureResource.width * 4,
-                imageHeight: textureResource.height
-            }, { texture, },
+            textureLoadEncoder.copyBufferToTexture(
+                {
+                    buffer: textureDataBuffer,
+                    rowPitch: textureResource.width * 4,
+                    imageHeight: textureResource.height
+                },
+                { texture },
                 [
                     textureResource.width,
                     textureResource.height,
                     1
-                ]);
+                ]
+            );
 
             device.defaultQueue.submit([textureLoadEncoder.finish()]);
 
-            const vertexUniformBuffer = device.createBuffer({
-                size: 64,
-                usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
-            });
+            const vertexUniformBuffer = createUniformBuffer(device, 64);
 
             const viewProjectionMatrix = matrix4.orthographic(100, canvas.width / canvas.height);
 
-            vertexUniformBuffer.setSubData(0, viewProjectionMatrix);
+            bufferData(vertexUniformBuffer, 0, viewProjectionMatrix);
 
             const uniformBindGroupLayout = device.createBindGroupLayout({
                 bindings: [
@@ -143,17 +138,18 @@ export const createRenderer = async (device, canvas, context, options) => {
             const vertexBuffers = [
                 {
                     data: staticData,
-                    handle: createBuffer(device, staticData, vertexBufferUsage | copyDestinationBufferUsage)
+                    handle: createVertexBuffer(device, staticData.byteLength)
                 },
                 {
                     data: modelTransformations,
-                    handle: createBuffer(device, modelTransformations, vertexBufferUsage | copyDestinationBufferUsage)
+                    handle: createVertexBuffer(device, modelTransformations.byteLength)
                 }
             ];
 
             const indexData = new Uint16Array(buffers.staticBuffer.indices);
-            const indexBuffer = createBuffer(device, indexData, indexBufferUsage | copyDestinationBufferUsage);
-            bufferData(indexBuffer, indexData);
+            const indexBuffer = createIndexBuffer(device, indexData.byteLength);
+
+            bufferData(indexBuffer, 0, indexData);
 
             strategy.commands.push({
                 uniformBindGroup,
@@ -186,7 +182,7 @@ export const createRenderer = async (device, canvas, context, options) => {
                 const vertexBuffers = command.vertexBuffers;
                 for (let i = 0; i < vertexBuffers.length; i++) {
                     const vertexBuffer = vertexBuffers[i];
-                    bufferData(vertexBuffer.handle, vertexBuffer.data);
+                    bufferData(vertexBuffer.handle, 0, vertexBuffer.data);
                     passEncoder.setVertexBuffer(i, vertexBuffer.handle);
                 }
 
