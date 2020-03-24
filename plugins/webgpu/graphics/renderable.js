@@ -1,6 +1,7 @@
 import { loadResource, resizeCanvas, matrix4 } from '../imports';
 import { createSprite } from '../components/sprite';
 import { createCopyBuffer, bufferData, createVertexBuffer, createIndexBuffer, createUniformBuffer } from './buffers';
+import { createCommand, encodeCommand } from './commands';
 import { createPreferredSwapChain } from './context';
 import { createSampledTexture } from './textures';
 import { createPipelineLayout } from './layouts';
@@ -129,15 +130,9 @@ export const createRenderable = async (device, canvas, context, options) => {
 
             bufferData(indexBuffer, 0, indexData);
 
-            strategy.commands = [
-                {
-                    uniformBindGroup,
-                    vertexBuffers,
-                    indexBuffer,
-                    pipeline,
-                    count
-                }
-            ];
+            //const command = createCommand(device, );
+
+            strategy.commands.push({ uniformBindGroup, vertexBuffers, indexBuffer, pipeline, count });
         },
         delete(scene) {
         }
@@ -149,6 +144,8 @@ export const createRenderable = async (device, canvas, context, options) => {
             resizeCanvas(canvas, options.scale);
 
             renderPassDescriptor.colorAttachments[0].attachment = swapChain.getCurrentTexture().createView();
+
+            //device.defaultQueue.submit(strategy.commands.map(encodeCommand));
 
             for (const command of strategy.commands) {
                 const commandEncoder = device.createCommandEncoder();
