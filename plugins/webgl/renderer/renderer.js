@@ -52,4 +52,4 @@ export const createWebGLRenderer = (context, renderable, options) => {
             pass.draw();
         }
     }
-}
+};

@@ -12,7 +12,7 @@ const orthographic = (size = 100, aspect = 1) => {
     m3[0] = scale / aspect;
     m3[4] = scale;
     return m3;
-}
+};
 
 const setIdentity = (m3) => {
     m3[0] = 1;
@@ -24,12 +24,12 @@ const setIdentity = (m3) => {
     m3[6] = 0;
     m3[7] = 0;
     m3[8] = 1;
-}
+};
 
 const setTranslation = (m3, v2) => {
     m3[6] = v2[0];
     m3[7] = v2[1];
-}
+};
 
 const setRotation = (m3, radians) => {
     const s = Math.sin(radians);
@@ -38,12 +38,12 @@ const setRotation = (m3, radians) => {
     m3[1] = -s;
     m3[3] = s;
     m3[4] = c;
-}
+};
 
 const setScale = (m3, v2) => {
     m3[0] = v2[0];
     m3[4] = v2[1];
-}
+};
 
 const multiply = (m3a, m3b, m3c) => {
     const a00 = m3a[0];
@@ -74,7 +74,7 @@ const multiply = (m3a, m3b, m3c) => {
     m3c[6] = b20 * a00 + b21 * a10 + b22 * a20;
     m3c[7] = b20 * a01 + b21 * a11 + b22 * a21;
     m3c[8] = b20 * a02 + b21 * a12 + b22 * a22;
-}
+};
 
 export const matrix3 = {
     components,

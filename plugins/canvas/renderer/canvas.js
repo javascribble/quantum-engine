@@ -26,4 +26,4 @@ export const resizeCanvas = (canvas, scale = devicePixelRatio) => {
     }
 
     return false;
-}
+};

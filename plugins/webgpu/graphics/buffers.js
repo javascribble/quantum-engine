@@ -1,8 +1,4 @@
-const indexBufferUsage = GPUBufferUsage.INDEX;
-const vertexBufferUsage = GPUBufferUsage.VERTEX;
-const uniformBufferUsage = GPUBufferUsage.UNIFORM;
-const copySourceBufferUsage = GPUBufferUsage.COPY_SRC;
-const copyDestinationBufferUsage = GPUBufferUsage.COPY_DST;
+import { uniformBufferUsage, vertexBufferUsage, indexBufferUsage, copySourceBufferUsage, copyDestinationBufferUsage } from './constants';
 
 export const createUniformBuffer = (device, size) => createBuffer(device, size, uniformBufferUsage | copyDestinationBufferUsage);
 

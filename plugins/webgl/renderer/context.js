@@ -9,7 +9,7 @@ export const createWebGLContext = (options) => {
     const context = getWebGLContext(canvas);
     applyOptionsAndExtensions(context);
     return context;
-}
+};
 
 export const applyOptionsAndExtensions = (context) => {
     context.enable(context.DEPTH_TEST);
@@ -27,10 +27,10 @@ export const applyOptionsAndExtensions = (context) => {
             context[memberNameWithoutVendorName] = isConstant ? extension[member] : extension[member].bind(extension);
         }
     }
-}
+};
 
 export const resizeContext = (context, scale) => {
     if (resizeCanvas(context.canvas, scale)) {
         context.viewport(0, 0, context.drawingBufferWidth, context.drawingBufferHeight);
     }
-}
+};

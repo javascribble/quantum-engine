@@ -1,9 +1,16 @@
 ﻿{
 	"entities": [],
+	"commands": [
+		{
+		}
+	],
 	"resources": {		
 		"shaders": {
 			"defaultVertexShader": "triangle.vert.spv",
 			"defaultFragmentShader": "triangle.frag.spv"
+		},
+		"layouts": {
+			"defaultLayout": "webgpuLayout.json"
 		},
 		"programs": {
 			"defaultProgram": "webgpuProgram.json"

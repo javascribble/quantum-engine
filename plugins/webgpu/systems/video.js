@@ -44,7 +44,7 @@ export const registerVideoSystem = async (options = defaultVideoOptions) => {
     }
 
     registerSystem(spriteComponent, renderables, updateRenderables);
-}
+};
 
 const copy = (transform, array, index) => {
     // TODO: Only multiply the parts that have changed.
@@ -69,4 +69,4 @@ const copy = (transform, array, index) => {
     // m4.multiply(transformation, scale, transformation);
 
     // array.set(transformation, index);
-}
+};

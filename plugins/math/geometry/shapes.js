@@ -5,4 +5,4 @@ export const circleContainsPoint = (point, center, radius) => vector2.distanceSq
 export const ellipseContainsPoint = (point, center, size, rotation) => vector2.distanceSquaredNormalized(point, center, size) <= 1;
 
 export const rectangleContainsPoint = (point, center, size, rotation) => {
-}
+};

@@ -11,7 +11,7 @@ export const getAttributeSetter = (context, location, type) => {
         case context.FLOAT_MAT3: return curryAttributeSetter(context, bindVertexAttribPointer(context), location, context.FLOAT, 4, 3);
         case context.FLOAT_MAT4: return curryAttributeSetter(context, bindVertexAttribPointer(context), location, context.FLOAT, 4, 4);
     }
-}
+};
 
 const curryAttributeSetter = (context, setter, location, type, bytes, slots) => (attribute) => {
     if (attribute.divisor) {

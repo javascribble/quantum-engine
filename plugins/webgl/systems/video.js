@@ -40,7 +40,7 @@ export const registerVideoSystem = async (options = defaultVideoOptions) => {
     }
 
     registerSystem(spriteComponent, renderables, updateRenderables);
-}
+};
 
 const createWebGLRenderable = (context) => {
     const passes = [];
@@ -83,7 +83,7 @@ const createWebGLRenderable = (context) => {
             deallocateHandles(context, resources, scene.resources);
         }
     };
-}
+};
 
 const copy = (transform, array, index) => {
     // TODO: Only multiply the parts that have changed.
@@ -106,4 +106,4 @@ const copy = (transform, array, index) => {
     // m4.multiply(transformation, scale, transformation);
 
     // array.set(transformation, index);
-}
+};

@@ -41,4 +41,4 @@ export const enableGamepads = () => {
     }
 
     systems.push(updateGamepads);
-}
+};

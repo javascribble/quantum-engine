@@ -24,7 +24,7 @@ export const parseObj = async (text) => {
 
                 break;
             case 'o':
-                mesh = { 
+                mesh = {
                     name: words.shift(),
                     vertexIndices: [],
                     normalIndices: [],
@@ -61,4 +61,4 @@ export const parseObj = async (text) => {
         materials,
         meshes
     };
-}
+};

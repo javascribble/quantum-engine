@@ -7,4 +7,4 @@ export const registerInputSystem = () => {
     }
 
     //registerSystem(inputComponent, inputs, updateInputSystem);
-}
+};

@@ -9,7 +9,7 @@ export const parseMtl = async (text) => {
         const words = line.split(' ').reverse();
         switch (words.pop()) {
             case 'newmtl':
-                material = { 
+                material = {
                     name: words.pop()
                 };
 
@@ -22,4 +22,4 @@ export const parseMtl = async (text) => {
     }
 
     return materials;
-}
+};

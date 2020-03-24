@@ -1,36 +1,34 @@
-import { systems } from './host';
-import { getOrAddMapValue } from '../utilities/maps';
 import { createAssignPropertyTrap, createDefinePropertyTrap, createDeletePropertyTrap } from '../utilities/proxies';
+import { getOrAddMapValue, tryExecuteMapValue } from '../utilities/maps';
+import { processObjectEntries } from '../utilities/objects';
+import { curryAdd, curryDelete } from '../utilities/sets';
+import { systems } from './host';
 
 const componentSystems = new Map();
 
-const addEntityComponent = (entity, component) => {
-    if (componentSystems.has(component)) {
-        componentSystems.get(component).forEach(system => system.add(entity[component]));
+const addComponent = (name, value) => {
+    if (componentSystems.has(name)) {
+        componentSystems.get(name).forEach(curryAdd(value));
     }
-}
+};
 
-const deleteEntityComponent = (entity, component) => {
-    if (componentSystems.has(component)) {
-        componentSystems.get(component).forEach(system => system.delete(entity[component]));
+const deleteComponent = (name, value) => {
+    if (componentSystems.has(name)) {
+        componentSystems.get(name).forEach(curryDelete(value));
     }
-}
+};
 
 const componentObserver = {
-    ...createAssignPropertyTrap(addEntityComponent),
-    ...createDefinePropertyTrap(addEntityComponent),
-    ...createDeletePropertyTrap(deleteEntityComponent)
+    ...createAssignPropertyTrap(addComponent),
+    ...createDefinePropertyTrap(addComponent),
+    ...createDeletePropertyTrap(deleteComponent)
 };
 
 export const registerSystem = (componentName, componentSet, update) => {
     getOrAddMapValue(componentSystems, componentName, () => new Set()).add(componentSet);
     update && systems.push(update);
-}
+};
 
 export const createEntity = (object = {}) => new Proxy(object, componentObserver);
 
-export const deleteEntity = (entity) => {
-    for (const component in entity) {
-        deleteEntityComponent(entity, component);
-    }
-}
+export const deleteEntity = (entity) => processObjectEntries(entity, deleteComponent);

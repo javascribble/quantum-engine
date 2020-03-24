@@ -7,13 +7,13 @@ export const allocateHandles = (context, cache, resources) => {
     applyHandles(context, cache, resources.programs, applyProgramAndShaders);
     applyHandles(context, cache, resources.buffers, applyBuffer);
     applyHandles(context, cache, resources.textures, applyTexture);
-}
+};
 
 export const deallocateHandles = (context, cache, resources) => {
     deleteHandles(context, cache, resources.programs, deleteProgramAndShaders);
     deleteHandles(context, cache, resources.buffers, deleteBuffer);
     deleteHandles(context, cache, resources.textures, deleteTexture);
-}
+};
 
 const applyHandles = (context, cache, resources, applicationMethod) => {
     for (const resourceName in resources) {
@@ -29,7 +29,7 @@ const applyHandles = (context, cache, resources, applicationMethod) => {
             cache[resourceName] = newResource;
         }
     }
-}
+};
 
 const deleteHandles = (context, cache, resources, deletionMethod) => {
     for (const resourceName in resources) {
@@ -39,7 +39,7 @@ const deleteHandles = (context, cache, resources, deletionMethod) => {
             delete cache[resourceName];
         }
     }
-}
+};
 
 const applyProgramAndShaders = (program, context) => {
     program.vertexShader.type = context.VERTEX_SHADER;
@@ -47,10 +47,10 @@ const applyProgramAndShaders = (program, context) => {
     applyShader(program.vertexShader, context);
     applyShader(program.fragmentShader, context);
     applyProgram(program, context);
-}
+};
 
 const deleteProgramAndShaders = (program, context) => {
     deleteShader(program.vertexShader, context);
     deleteShader(program.fragmentShader, context);
     deleteProgram(program, context);
-}
+};

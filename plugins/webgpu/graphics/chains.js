@@ -1,4 +1,4 @@
-import { outputAttachmentTextureUsage, copySourceTextureUsage } from './textures';
+import { outputAttachmentTextureUsage, copySourceTextureUsage } from './constants';
 
 const defaultSwapChainOptions = {
     usage: outputAttachmentTextureUsage | copySourceTextureUsage

@@ -9,7 +9,7 @@
 
     applyTexture(texture, context);
     return texture;
-}
+};
 
 export const applyTexture = (texture, context) => {
     texture.changed = !!texture.data;
@@ -29,7 +29,7 @@ export const applyTexture = (texture, context) => {
 
     restoreTexture(texture, context);
     context.textures.add(texture);
-}
+};
 
 export const restoreTexture = (texture, context) => texture.handle = context.createTexture();
 
@@ -45,9 +45,9 @@ export const bufferTexture = (texture, context) => {
     }
 
     context.texImage2D(texture.target, /* mipmap level */ 0, texture.format, texture.format, texture.type, texture.data);
-}
+};
 
 export const deleteTexture = (texture, context) => {
     context.textures.delete(texture);
     context.deleteTexture(texture.handle);
-}
+};

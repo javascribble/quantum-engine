@@ -1,6 +1,7 @@
 import { loadResource, resizeCanvas, matrix4 } from '../imports';
-import { createCopyBuffer, bufferData, createVertexBuffer, createIndexBuffer } from './buffers';
 import { createSprite } from '../components/sprite';
+import { createCopyBuffer, bufferData, createVertexBuffer, createIndexBuffer, createUniformBuffer } from './buffers';
+import { createTexture } from './textures';
 import { createPipelineLayout } from './layouts';
 import { createShaderModule } from './modules';
 import { configureSwapChain } from './chains';
@@ -13,12 +14,11 @@ export const createRenderer = async (device, canvas, context, options) => {
 
     const renderPassDescriptor = await loadResource('webgpuRenderPass.json');
     const textureResource = await loadResource('marble.png');
-    const strategy = {
-        commands: []
-    };
+    const strategy = { commands: [] };
 
     const renderables = {
         add(scene) {
+            const commands = scene.commands;
             const resources = scene.resources;
             const buffers = resources.buffers;
 
@@ -64,25 +64,7 @@ export const createRenderer = async (device, canvas, context, options) => {
 
             bufferData(vertexUniformBuffer, 0, viewProjectionMatrix);
 
-            const uniformBindGroupLayout = device.createBindGroupLayout({
-                bindings: [
-                    {
-                        binding: 0,
-                        visibility: GPUShaderStage.VERTEX,
-                        type: "uniform-buffer"
-                    },
-                    {
-                        binding: 1,
-                        visibility: GPUShaderStage.FRAGMENT,
-                        type: "sampler"
-                    },
-                    {
-                        binding: 2,
-                        visibility: GPUShaderStage.FRAGMENT,
-                        type: "sampled-texture"
-                    }
-                ]
-            });
+            const uniformBindGroupLayout = device.createBindGroupLayout(scene.resources.layouts.defaultLayout);
 
             const uniformBindGroup = device.createBindGroup({
                 layout: uniformBindGroupLayout,
@@ -151,14 +133,15 @@ export const createRenderer = async (device, canvas, context, options) => {
 
             bufferData(indexBuffer, 0, indexData);
 
-            strategy.commands.push({
-                uniformBindGroup,
-                vertexBuffers,
-                indexBuffer,
-                pipeline,
-                canvas,
-                count
-            });
+            strategy.commands = [
+                {
+                    uniformBindGroup,
+                    vertexBuffers,
+                    indexBuffer,
+                    pipeline,
+                    count
+                }
+            ];
         },
         delete(scene) {
         }
@@ -176,8 +159,8 @@ export const createRenderer = async (device, canvas, context, options) => {
                 const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
                 passEncoder.setPipeline(command.pipeline);
                 passEncoder.setBindGroup(0, command.uniformBindGroup);
-                passEncoder.setViewport(0, 0, command.canvas.width, command.canvas.height, 0, 1);
-                passEncoder.setScissorRect(0, 0, command.canvas.width, command.canvas.height);
+                passEncoder.setViewport(0, 0, canvas.width, canvas.height, 0, 1);
+                passEncoder.setScissorRect(0, 0, canvas.width, canvas.height);
 
                 const vertexBuffers = command.vertexBuffers;
                 for (let i = 0; i < vertexBuffers.length; i++) {
@@ -193,4 +176,4 @@ export const createRenderer = async (device, canvas, context, options) => {
             }
         }
     }
-}
+};

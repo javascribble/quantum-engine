@@ -17,4 +17,4 @@ const update = (currentTime) => {
 
     previousTime = currentTime;
     frame = requestAnimationFrame(update);
-}
+};

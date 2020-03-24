@@ -4,12 +4,12 @@ const create = (type = Float32Array) => {
     const v2 = new type(components);
     setIdentity(v2);
     return v2;
-}
+};
 
 const setIdentity = (v2) => {
     v2[0] = 0;
     v2[1] = 0;
-}
+};
 
 const distance = (v2a, v2b) => Math.sqrt(getDistanceSquared(v2a, v2b));
 

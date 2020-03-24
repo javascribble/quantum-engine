@@ -4,7 +4,7 @@ import { getUniformSetter } from './uniforms';
 export const addVariables = (context, program, handle) => {
     addAccessors(context, program, handle, context.ACTIVE_UNIFORMS, context.getActiveUniform, context.getUniformLocation, getUniformSetter);
     addAccessors(context, program, handle, context.ACTIVE_ATTRIBUTES, context.getActiveAttrib, context.getAttribLocation, getAttributeSetter);
-}
+};
 
 const addAccessors = (context, program, handle, memberType, accessMember, accessLocation, getSetter) => {
     const members = context.getProgramParameter(handle, memberType);
@@ -15,4 +15,4 @@ const addAccessors = (context, program, handle, memberType, accessMember, access
             program[name] = getSetter(context, accessLocation.call(context, handle, name), member.type);
         }
     }
-}
+};

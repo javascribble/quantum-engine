@@ -15,7 +15,7 @@ export const createManagedWebGLContext = (options) => {
     context.textures = new Set();
     contexts.set(context);
     return context;
-}
+};
 
 const contextLost = () => stop();
 
@@ -29,10 +29,10 @@ const contextRestored = () => {
     }
 
     start();
-}
+};
 
 const contextCreationError = () => {
-}
+};
 
 addListener('webglcontextlostevent', contextLost);
 addListener('webglcontextrestored', contextRestored);

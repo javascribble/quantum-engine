@@ -14,4 +14,4 @@ export const setElementParent = (element, parent) => {
     if (parent) {
         parent.appendChild(element);
     }
-}
+};

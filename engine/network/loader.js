@@ -15,4 +15,4 @@ export const loadImage = (url) => {
         image.onload = () => resolve(image);
         image.src = url;
     });
-}
+};

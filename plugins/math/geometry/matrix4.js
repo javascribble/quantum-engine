@@ -6,7 +6,7 @@ const create = (type = Float32Array) => {
     const m4 = new type(components);
     setIdentity(m4);
     return m4;
-}
+};
 
 const orthographic = (size = 100, aspect = 1) => {
     const scale = 1 / size;
@@ -15,7 +15,7 @@ const orthographic = (size = 100, aspect = 1) => {
     m4[5] = scale;
     m4[10] = scale;
     return m4;
-}
+};
 
 const perspective = (radians = Math.PI / 2, aspect = 1, near = 0, far = 100) => {
     const d = 1 / Math.tan(radians / 2);
@@ -29,7 +29,7 @@ const perspective = (radians = Math.PI / 2, aspect = 1, near = 0, far = 100) => 
     m4[14] = 2 * far * near * r;
     m4[15] = 0;
     return m4;
-}
+};
 
 const setIdentity = (m4) => {
     m4[0] = 1;
@@ -48,13 +48,13 @@ const setIdentity = (m4) => {
     m4[13] = 0;
     m4[14] = 0;
     m4[15] = 1;
-}
+};
 
 const setTranslation = (m4, v3) => {
     m4[12] = v3.x;
     m4[13] = v3.y;
     m4[14] = v3.z;
-}
+};
 
 const setRotation = (m4, v3) => {
     // TODO: 3d rotation.
@@ -64,13 +64,13 @@ const setRotation = (m4, v3) => {
     m4[1] = s;
     m4[4] = -s;
     m4[5] = c;
-}
+};
 
 const setScale = (m4, v3) => {
     m4[0] = v3.x;
     m4[5] = v3.y;
     m4[10] = v3.z;
-}
+};
 
 const multiply = (m4a, m4b, m4c) => {
     const a00 = m4a[0];
@@ -122,7 +122,7 @@ const multiply = (m4a, m4b, m4c) => {
     m4c[13] = a01 * b30 + a11 * b31 + a21 * b32 + a31 * b33;
     m4c[14] = a02 * b30 + a12 * b31 + a22 * b32 + a32 * b33;
     m4c[15] = a03 * b30 + a13 * b31 + a23 * b32 + a33 * b33;
-}
+};
 
 const lookAt = (m4, point, eye, up) => {
     const z = vector3.normalize(vector3.subtract(eye, point));
@@ -145,7 +145,7 @@ const lookAt = (m4, point, eye, up) => {
     m4[13] = -vector3.dotProduct(y, eye);
     m4[14] = -vector3.dotProduct(z, eye);
     m4[15] = 1;
-}
+};
 
 export const matrix4 = {
     components,

@@ -8,12 +8,12 @@ export const createProgram = (context, vertexShader, fragmentShader) => {
 
     applyProgram(program, context);
     return program;
-}
+};
 
 export const applyProgram = (program, context) => {
     restoreProgram(program, context);
     context.programs.add(program);
-}
+};
 
 export const restoreProgram = (program, context) => {
     const handle = program.handle = context.createProgram();
@@ -25,12 +25,11 @@ export const restoreProgram = (program, context) => {
     }
 
     addVariables(context, program, handle);
-}
+};
 
 export const useProgram = (program, context) => context.useProgram(program.handle);
 
 export const deleteProgram = (program, context) => {
     context.programs.delete(program);
     context.deleteProgram(program.handle);
-}
-
+};

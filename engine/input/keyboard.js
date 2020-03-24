@@ -12,7 +12,7 @@ export const defaultKeyboardControls = {
 export const enableKeyboard = () => {
     addListener('keydown', keyboardKeyDown);
     addListener('keyup', keyboardKeyUp);
-}
+};
 
 const keyboardKeyDown = (event) => publish(event.code, event);
 
