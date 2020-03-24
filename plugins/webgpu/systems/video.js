@@ -1,10 +1,11 @@
-import { createCanvas, getWebGPUContext, setElementParent, registerSystem, defaultVideoOptions } from '../imports';
+import { createCanvas, resizeCanvas, getWebGPUContext, setElementParent, registerSystem, defaultVideoOptions } from '../imports';
 import { spriteComponent } from '../components/sprite';
 import { createRenderable } from '../graphics/renderable';
 
 export const registerVideoSystem = async (options = defaultVideoOptions) => {
     const canvas = createCanvas();
     setElementParent(canvas, options.parent);
+    resizeCanvas(canvas, options.scale);
 
     const adapter = await navigator.gpu.requestAdapter();
     const device = await adapter.requestDevice();

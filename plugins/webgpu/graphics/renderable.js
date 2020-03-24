@@ -106,33 +106,37 @@ export const createRenderable = async (device, canvas, context, options) => {
             const entities = scene.entities;
             const count = entities.length;
             const modelTransformations = new Float32Array(count * 6);
-
-            for (let i = 0; i < count; i++) {
-                const entity = entities[i];
-                entity.sprite = createSprite(entity.transform, { data: modelTransformations }, i);
-            }
-
             const staticData = new Float32Array(buffers.staticBuffer.data);
-
             const vertexBuffers = [
                 {
                     data: staticData,
-                    handle: createVertexBuffer(device, { size: staticData.byteLength })
+                    handle: createVertexBuffer(device, { size: staticData.byteLength }),
+                    index: 0,
+                    changed: true
                 },
                 {
                     data: modelTransformations,
-                    handle: createVertexBuffer(device, { size: modelTransformations.byteLength })
+                    handle: createVertexBuffer(device, { size: modelTransformations.byteLength }),
+                    index: 0,
+                    changed: true
                 }
             ];
 
+            for (let i = 0; i < count; i++) {
+                const entity = entities[i];
+                entity.sprite = createSprite(entity.transform, vertexBuffers[1], i);
+            }
+
             const indexData = new Uint16Array(buffers.staticBuffer.indices);
-            const indexBuffer = createIndexBuffer(device, { size: indexData.byteLength });
+            const indexBuffer = {
+                data: indexData,
+                handle: createIndexBuffer(device, { size: indexData.byteLength }),
+                index: 0,
+                changed: true
+            };
 
-            bufferData(indexBuffer, 0, indexData);
-
-            //const command = createCommand(device, );
-
-            strategy.commands.push({ uniformBindGroup, vertexBuffers, indexBuffer, pipeline, count });
+            const command = createCommand(canvas, renderPassDescriptor, uniformBindGroup, vertexBuffers, indexBuffer, pipeline, count);
+            strategy.commands.push(command);
         },
         delete(scene) {
         }
@@ -141,32 +145,10 @@ export const createRenderable = async (device, canvas, context, options) => {
     return {
         renderables,
         render(deltaTime) {
-            resizeCanvas(canvas, options.scale);
-
             renderPassDescriptor.colorAttachments[0].attachment = swapChain.getCurrentTexture().createView();
 
-            //device.defaultQueue.submit(strategy.commands.map(encodeCommand));
-
-            for (const command of strategy.commands) {
-                const commandEncoder = device.createCommandEncoder();
-                const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
-                passEncoder.setPipeline(command.pipeline);
-                passEncoder.setBindGroup(0, command.uniformBindGroup);
-                passEncoder.setViewport(0, 0, canvas.width, canvas.height, 0, 1);
-                passEncoder.setScissorRect(0, 0, canvas.width, canvas.height);
-
-                const vertexBuffers = command.vertexBuffers;
-                for (let i = 0; i < vertexBuffers.length; i++) {
-                    const vertexBuffer = vertexBuffers[i];
-                    bufferData(vertexBuffer.handle, 0, vertexBuffer.data);
-                    passEncoder.setVertexBuffer(i, vertexBuffer.handle);
-                }
-
-                passEncoder.setIndexBuffer(command.indexBuffer);
-                passEncoder.drawIndexed(4, command.count, 0, 0, 0);
-                passEncoder.endPass();
-                device.defaultQueue.submit([commandEncoder.finish()]);
-            }
+            const commands = strategy.commands.map(command => encodeCommand(device, command));
+            device.defaultQueue.submit(commands);
         }
     }
 };

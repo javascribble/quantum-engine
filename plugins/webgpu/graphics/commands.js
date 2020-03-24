@@ -1,62 +1,92 @@
-export const createCommand = (test) => {
-    return {
-        passes: [
-            {
-            }
-        ]
-    }
-}
+import { bufferData } from './buffers';
+
+export const createCommand = (canvas, renderPassDescriptor, uniformBindGroup, vertexBuffers, indexBuffer, pipeline, count) => ({
+    passes: [
+        {
+            descriptor: renderPassDescriptor,
+            pipeline,
+            viewport: {
+                x: 0,
+                y: 0,
+                width: canvas.width,
+                height: canvas.height,
+                minDepth: 0,
+                maxDepth: 1
+            },
+            scissorRect: {
+                x: 0,
+                y: 0,
+                width: canvas.width,
+                height: canvas.height
+            },
+            bindGroups: [uniformBindGroup],
+            vertexBuffers,
+            indexBuffer,
+            draws: [
+                {
+                    indexed: true,
+                    count: 4,
+                    instances: count,
+                    firstElement: 0,
+                    firstInstance: 0,
+                    baseVertex: 0
+                }
+            ]
+        }
+    ]
+});
 
 export const encodeCommand = (device, command) => {
     const commandEncoder = device.createCommandEncoder();
     for (const pass of command.passes) {
         if (pass.compute) {
-            const computePassEncoder = commandEncoder.beginComputePass(pass.descriptor);
+            const { descriptor } = pass;
+
+            const computePassEncoder = commandEncoder.beginComputePass(descriptor);
+
             computePassEncoder.endPass();
         } else {
-            const renderPassEncoder = commandEncoder.beginRenderPass(pass.descriptor);
-            renderPassEncoder.setPipeline(renderPass.pipeline);
+            const { descriptor, pipeline, viewport, scissorRect, bindGroups, vertexBuffers, indexBuffer, draws } = pass;
+
+            const renderPassEncoder = commandEncoder.beginRenderPass(descriptor);
+            renderPassEncoder.setPipeline(pipeline);
 
             // TODO: Set this only on viewport resize.
-            const viewport = renderPass.viewport;
             if (viewport) {
                 renderPassEncoder.setViewport(viewport.x, viewport.y, viewport.width, viewport.height, viewport.minDepth, viewport.maxDepth);
             }
 
-            const scissorRect = renderPass.scissorRect;
             if (scissorRect) {
                 renderPassEncoder.setScissorRect(scissorRect.x, scissorRect.y, scissorRect.width, scissorRect.height); //canvas.width/height
             }
 
-            const bindGroups = renderPass.bindGroups;
             if (bindGroups) {
                 for (let i = 0; i < bindGroups.length; i++) {
                     renderPassEncoder.setBindGroup(i, bindGroups[i]); //does this need to be reuploaded if nothing changed?
                 }
             }
 
-            const vertexBuffers = renderPass.vertexBuffers;
             if (vertexBuffers) {
                 for (let i = 0; i < vertexBuffers.length; i++) {
                     const vertexBuffer = vertexBuffers[i];
                     if (vertexBuffer.changed) {
                         bufferData(vertexBuffer.handle, vertexBuffer.index, vertexBuffer.data);
+                        vertexBuffer.changed = false;
                     }
 
                     renderPassEncoder.setVertexBuffer(i, vertexBuffer.handle);
                 }
             }
 
-            const indexBuffer = renderPass.indexBuffer;
             if (indexBuffer) {
                 if (indexBuffer.changed) {
                     bufferData(indexBuffer.handle, indexBuffer.index, indexBuffer.data);
+                    indexBuffer.changed = false;
                 }
 
                 renderPassEncoder.setIndexBuffer(indexBuffer.handle);
             }
 
-            const draws = renderPass.draws;
             if (draws) {
                 for (const draw of draws) {
                     const indexed = draw.indexed;
