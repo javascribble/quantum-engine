@@ -1,4 +1,4 @@
-import { loadResource, resizeCanvas, matrix4 } from '../imports';
+import { loadResource, matrix4 } from '../imports';
 import { createSprite } from '../components/sprite';
 import { createCopyBuffer, bufferData, createVertexBuffer, createIndexBuffer, createUniformBuffer } from './buffers';
 import { createCommand, encodeCommand } from './commands';
@@ -19,7 +19,6 @@ export const createRenderable = async (device, canvas, context, options) => {
 
     const renderables = {
         add(scene) {
-            const commands = scene.commands;
             const resources = scene.resources;
             const buffers = resources.buffers;
 

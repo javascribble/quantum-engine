@@ -1,6 +1,7 @@
-import { createCanvas, resizeCanvas, getWebGPUContext, setElementParent, registerSystem, defaultVideoOptions } from '../imports';
-import { spriteComponent } from '../components/sprite';
+import { setElementParent, registerSystem, defaultVideoOptions } from '../imports';
+import { createCanvas, resizeCanvas, getWebGPUContext } from '../graphics/canvas';
 import { createRenderable } from '../graphics/renderable';
+import { spriteComponent } from '../components/sprite';
 
 export const registerVideoSystem = async (options = defaultVideoOptions) => {
     const canvas = createCanvas();
