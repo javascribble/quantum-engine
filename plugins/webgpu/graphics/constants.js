@@ -10,4 +10,6 @@ export const copySourceBufferUsage = getGPUBufferUsageConstant("COPY_SRC");
 export const copyDestinationBufferUsage = getGPUBufferUsageConstant("COPY_DST");
 
 export const outputAttachmentTextureUsage = getGPUTextureUsageConstant("OUTPUT_ATTACHMENT");
+export const copyDestinationTextureUsage = getGPUTextureUsageConstant("COPY_DST");
 export const copySourceTextureUsage = getGPUTextureUsageConstant("COPY_SRC");
+export const sampledTextureUsage = getGPUTextureUsageConstant("SAMPLED");

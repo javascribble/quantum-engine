@@ -1,13 +1,15 @@
 import { uniformBufferUsage, vertexBufferUsage, indexBufferUsage, copySourceBufferUsage, copyDestinationBufferUsage } from './constants';
 
-export const createUniformBuffer = (device, size) => createBuffer(device, size, uniformBufferUsage | copyDestinationBufferUsage);
+export const defaultBufferOptions = {};
 
-export const createVertexBuffer = (device, size) => createBuffer(device, size, vertexBufferUsage | copyDestinationBufferUsage);
+export const createUniformBuffer = (device, options) => createBuffer(device, { ...options, usage: uniformBufferUsage | copyDestinationBufferUsage });
 
-export const createIndexBuffer = (device, size) => createBuffer(device, size, indexBufferUsage | copyDestinationBufferUsage);
+export const createVertexBuffer = (device, options) => createBuffer(device, { ...options, usage: vertexBufferUsage | copyDestinationBufferUsage });
 
-export const createCopyBuffer = (device, size) => createBuffer(device, size, copyDestinationBufferUsage | copySourceBufferUsage);
+export const createIndexBuffer = (device, options) => createBuffer(device, { ...options, usage: indexBufferUsage | copyDestinationBufferUsage });
 
-export const createBuffer = (device, size, usage) => device.createBuffer({ usage, size });
+export const createCopyBuffer = (device, options) => createBuffer(device, { ...options, usage: copyDestinationBufferUsage | copySourceBufferUsage });
+
+export const createBuffer = (device, options) => device.createBuffer({ ...defaultBufferOptions, ...options });
 
 export const bufferData = (buffer, index, data) => buffer.setSubData(index, data);
