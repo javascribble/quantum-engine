@@ -14,7 +14,7 @@ export const createRenderable = async (device, canvas, context, options) => {
     const swapChain = await createPreferredSwapChain(context, device);
 
     const renderPassDescriptor = await loadResource('webgpuRenderPass.json');
-    const textureResource = await loadResource('marble.png');
+    const textureResource = await loadResource('Kal256.png');
     const strategy = { commands: [] };
 
     const renderables = {

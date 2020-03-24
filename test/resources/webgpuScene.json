@@ -16,11 +16,11 @@
 			"defaultProgram": "webgpuProgram.json"
 		},
 		"buffers": {
-			"staticBuffer": "webgpuStaticBuffers.json",
-			"dynamicBuffer": "dynamicBuffer.json"
+			"staticBuffer": "webgpuStaticBuffers.json"
 		},
 		"textures": {
-			"depthTexture": "webgpuDepthTexture.json"
+			"depthTexture": "webgpuDepthTexture.json",
+			"defaultTexture": "webgpuTexture.json"
 		}
 	}
 }
