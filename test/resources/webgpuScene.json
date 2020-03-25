@@ -1,9 +1,5 @@
 ﻿{
 	"entities": [],
-	"commands": [
-		{
-		}
-	],
 	"resources": {		
 		"shaders": {
 			"defaultVertexShader": "triangle.vert.spv",

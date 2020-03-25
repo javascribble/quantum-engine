@@ -7,8 +7,8 @@ const math = './plugins/math/exports.js';
 const webgpu = './plugins/webgpu/exports.js';
 const webaudio = './plugins/webaudio/exports.js';
 const bundles = [
-	{ name: '', input: engine },
-	{ name: '.all', input: [engine, math, webaudio, webgpu] }
+	{ name: '.engine', input: [engine, math, webaudio, webgpu] },
+	{ name: '.editor', input: [editor, engine, math, webaudio, webgpu] }
 ];
 
 const output = (name, plugins = []) => ({
