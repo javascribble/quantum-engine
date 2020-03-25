@@ -12,7 +12,7 @@ const bundles = [
 ];
 
 const output = (name, plugins = []) => ({
-	file: `./build/whitestone${name}.js`,
+	file: `./build/worldbuilder${name}.js`,
 	name: 'engine',
 	format: 'iife',
 	plugins

@@ -16,8 +16,8 @@
   },
   "scripts": {
     "serve": "serve ./",
-    "build": "rollup -c whitestone.rollup.config.js",
-    "watch": "rollup -w -c whitestone.rollup.config.js",
+    "build": "rollup -c worldbuilder.rollup.config.js",
+    "watch": "rollup -w -c worldbuilder.rollup.config.js",
     "start": "npm-run-all --parallel serve watch",
     "postversion": "npm publish --access public"
   },
