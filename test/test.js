@@ -4,13 +4,14 @@ engine.start();
 initialize();
 
 async function initialize() {
-	const transforms = new Set();
+	const entities = new Set();
 	function updateTest(deltaTime) {
 		if (deltaTime > 17) {
 			console.log(deltaTime);
 		}
 
-		for (const transform of transforms) {
+		for (const entity of entities) {
+			const transform = entity.transform;
 			const translation = transform.translation;
 			translation.x = Math.random() * 200 - 100;
 			translation.y = Math.random() * 200 - 100;
@@ -22,7 +23,7 @@ async function initialize() {
 		}
 	}
 
-	engine.registerSystem(engine.transformComponent, transforms, updateTest);	
+	engine.registerSystem(engine.transformComponent, entities, updateTest);	
 	await engine.registerVideoSystem();
 		
 	const scene = await engine.loadScene('webgpuScene.json');
@@ -37,11 +38,13 @@ async function initialize() {
 		transform.scale.y = 2;//Math.random() * 2;
 		transform.changed = true;
 
-		const entity = engine.createEntity();
+		const entity = engine.addEntity();
 		entity.transform = transform;
+		engine.addComponent(engine.transformComponent, entity);
 		scene.entities.push(entity);
 	}
 
-	const root = engine.createEntity();
+	const root = engine.addEntity();
 	root.scene = scene;
+	engine.addComponent('scene', root);	
 }

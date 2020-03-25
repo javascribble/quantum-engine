@@ -24,6 +24,4 @@ export * from './systems/storage';
 export * from './utilities/arrays';
 export * from './utilities/maps';
 export * from './utilities/numbers';
-export * from './utilities/objects';
-export * from './utilities/proxies';
 export * from './utilities/strings';

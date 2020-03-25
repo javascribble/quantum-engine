@@ -1,6 +1,6 @@
 ﻿import { addListener } from '../application/browser';
 import { publish } from '../application/events';
-import { systems } from '../application/host';
+import { updates } from '../application/host';
 
 export const defaultGamepadControls = {
     UP: 'PAD_UP',
@@ -40,5 +40,5 @@ export const enableGamepads = () => {
         }
     }
 
-    systems.push(updateGamepads);
+    updates.push(updateGamepads);
 };

@@ -1,6 +1,6 @@
-import { systems } from '../application/host';
+import { updates } from '../application/host';
 
-export const enableNetwork = () => systems.push(updateNetwork);
+export const enableNetwork = () => updates.push(updateNetwork);
 
 const updateNetwork = (deltaTime) => {
     // TODO: Add web sockets.

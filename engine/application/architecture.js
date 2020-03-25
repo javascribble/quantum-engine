@@ -1,34 +1,32 @@
-import { createAssignPropertyTrap, createDefinePropertyTrap, createDeletePropertyTrap } from '../utilities/proxies';
-import { getOrAddMapValue, tryExecuteMapValue } from '../utilities/maps';
-import { processObjectEntries } from '../utilities/objects';
-import { curryAdd, curryDelete } from '../utilities/sets';
-import { systems } from './host';
+import { curryDelete } from '../utilities/sets';
+import { updates } from './host';
 
-const componentSystems = new Map();
+const entities = new Map();
+const systems = new Map();
 
-const addComponent = (name, value) => {
-    if (componentSystems.has(name)) {
-        componentSystems.get(name).forEach(curryAdd(value));
-    }
+export const addEntity = (entity = {}) => {
+    entities.set(entity, new Set());
+    return entity;
+}
+
+export const deleteEntity = (entity) => {
+    entities.get(entity).forEach(curryDelete(entity));
+    entities.delete(entity);
 };
 
-const deleteComponent = (name, value) => {
-    if (componentSystems.has(name)) {
-        componentSystems.get(name).forEach(curryDelete(value));
-    }
+export const addComponent = (component, entity) => {
+    const system = systems.get(component);
+    entities.get(entity).add(system);
+    system.add(entity);
 };
 
-const componentObserver = {
-    ...createAssignPropertyTrap(addComponent),
-    ...createDefinePropertyTrap(addComponent),
-    ...createDeletePropertyTrap(deleteComponent)
+export const deleteComponent = (component, entity) => {
+    const system = systems.get(component);
+    entities.get(entity).delete(system);
+    system.delete(entity);
 };
 
-export const registerSystem = (componentName, componentSet, update) => {
-    getOrAddMapValue(componentSystems, componentName, () => new Set()).add(componentSet);
-    update && systems.push(update);
+export const registerSystem = (component, system, update) => {
+    systems.set(component, system);
+    update && updates.push(update);
 };
-
-export const createEntity = (object = {}) => new Proxy(object, componentObserver);
-
-export const deleteEntity = (entity) => processObjectEntries(entity, deleteComponent);

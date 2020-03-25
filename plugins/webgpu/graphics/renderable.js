@@ -1,4 +1,4 @@
-import { loadResource, matrix4 } from '../imports';
+import { loadResource, addComponent, matrix4 } from '../imports';
 import { createSprite } from '../components/sprite';
 import { createCopyBuffer, bufferData, createVertexBuffer, createIndexBuffer, createUniformBuffer } from './buffers';
 import { createSampledTexture, createDepthTexture } from './textures';
@@ -19,7 +19,8 @@ export const createRenderable = async (device, canvas, context, options) => {
     const strategy = { commands: [] };
 
     const renderables = {
-        add(scene) {
+        add(entity) {
+            const scene = entity.scene;
             const resources = scene.resources;
             const buffers = resources.buffers;
 
@@ -125,6 +126,7 @@ export const createRenderable = async (device, canvas, context, options) => {
             for (let i = 0; i < count; i++) {
                 const entity = entities[i];
                 entity.sprite = createSprite(entity.transform, vertexBuffers[1], i);
+                addComponent('sprite', entity);
             }
 
             const indexData = new Uint16Array(buffers.staticBuffer.indices);
@@ -168,7 +170,7 @@ export const createRenderable = async (device, canvas, context, options) => {
 
             strategy.commands.push(command);
         },
-        delete(scene) {
+        delete(entity) {
         }
     };
 

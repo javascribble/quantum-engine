@@ -1,4 +1,4 @@
-import { setElementParent, registerSystem, defaultVideoOptions } from '../imports';
+import { registerSystem, setElementParent, defaultVideoOptions } from '../imports';
 import { createCanvas, resizeCanvas, getWebGPUContext } from '../graphics/canvas';
 import { createRenderable } from '../graphics/renderable';
 import { spriteComponent } from '../components/sprite';
@@ -19,11 +19,12 @@ export const registerVideoSystem = async (options = defaultVideoOptions) => {
     // TODO: Make scene an entity rather than a component.
     registerSystem('scene', renderer.renderables, renderer.render);
 
-    const renderables = new Set();
+    const entities = new Set();
     const updateRenderables = (deltaTime) => {
         let index = 0;
         let firstChangedRenderable = null;
-        for (const renderable of renderables) {
+        for (const entity of entities) {
+            const renderable = entity.sprite;
             const transform = renderable.transform;
             if (transform.changed) {
                 const buffer = renderable.buffer;
@@ -32,7 +33,7 @@ export const registerVideoSystem = async (options = defaultVideoOptions) => {
                 transform.changed = false;
 
 
-                if (index < renderables.size && !firstChangedRenderable) {
+                if (index < entities.size && !firstChangedRenderable) {
                     firstChangedRenderable = renderable;
                     buffer.offset = index;
                 }
@@ -47,7 +48,7 @@ export const registerVideoSystem = async (options = defaultVideoOptions) => {
         }
     }
 
-    registerSystem(spriteComponent, renderables, updateRenderables);
+    registerSystem(spriteComponent, entities, updateRenderables);
 };
 
 const copy = (transform, array, index) => {
