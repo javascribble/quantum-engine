@@ -7,15 +7,15 @@ const math = './plugins/math/exports.js';
 const webgpu = './plugins/webgpu/exports.js';
 const webaudio = './plugins/webaudio/exports.js';
 const bundles = [
-	{ name: '.engine', input: [engine, math, webaudio, webgpu] },
-	{ name: '.editor', input: [editor, engine, math, webaudio, webgpu] }
+	{ name: 'engine', input: [engine, math, webaudio, webgpu] },
+	{ name: 'editor', input: [editor, engine, math, webaudio, webgpu] }
 ];
 
 const output = (name, plugins = []) => ({
-	file: `./build/worldbuilder${name}.js`,
-	name: 'engine',
+	file: `./build/worldbuilder.${name}.js`,
 	format: 'iife',
-	plugins
+	plugins,
+	name
 });
 
 const development = (bundle) => [output(bundle.name)];
