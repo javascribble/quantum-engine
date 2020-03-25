@@ -2,6 +2,7 @@ import { setElementParent, registerSystem, defaultVideoOptions } from '../import
 import { createCanvas, resizeCanvas, getWebGPUContext } from '../graphics/canvas';
 import { createRenderable } from '../graphics/renderable';
 import { spriteComponent } from '../components/sprite';
+import { bufferData } from '../graphics/buffers';
 
 export const registerVideoSystem = async (options = defaultVideoOptions) => {
     const canvas = createCanvas();
@@ -27,8 +28,9 @@ export const registerVideoSystem = async (options = defaultVideoOptions) => {
             if (transform.changed) {
                 const buffer = renderable.buffer;
                 copy(transform, buffer.data, renderable.index * 6);
+                bufferData(buffer.handle, buffer.index, buffer.data);
                 transform.changed = false;
-                buffer.changed = true;
+
 
                 if (index < renderables.size && !firstChangedRenderable) {
                     firstChangedRenderable = renderable;

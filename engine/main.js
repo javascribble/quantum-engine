@@ -6,7 +6,6 @@ export * from './application/events';
 export * from './application/host';
 export * from './application/presets';
 export * from './components/node';
-export * from './components/resources';
 export * from './entities/player';
 export * from './input/gamepads';
 export * from './input/keyboard';

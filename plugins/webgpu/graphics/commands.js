@@ -1,41 +1,5 @@
 import { bufferData } from './buffers';
 
-export const createCommand = (canvas, renderPassDescriptor, uniformBindGroup, vertexBuffers, indexBuffer, pipeline, count) => ({
-    passes: [
-        {
-            descriptor: renderPassDescriptor,
-            pipeline,
-            viewport: {
-                x: 0,
-                y: 0,
-                width: canvas.width,
-                height: canvas.height,
-                minDepth: 0,
-                maxDepth: 1
-            },
-            scissorRect: {
-                x: 0,
-                y: 0,
-                width: canvas.width,
-                height: canvas.height
-            },
-            bindGroups: [uniformBindGroup],
-            vertexBuffers,
-            indexBuffer,
-            draws: [
-                {
-                    indexed: true,
-                    count: 4,
-                    instances: count,
-                    firstElement: 0,
-                    firstInstance: 0,
-                    baseVertex: 0
-                }
-            ]
-        }
-    ]
-});
-
 export const encodeCommand = (device, command) => {
     const commandEncoder = device.createCommandEncoder();
     for (const pass of command.passes) {
@@ -62,28 +26,17 @@ export const encodeCommand = (device, command) => {
 
             if (bindGroups) {
                 for (let i = 0; i < bindGroups.length; i++) {
-                    renderPassEncoder.setBindGroup(i, bindGroups[i]); //does this need to be reuploaded if nothing changed?
+                    renderPassEncoder.setBindGroup(i, bindGroups[i]);
                 }
             }
 
             if (vertexBuffers) {
                 for (let i = 0; i < vertexBuffers.length; i++) {
-                    const vertexBuffer = vertexBuffers[i];
-                    if (vertexBuffer.changed) {
-                        bufferData(vertexBuffer.handle, vertexBuffer.index, vertexBuffer.data);
-                        vertexBuffer.changed = false;
-                    }
-
-                    renderPassEncoder.setVertexBuffer(i, vertexBuffer.handle);
+                    renderPassEncoder.setVertexBuffer(i, vertexBuffers[i].handle);
                 }
             }
 
             if (indexBuffer) {
-                if (indexBuffer.changed) {
-                    bufferData(indexBuffer.handle, indexBuffer.index, indexBuffer.data);
-                    indexBuffer.changed = false;
-                }
-
                 renderPassEncoder.setIndexBuffer(indexBuffer.handle);
             }
 

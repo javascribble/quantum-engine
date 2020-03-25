@@ -1,14 +1,15 @@
 import { loadResource, matrix4 } from '../imports';
 import { createSprite } from '../components/sprite';
 import { createCopyBuffer, bufferData, createVertexBuffer, createIndexBuffer, createUniformBuffer } from './buffers';
-import { createCommand, encodeCommand } from './commands';
+import { createSampledTexture, createDepthTexture } from './textures';
+import { encodeCommand } from './commands';
 import { createPreferredSwapChain } from './context';
-import { createSampledTexture } from './textures';
 import { createPipelineLayout } from './layouts';
 import { createShaderModule } from './modules';
 import { createProgram } from './programs';
 import { createShader } from './shaders';
 import { createSampler } from './samplers';
+import { createCanvasViewport } from './viewport';
 
 export const createRenderable = async (device, canvas, context, options) => {
     const swapChain = await createPreferredSwapChain(context, device);
@@ -35,7 +36,7 @@ export const createRenderable = async (device, canvas, context, options) => {
 
             textureDataBuffer.setSubData(0, textureData);
 
-            const texture = createSampledTexture(device, [textureResource.width, textureResource.height, 1], 'rgba8unorm');
+            const texture = createSampledTexture(device, { size: [textureResource.width, textureResource.height, 1] });
 
             const textureLoadEncoder = device.createCommandEncoder();
             textureLoadEncoder.copyBufferToTexture(
@@ -54,10 +55,8 @@ export const createRenderable = async (device, canvas, context, options) => {
 
             device.defaultQueue.submit([textureLoadEncoder.finish()]);
 
-            const vertexUniformBuffer = createUniformBuffer(device, { size: 64 });
-
             const viewProjectionMatrix = matrix4.orthographic(100, canvas.width / canvas.height);
-
+            const vertexUniformBuffer = createUniformBuffer(device, { size: viewProjectionMatrix.byteLength });
             bufferData(vertexUniformBuffer, 0, viewProjectionMatrix);
 
             const uniformBindGroupLayout = device.createBindGroupLayout(scene.resources.layouts.defaultLayout);
@@ -100,7 +99,7 @@ export const createRenderable = async (device, canvas, context, options) => {
                 depth: 1
             };
 
-            renderPassDescriptor.depthStencilAttachment.attachment = device.createTexture(depthTextureDescriptor).createView();
+            renderPassDescriptor.depthStencilAttachment.attachment = createDepthTexture(device, depthTextureDescriptor).createView();
 
             const entities = scene.entities;
             const count = entities.length;
@@ -121,6 +120,8 @@ export const createRenderable = async (device, canvas, context, options) => {
                 }
             ];
 
+            bufferData(vertexBuffers[0].handle, 0, vertexBuffers[0].data);
+
             for (let i = 0; i < count; i++) {
                 const entity = entities[i];
                 entity.sprite = createSprite(entity.transform, vertexBuffers[1], i);
@@ -134,7 +135,37 @@ export const createRenderable = async (device, canvas, context, options) => {
                 changed: true
             };
 
-            const command = createCommand(canvas, renderPassDescriptor, uniformBindGroup, vertexBuffers, indexBuffer, pipeline, count);
+            bufferData(indexBuffer.handle, 0, indexBuffer.data);
+
+            const command = {
+                passes: [
+                    {
+                        descriptor: renderPassDescriptor,
+                        pipeline,
+                        viewport: createCanvasViewport(canvas),
+                        scissorRect: {
+                            x: 0,
+                            y: 0,
+                            width: canvas.width,
+                            height: canvas.height
+                        },
+                        bindGroups: [uniformBindGroup],
+                        vertexBuffers,
+                        indexBuffer,
+                        draws: [
+                            {
+                                indexed: true,
+                                count: 4,
+                                instances: count,
+                                firstElement: 0,
+                                firstInstance: 0,
+                                baseVertex: 0
+                            }
+                        ]
+                    }
+                ]
+            };
+
             strategy.commands.push(command);
         },
         delete(scene) {

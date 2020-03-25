@@ -7,4 +7,6 @@ export const defaultViewportOptions = {
     maxDepth: 1
 };
 
+export const createCanvasViewport = (canvas) => createViewport({ width: canvas.width, height: canvas.height });
+
 export const createViewport = (options) => ({ ...defaultViewportOptions, ...options });

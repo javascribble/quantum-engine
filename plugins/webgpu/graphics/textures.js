@@ -1,9 +1,12 @@
-import { sampledTextureUsage, copyDestinationTextureUsage } from './constants';
+import { sampledTextureUsage, outputAttachmentTextureUsage, copySourceTextureUsage, copyDestinationTextureUsage } from './constants';
 
 export const defaultTextureOptions = {
-    format: 'rgba8unorm'
+    format: 'rgba8unorm',
+    dimension: '2d'
 };
 
-export const createSampledTexture = (device, size, format) => createTexture(device, size, format, sampledTextureUsage | copyDestinationTextureUsage);
+export const createSampledTexture = (device, options) => createTexture(device, { ...options, usage: sampledTextureUsage | copyDestinationTextureUsage });
 
-export const createTexture = (device, size, format, usage) => device.createTexture({ size, usage, format });
+export const createDepthTexture = (device, options) => createTexture(device, { ...options, usage: outputAttachmentTextureUsage | copySourceTextureUsage });
+
+export const createTexture = (device, options) => device.createTexture({ ...defaultTextureOptions, ...options });

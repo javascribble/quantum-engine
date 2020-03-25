@@ -1,5 +1,5 @@
 import { loadResource, loadResources } from '../imports';
-import { getGPUShaderStageConstant, getGPUColorWriteConstant, getGPUTextureUsageConstant } from '../graphics/constants';
+import { getGPUShaderStageConstant, getGPUColorWriteConstant } from '../graphics/constants';
 
 export const loadScene = async (resource) => {
     const scene = await loadResource(resource);
@@ -42,13 +42,5 @@ const loadBuffer = async (resource) => {
 
 const loadTexture = async (resource) => {
     const textureResource = await loadResource(resource);
-
-    let usageFlag = 0;
-    for (const textureUsage of textureResource.usage) {
-        usageFlag |= getGPUTextureUsageConstant(textureUsage);
-    }
-
-    textureResource.usage = usageFlag;
-
     return textureResource;
 };
