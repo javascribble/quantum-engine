@@ -4,7 +4,6 @@ export const resourceOptions = {
     path: '/resources',
     extensions: {
         json: loadJson,
-        png: loadImage,
         txt: loadText,
         bin: loadBlob
     }

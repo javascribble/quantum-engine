@@ -2,7 +2,7 @@ import { loadResource, addComponent, matrix4 } from '../imports';
 import { createSprite } from '../components/sprite';
 import { createCopyBuffer, bufferData, createVertexBuffer, createIndexBuffer, createUniformBuffer } from './buffers';
 import { createSampledTexture, createDepthTexture } from './textures';
-import { encodeCommand } from './commands';
+import { createCommand } from './commands';
 import { createPreferredSwapChain } from './context';
 import { createPipelineLayout } from './layouts';
 import { createShaderModule } from './modules';
@@ -13,16 +13,14 @@ import { createCanvasViewport } from './viewport';
 
 export const createRenderable = async (device, canvas, context, options) => {
     const swapChain = await createPreferredSwapChain(context, device);
-
-    const renderPassDescriptor = await loadResource('webgpuRenderPass.json');
-    const textureResource = await loadResource('Kal256.png');
     const strategy = { commands: [] };
-
     const renderables = {
         add(entity) {
             const scene = entity.scene;
             const resources = scene.resources;
             const buffers = resources.buffers;
+            const renderPassDescriptor = resources.passes.defaultRenderPass;
+            const textureResource = resources.textures.defaultTexture;
 
             const sampler = createSampler(device);
 
@@ -32,12 +30,19 @@ export const createRenderable = async (device, canvas, context, options) => {
             textureDataCanvas.height = textureResource.height;
             textureDataCtx.drawImage(textureResource, 0, 0);
             const textureData = textureDataCtx.getImageData(0, 0, textureResource.width, textureResource.height).data;
-
             const textureDataBuffer = createCopyBuffer(device, { size: textureData.byteLength });
 
             textureDataBuffer.setSubData(0, textureData);
 
             const texture = createSampledTexture(device, { size: [textureResource.width, textureResource.height, 1] });
+
+            const imageSize = [
+                textureResource.width,
+                textureResource.height,
+                1
+            ];
+
+            //device.defaultQueue.copyImageBitmapToTexture({ imageBitmap: textureResource, origin: { x: 0, y: 0 } }, texture, imageSize);
 
             const textureLoadEncoder = device.createCommandEncoder();
             textureLoadEncoder.copyBufferToTexture(
@@ -45,13 +50,7 @@ export const createRenderable = async (device, canvas, context, options) => {
                     buffer: textureDataBuffer,
                     rowPitch: textureResource.width * 4,
                     imageHeight: textureResource.height
-                },
-                { texture },
-                [
-                    textureResource.width,
-                    textureResource.height,
-                    1
-                ]
+                }, { texture }, imageSize
             );
 
             device.defaultQueue.submit([textureLoadEncoder.finish()]);
@@ -142,6 +141,7 @@ export const createRenderable = async (device, canvas, context, options) => {
             const command = {
                 passes: [
                     {
+                        swapChain,
                         descriptor: renderPassDescriptor,
                         pipeline,
                         viewport: createCanvasViewport(canvas),
@@ -177,9 +177,7 @@ export const createRenderable = async (device, canvas, context, options) => {
     return {
         renderables,
         render(deltaTime) {
-            renderPassDescriptor.colorAttachments[0].attachment = swapChain.getCurrentTexture().createView();
-
-            const commands = strategy.commands.map(command => encodeCommand(device, command));
+            const commands = strategy.commands.map(command => createCommand(device, command));
             device.defaultQueue.submit(commands);
         }
     }

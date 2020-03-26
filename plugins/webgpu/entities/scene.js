@@ -8,10 +8,11 @@ export const loadScene = async (resource) => {
 };
 
 const loadSceneResources = async (resources) => {
+    resources.passes = await loadResources(resources.passes);
     resources.shaders = await loadResources(resources.shaders);
     resources.layouts = await loadResources(resources.layouts, loadLayout);
     resources.programs = await loadResources(resources.programs, loadProgram);
-    resources.buffers = await loadResources(resources.buffers, loadBuffer);
+    resources.buffers = await loadResources(resources.buffers);
     resources.textures = await loadResources(resources.textures, loadTexture);
 };
 
@@ -33,11 +34,6 @@ const loadProgram = async (resource) => {
     }
 
     return programResource;
-};
-
-const loadBuffer = async (resource) => {
-    const bufferResource = await loadResource(resource);
-    return bufferResource;
 };
 
 const loadTexture = async (resource) => {

@@ -1,10 +1,10 @@
 import { loadText, resourceOptions } from '../imports';
 import { parseObj } from '../parsers/obj';
 
-export const loadModel = async (resource) => {
+const loadModel = async (resource) => {
     // TODO: Add other formats.
-    return await parseObj(await loadResource(resource));
+    return await parseObj(await loadText(resource));
 };
 
-resourceOptions.extensions.obj = loadText;
+resourceOptions.extensions.obj = loadModel;
 resourceOptions.extensions.mtl = loadText;

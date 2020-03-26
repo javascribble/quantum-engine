@@ -1,6 +1,9 @@
 ﻿{
 	"entities": [],
-	"resources": {		
+	"resources": {
+		"passes": {
+			"defaultRenderPass": "webgpuRenderPass.json"
+		},
 		"shaders": {
 			"defaultVertexShader": "triangle.vert.spv",
 			"defaultFragmentShader": "triangle.frag.spv"
@@ -16,7 +19,7 @@
 		},
 		"textures": {
 			"depthTexture": "webgpuDepthTexture.json",
-			"defaultTexture": "webgpuTexture.json"
+			"defaultTexture": "Kal256.png"
 		}
 	}
 }

@@ -1,3 +1,12 @@
 ﻿{
-    "data": "Kal0000.png"
+    "image": "Kal16.png",
+	"sprites": [
+		{
+			"name": "default",
+			"x": 0,
+			"y": 0,
+			"w": 16,
+			"h": 16
+		}
+	]
 }
