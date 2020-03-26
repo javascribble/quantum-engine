@@ -20,40 +20,25 @@ export const createRenderable = async (device, canvas, context, options) => {
             const resources = scene.resources;
             const buffers = resources.buffers;
             const renderPassDescriptor = resources.passes.defaultRenderPass;
-            const textureResource = resources.textures.defaultTexture;
-
-            const sampler = createSampler(device);
-
-            let textureDataCanvas = document.createElement('canvas');
-            let textureDataCtx = textureDataCanvas.getContext('2d');
-            textureDataCanvas.width = textureResource.width;
-            textureDataCanvas.height = textureResource.height;
-            textureDataCtx.drawImage(textureResource, 0, 0);
-            const textureData = textureDataCtx.getImageData(0, 0, textureResource.width, textureResource.height).data;
-            const textureDataBuffer = createCopyBuffer(device, { size: textureData.byteLength });
-
-            textureDataBuffer.setSubData(0, textureData);
-
-            const texture = createSampledTexture(device, { size: [textureResource.width, textureResource.height, 1] });
+            const textureResource = resources.textures.defaultTexture.sprites[0];
 
             const imageSize = [
-                textureResource.width,
-                textureResource.height,
+                textureResource.imageBitmap.width,
+                textureResource.imageBitmap.height,
                 1
             ];
 
-            //device.defaultQueue.copyImageBitmapToTexture({ imageBitmap: textureResource, origin: { x: 0, y: 0 } }, texture, imageSize);
+            const sampler = createSampler(device);
+            const texture = createSampledTexture(device, { size: imageSize });
 
-            const textureLoadEncoder = device.createCommandEncoder();
-            textureLoadEncoder.copyBufferToTexture(
-                {
-                    buffer: textureDataBuffer,
-                    rowPitch: textureResource.width * 4,
-                    imageHeight: textureResource.height
-                }, { texture }, imageSize
-            );
+            const gpuImageBitmapCopyView = {
+                imageBitmap: textureResource.imageBitmap,
+                origin: { x: 0, y: 0 }
+            };
 
-            device.defaultQueue.submit([textureLoadEncoder.finish()]);
+            const gpuTextureCopyView = { texture };
+
+            device.defaultQueue.copyImageBitmapToTexture(gpuImageBitmapCopyView, gpuTextureCopyView, imageSize);
 
             const viewProjectionMatrix = matrix4.orthographic(100, canvas.width / canvas.height);
             const vertexUniformBuffer = createUniformBuffer(device, { size: viewProjectionMatrix.byteLength });
@@ -92,11 +77,13 @@ export const createRenderable = async (device, canvas, context, options) => {
             const program = createProgram(programOptions);
             const pipeline = device.createRenderPipeline(program);
 
-            const depthTextureDescriptor = resources.textures.depthTexture;
-            depthTextureDescriptor.size = {
-                width: canvas.width,
-                height: canvas.height,
-                depth: 1
+            const depthTextureDescriptor = {
+                format: 'depth24plus-stencil8',
+                size: {
+                    width: canvas.width,
+                    height: canvas.height,
+                    depth: 1
+                }
             };
 
             renderPassDescriptor.depthStencilAttachment.attachment = createDepthTexture(device, depthTextureDescriptor).createView();

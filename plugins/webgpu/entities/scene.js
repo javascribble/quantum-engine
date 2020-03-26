@@ -1,4 +1,4 @@
-import { loadResource, loadResources } from '../imports';
+import { loadResource, loadResources, loadTexture } from '../imports';
 import { getGPUShaderStageConstant, getGPUColorWriteConstant } from '../graphics/constants';
 
 export const loadScene = async (resource) => {
@@ -34,9 +34,4 @@ const loadProgram = async (resource) => {
     }
 
     return programResource;
-};
-
-const loadTexture = async (resource) => {
-    const textureResource = await loadResource(resource);
-    return textureResource;
 };

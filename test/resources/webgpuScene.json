@@ -18,8 +18,7 @@
 			"staticBuffer": "webgpuStaticBuffers.json"
 		},
 		"textures": {
-			"depthTexture": "webgpuDepthTexture.json",
-			"defaultTexture": "Kal256.png"
+			"defaultTexture": "webgpuTexture.json"
 		}
 	}
 }
