@@ -1,4 +1,3 @@
-export * from './components/transform';
 export * from './geometry/angles';
 export * from './geometry/curves';
 export * from './geometry/matrix3';

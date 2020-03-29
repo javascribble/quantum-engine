@@ -1,4 +1,4 @@
-﻿import { loadBlob, loadText, loadJson, loadImage } from './loader';
+﻿import { loadBlob, loadText, loadJson } from './loader';
 
 export const resourceOptions = {
     path: '/resources',

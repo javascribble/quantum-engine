@@ -10,3 +10,7 @@ export const createSampledTexture = (device, options) => createTexture(device, {
 export const createDepthTexture = (device, options) => createTexture(device, { ...options, usage: outputAttachmentTextureUsage | copySourceTextureUsage });
 
 export const createTexture = (device, options) => device.createTexture({ ...defaultTextureOptions, ...options });
+
+export const bufferTexture = (device) => {
+
+};

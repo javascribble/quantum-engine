@@ -1,35 +1,28 @@
-export const createCommand = (device, options) => {
+export const encodeCommand = (device, command) => {
     const commandEncoder = device.createCommandEncoder();
-    encodeCommand(options, commandEncoder);
-    return commandEncoder.finish();
-}
-
-const encodeCommand = (command, commandEncoder) => {
     for (const pass of command.passes) {
         if (pass.compute) {
             const computePassEncoder = commandEncoder.beginComputePass(pass.descriptor);
             encodeComputePass(pass, computePassEncoder);
             computePassEncoder.endPass();
         } else {
-            // TODO: Unhack this.
-            pass.descriptor.colorAttachments[0].attachment = pass.swapChain.getCurrentTexture().createView();
-
             const renderPassEncoder = commandEncoder.beginRenderPass(pass.descriptor);
             encodeRenderPass(pass, renderPassEncoder);
             renderPassEncoder.endPass();
         }
     }
+
+    return commandEncoder.finish();
 };
 
 const encodeComputePass = (computePass, computePassEncoder) => {
     const { } = computePass;
     encodePass(computePass, computePassEncoder);
-
     computePassEncoder.dispatch(0);
 };
 
 const encodeRenderPass = (renderPass, renderPassEncoder) => {
-    const { pipeline, viewport, scissorRect, bindGroups, vertexBuffers, indexBuffer, draws } = renderPass;
+    const { viewport, scissorRect, vertexBuffers, indexBuffer, draws } = renderPass;
     encodePass(renderPass, renderPassEncoder);
 
     // TODO: Set this only on viewport resize.
@@ -43,12 +36,12 @@ const encodeRenderPass = (renderPass, renderPassEncoder) => {
 
     if (vertexBuffers) {
         for (let i = 0; i < vertexBuffers.length; i++) {
-            renderPassEncoder.setVertexBuffer(i, vertexBuffers[i].handle);
+            renderPassEncoder.setVertexBuffer(i, vertexBuffers[i]);
         }
     }
 
     if (indexBuffer) {
-        renderPassEncoder.setIndexBuffer(indexBuffer.handle);
+        renderPassEncoder.setIndexBuffer(indexBuffer);
     }
 
     if (draws) {

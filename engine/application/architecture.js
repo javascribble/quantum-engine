@@ -1,32 +1,47 @@
-import { curryDelete } from '../utilities/sets';
-import { updates } from './host';
+import { createAssignPropertyTrap, createDefinePropertyTrap, createDeletePropertyTrap } from '../utilities/proxies';
+import { moveSetValue, curryDelete } from '../utilities/sets';
+import { hasEveryProperty } from '../utilities/objects';
 
 const entities = new Map();
-const systems = new Map();
+export const systems = new Set();
 
-export const addEntity = (entity = {}) => {
-    entities.set(entity, new Set());
+const addComponent = (entity) => {
+    const entitySystems = entities.get(entity);
+    const activeSystems = entitySystems.active;
+    const inactiveSystems = entitySystems.inactive;
+    for (const inactiveSystem of inactiveSystems) {
+        if (hasEveryProperty(entity, inactiveSystem.components)) {
+            moveSetValue(inactiveSystem, inactiveSystems, activeSystems);
+            inactiveSystem.add(entity);
+        }
+    }
+};
+
+const deleteComponent = (entity) => {
+    const entitySystems = entities.get(entity);
+    const activeSystems = entitySystems.active;
+    const inactiveSystems = entitySystems.inactive;
+    for (const activeSystem of activeSystems) {
+        if (!hasEveryProperty(entity, activeSystem.components)) {
+            moveSetValue(activeSystem, activeSystems, inactiveSystems);
+            activeSystem.delete(entity);
+        }
+    }
+};
+
+const componentObserver = {
+    ...createAssignPropertyTrap(addComponent),
+    ...createDefinePropertyTrap(addComponent),
+    ...createDeletePropertyTrap(deleteComponent)
+};
+
+export const createEntity = (options) => {
+    const entity = new Proxy(options, componentObserver);
+    entities.set(entity, { active: new Set(), inactive: new Set() });
     return entity;
-}
+};
 
 export const deleteEntity = (entity) => {
-    entities.get(entity).forEach(curryDelete(entity));
+    entities.get(entity).active.forEach(curryDelete(entity));
     entities.delete(entity);
-};
-
-export const addComponent = (component, entity) => {
-    const system = systems.get(component);
-    entities.get(entity).add(system);
-    system.add(entity);
-};
-
-export const deleteComponent = (component, entity) => {
-    const system = systems.get(component);
-    entities.get(entity).delete(system);
-    system.delete(entity);
-};
-
-export const registerSystem = (component, system, update) => {
-    systems.set(component, system);
-    update && updates.push(update);
 };

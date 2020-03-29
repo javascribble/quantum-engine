@@ -1,4 +1,5 @@
-import { registerSystem } from '../application/architecture';
+import { systems } from '../application/architecture';
+import { updates } from '../application/host';
 
 export const registerStorageSystem = () => {
     const stores = new Set();
@@ -6,5 +7,6 @@ export const registerStorageSystem = () => {
         // TODO: Update dirty properties periodically.
     }
 
-    //registerSystem(storageComponent, stores, updateStorageSystem);
+    //systems.add({});
+    //updates.push(updateStorageSystem);
 };

@@ -4,6 +4,7 @@ export const defaultSwapChainOptions = {
     usage: outputAttachmentTextureUsage | copySourceTextureUsage
 };
 
-export const createPreferredSwapChain = async (context, device, options) => createSwapChain(context, device, { ...options, format: await context.getSwapChainPreferredFormat(device) });
-
-export const createSwapChain = (context, device, options) => context.configureSwapChain({ device, ...defaultSwapChainOptions, ...options });
+export const createSwapChain = (context, device, options) => {
+    const format = await context.getSwapChainPreferredFormat(device);
+    return context.configureSwapChain({ device, format, ...defaultSwapChainOptions, ...options });
+};

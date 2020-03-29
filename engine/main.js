@@ -16,6 +16,7 @@ export * from './network/resources';
 export * from './network/socket';
 export * from './network/worker';
 export * from './output/audio';
+export * from './output/canvas';
 export * from './output/video';
 export * from './storage/local';
 export * from './systems/input';
