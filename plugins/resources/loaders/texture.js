@@ -1,4 +1,4 @@
-import { loadResource } from '../imports';
+import { loadResource } from '../../../engine/main';
 
 export const loadTexture = async (resource) => {
     const textureResource = await loadResource(resource);

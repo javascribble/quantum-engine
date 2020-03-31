@@ -1,4 +1,4 @@
-import { loadText, loadArrayBuffer, resourceOptions } from '../imports';
+import { loadText, loadArrayBuffer, resourceOptions } from '../../../engine/main';
 
 const loadSPIRVShader = async (resource) => new Uint32Array(await loadArrayBuffer(resource));
 

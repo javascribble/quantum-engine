@@ -1,22 +1,20 @@
-import { getWebGPUContext } from '../imports';
+import { createSwapChain } from '../graphics/context';
 import { encodeCommand } from '../graphics/commands';
 import { updateStrategy } from '../graphics/strategy';
 import { renderableComponent } from '../components/renderable';
 
 export const createRendererSystem = async (options) => {
-    const adapter = await navigator.gpu.requestAdapter();
-    const device = await adapter.requestDevice();
-
-    const targets = {};
-    for (const canvas of options.canvases) {
-        const context = getWebGPUContext(canvas);
-        const swapChain = await createSwapChain(context, device);
-        targets[canvas.name] = { canvas, swapChain };
-    }
-
     const adds = new Set();
     const deletes = new Set();
     const commands = new Map();
+    const targets = new Map();
+
+    const device = options.device;
+    for (const canvas of options.canvases) {
+        const swapChain = await createSwapChain(device, canvas);
+        targets.set(canvas.name, { canvas, swapChain });
+    }
+
     return {
         components: [renderableComponent],
         add(entity) {
@@ -26,7 +24,15 @@ export const createRendererSystem = async (options) => {
             deletes.add(entity.renderable);
         },
         update(deltaTime) {
-            updateStrategy(commands, targets, adds, deletes);
+            for (const target of targets.values()) {
+                target.texture = target.swapChain.getCurrentTexture().createView();
+            }
+
+            if (adds.size > 0 || deletes.size > 0) {
+                updateStrategy(commands, targets, adds, deletes);
+                adds.clear();
+                deletes.clear();
+            }
 
             const encodedCommands = [];
             for (const command of commands.values()) {

@@ -1,4 +1,4 @@
-import { splitNewLines } from '../imports';
+import { splitNewLines } from '../../../engine/main';
 import { isValidLine } from '../utilities/strings';
 
 export const parseMtl = async (text) => {

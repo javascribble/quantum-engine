@@ -1,5 +1,6 @@
-export const materialComponent = 'mesh';
+export const materialComponent = 'material';
 
-export const createMaterial = () => {
-
-};
+export const createMaterial = (data, indices) => ({
+    vertices,
+    indices
+});

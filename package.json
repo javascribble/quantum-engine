@@ -1,8 +1,8 @@
 {
-  "name": "worldbuilder",
+  "name": "whitestone",
   "description": "simple, web based game engine",
-  "author": "Web Worlds",
-  "version": "0.0.2",
+  "author": "Adonai Games",
+  "version": "0.0.1",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
@@ -16,25 +16,23 @@
   },
   "scripts": {
     "serve": "serve ./",
-    "build": "rollup -c worldbuilder.rollup.config.js",
-    "watch": "rollup -w -c worldbuilder.rollup.config.js",
+    "build": "rollup -c whitestone.rollup.config.js",
+    "watch": "rollup -w -c whitestone.rollup.config.js",
     "start": "npm-run-all --parallel serve watch",
     "postversion": "npm publish --access public"
   },
-  "homepage": "https://github.com/webworlds/worldbuilder#readme",
+  "homepage": "https://github.com/adonaigames/whitestone#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webworlds/worldbuilder.git"
+    "url": "git+https://github.com/adonaigames/whitestone.git"
   },
   "bugs": {
-    "url": "https://github.com/webworlds/worldbuilder/issues"
+    "url": "https://github.com/adonaigames/whitestone/issues"
   },
   "keywords": [
     "game",
     "editor",
-    "engine",
-    "world",
-    "builder"
+    "engine"
   ],
   "files": [
     "build/",

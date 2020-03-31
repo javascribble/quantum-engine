@@ -1,4 +1,4 @@
-import { matrix4 } from '../imports';
+import { orthographicMatrix4 } from '../../math/main';
 import { bufferData, createIndexBuffer, createUniformBuffer, createVertexBuffer } from '../graphics/buffers';
 import { createDepthTexture, createSampledTexture } from '../graphics/textures';
 import { createCanvasViewport } from '../graphics/viewport';
@@ -9,11 +9,13 @@ import { createSampler } from '../graphics/samplers';
 import { createShader } from '../graphics/shaders';
 
 export const updateStrategy = (commands, targets, adds, deletes) => {
-    if (commands.size === 0) {
+    for (const renderable of adds) {
+        const scene = renderable;
         const resources = scene.resources;
         const buffers = resources.buffers;
         const renderPassDescriptor = resources.passes.defaultRenderPass;
         const textureResource = resources.textures.defaultTexture.sprites[0];
+        const { canvas, swapChain } = targets[0];
 
         const imageSize = [
             textureResource.imageBitmap.width,
@@ -33,7 +35,7 @@ export const updateStrategy = (commands, targets, adds, deletes) => {
 
         device.defaultQueue.copyImageBitmapToTexture(gpuImageBitmapCopyView, gpuTextureCopyView, imageSize);
 
-        const viewProjectionMatrix = matrix4.orthographic(100, canvas.width / canvas.height);
+        const viewProjectionMatrix = orthographicMatrix4(100, canvas.width / canvas.height);
         const vertexUniformBuffer = createUniformBuffer(device, { size: viewProjectionMatrix.byteLength });
         bufferData(vertexUniformBuffer, 0, viewProjectionMatrix);
 
@@ -80,6 +82,7 @@ export const updateStrategy = (commands, targets, adds, deletes) => {
         };
 
         renderPassDescriptor.depthStencilAttachment.attachment = createDepthTexture(device, depthTextureDescriptor).createView();
+        renderPassDescriptor.colorAttachments[0].attachment = renderer.swapChain.getCurrentTexture().createView();
 
         const entities = scene.entities;
         const count = entities.length;
@@ -98,21 +101,16 @@ export const updateStrategy = (commands, targets, adds, deletes) => {
         const indexBuffer = createIndexBuffer(device, { size: indexData.byteLength });
         bufferData(indexBuffer, 0, indexData);
 
-        const vertexDataProxy = {
-            data: modelTransformations,
-            buffer: modelTransformationsBuffer,
-            index: 0
-        };
-
         for (let i = 0; i < count; i++) {
             const entity = entities[i];
-            entity.sprite = createSprite(entity.transform, vertexDataProxy, i);
+            entity.bufferIndex = i * 6;
+            entity.data = modelTransformations;
+            entity.buffer = modelTransformationsBuffer;
         }
 
         const command = {
             passes: [
                 {
-                    swapChain,
                     descriptor: renderPassDescriptor,
                     pipeline,
                     viewport: createCanvasViewport(canvas),
@@ -141,6 +139,4 @@ export const updateStrategy = (commands, targets, adds, deletes) => {
 
         commands.set('default', command);
     }
-
-    command.descriptor.colorAttachments[0].attachment = renderer.swapChain.getCurrentTexture().createView();
 };

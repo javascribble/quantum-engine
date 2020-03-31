@@ -1,4 +1,4 @@
-import { resourceOptions } from '../imports';
+import { resourceOptions } from '../../../engine/main';
 
 const loadImage = async (resource) => {
     return new Promise((resolve, reject) => {

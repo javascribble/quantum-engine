@@ -1,6 +1,6 @@
 export const defineProperty = Object.defineProperty;
 
-export const hasEveryProperty = (object, properties) => properties.every(object.hasOwnProperty);
+export const hasEveryProperty = (object, properties) => properties.every(property => object.hasOwnProperty(property));
 
 export const defineObservedProperty = (object, property, target, handler) => {
     defineProperty(object, property, {

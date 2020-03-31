@@ -1,4 +1,4 @@
-import { loadResource, splitNewLines } from '../imports';
+import { loadResource, splitNewLines } from '../../../engine/main';
 import { isValidLine } from '../utilities/strings';
 import { parseMtl } from './mtl';
 

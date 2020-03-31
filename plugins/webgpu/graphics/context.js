@@ -1,10 +1,9 @@
+import { getWebGPUContext } from '../../../engine/main';
 import { outputAttachmentTextureUsage, copySourceTextureUsage } from './constants';
 
-export const defaultSwapChainOptions = {
-    usage: outputAttachmentTextureUsage | copySourceTextureUsage
-};
-
-export const createSwapChain = (context, device, options) => {
+export const createSwapChain = async (device, canvas) => {
+    const context = getWebGPUContext(canvas);
     const format = await context.getSwapChainPreferredFormat(device);
-    return context.configureSwapChain({ device, format, ...defaultSwapChainOptions, ...options });
+    const usage = outputAttachmentTextureUsage | copySourceTextureUsage;
+    return context.configureSwapChain({ device, format, usage });
 };

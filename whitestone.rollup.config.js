@@ -3,16 +3,16 @@ import multi from '@rollup/plugin-multi-entry';
 
 const editor = './editor/main.js';
 const engine = './engine/main.js';
-const math = './plugins/math/exports.js';
-const webgpu = './plugins/webgpu/exports.js';
-const webaudio = './plugins/webaudio/exports.js';
+const math = './plugins/math/main.js';
+const webgpu = './plugins/webgpu/main.js';
+const webaudio = './plugins/webaudio/main.js';
 const bundles = [
 	{ name: 'engine', input: [engine, math, webaudio, webgpu] },
 	{ name: 'editor', input: [editor, engine, math, webaudio, webgpu] }
 ];
 
 const output = (name, plugins = []) => ({
-	file: `./build/worldbuilder.${name}.js`,
+	file: `./build/whitestone.${name}.js`,
 	format: 'iife',
 	plugins,
 	name

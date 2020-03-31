@@ -1,27 +1,25 @@
-import { vector3 } from './vector3';
+import { normalizeVector3, subtractVector3, crossProductVector3, dotProductVector3 } from './vector3';
 
-const components = 16;
-
-const create = (type = Float32Array) => {
-    const m4 = new type(components);
-    setIdentity(m4);
+export const createMatrix4 = (type = Float32Array) => {
+    const m4 = new type(16);
+    setIdentityMatrix4(m4);
     return m4;
 };
 
-const orthographic = (size = 100, aspect = 1) => {
+export const orthographicMatrix4 = (size = 100, aspect = 1) => {
     const scale = 1 / size;
-    const m4 = create();
+    const m4 = createMatrix4();
     m4[0] = scale / aspect;
     m4[5] = scale;
     m4[10] = scale;
     return m4;
 };
 
-const perspective = (radians = Math.PI / 2, aspect = 1, near = 0, far = 100) => {
+export const perspectiveMatrix4 = (radians = Math.PI / 2, aspect = 1, near = 0, far = 100) => {
     const d = 1 / Math.tan(radians / 2);
     const r = 1 / (near - far);
 
-    const m4 = create();
+    const m4 = createMatrix4();
     m4[0] = d / aspect;
     m4[5] = d;
     m4[10] = (far + near) * r;
@@ -31,7 +29,7 @@ const perspective = (radians = Math.PI / 2, aspect = 1, near = 0, far = 100) => 
     return m4;
 };
 
-const setIdentity = (m4) => {
+export const setIdentityMatrix4 = (m4) => {
     m4[0] = 1;
     m4[1] = 0;
     m4[2] = 0;
@@ -50,13 +48,13 @@ const setIdentity = (m4) => {
     m4[15] = 1;
 };
 
-const setTranslation = (m4, v3) => {
+export const setTranslationMatrix4 = (m4, v3) => {
     m4[12] = v3.x;
     m4[13] = v3.y;
     m4[14] = v3.z;
 };
 
-const setRotation = (m4, v3) => {
+export const setRotationMatrix4 = (m4, v3) => {
     // TODO: 3d rotation.
     const s = Math.sin(v3.z);
     const c = Math.cos(v3.z);
@@ -66,45 +64,46 @@ const setRotation = (m4, v3) => {
     m4[5] = c;
 };
 
-const setScale = (m4, v3) => {
+export const setScaleMatrix4 = (m4, v3) => {
     m4[0] = v3.x;
     m4[5] = v3.y;
     m4[10] = v3.z;
 };
 
-const multiply = (m4a, m4b, m4c) => {
-    const a00 = m4a[0];
-    const a01 = m4a[1];
-    const a02 = m4a[2];
-    const a03 = m4a[3];
-    const a10 = m4a[4];
-    const a11 = m4a[5];
-    const a12 = m4a[6];
-    const a13 = m4a[7];
-    const a20 = m4a[8];
-    const a21 = m4a[9];
-    const a22 = m4a[10];
-    const a23 = m4a[11];
-    const a30 = m4a[12];
-    const a31 = m4a[13];
-    const a32 = m4a[14];
-    const a33 = m4a[15];
-    const b00 = m4b[0];
-    const b01 = m4b[1];
-    const b02 = m4b[2];
-    const b03 = m4b[3];
-    const b10 = m4b[4];
-    const b11 = m4b[5];
-    const b12 = m4b[6];
-    const b13 = m4b[7];
-    const b20 = m4b[8];
-    const b21 = m4b[9];
-    const b22 = m4b[10];
-    const b23 = m4b[11];
-    const b30 = m4b[12];
-    const b31 = m4b[13];
-    const b32 = m4b[14];
-    const b33 = m4b[15];
+export const multiplyMatrix4 = (m4a, m4b, m4c) => {
+    const
+        a00 = m4a[0],
+        a01 = m4a[1],
+        a02 = m4a[2],
+        a03 = m4a[3],
+        a10 = m4a[4],
+        a11 = m4a[5],
+        a12 = m4a[6],
+        a13 = m4a[7],
+        a20 = m4a[8],
+        a21 = m4a[9],
+        a22 = m4a[10],
+        a23 = m4a[11],
+        a30 = m4a[12],
+        a31 = m4a[13],
+        a32 = m4a[14],
+        a33 = m4a[15],
+        b00 = m4b[0],
+        b01 = m4b[1],
+        b02 = m4b[2],
+        b03 = m4b[3],
+        b10 = m4b[4],
+        b11 = m4b[5],
+        b12 = m4b[6],
+        b13 = m4b[7],
+        b20 = m4b[8],
+        b21 = m4b[9],
+        b22 = m4b[10],
+        b23 = m4b[11],
+        b30 = m4b[12],
+        b31 = m4b[13],
+        b32 = m4b[14],
+        b33 = m4b[15];
 
     m4c[0] = a00 * b00 + a10 * b01 + a20 * b02 + a30 * b03;
     m4c[1] = a01 * b00 + a11 * b01 + a21 * b02 + a31 * b03;
@@ -124,10 +123,10 @@ const multiply = (m4a, m4b, m4c) => {
     m4c[15] = a03 * b30 + a13 * b31 + a23 * b32 + a33 * b33;
 };
 
-const lookAt = (m4, point, eye, up) => {
-    const z = vector3.normalize(vector3.subtract(eye, point));
-    const x = vector3.normalize(vector3.crossProduct(up, z));
-    const y = vector3.normalize(vector3.crossProduct(z, x));
+export const lookAtMatrix4 = (m4, point, eye, up) => {
+    const z = normalizeVector3(subtractVector3(eye, point));
+    const x = normalizeVector3(crossProductVector3(up, z));
+    const y = normalizeVector3(crossProductVector3(z, x));
 
     m4[0] = x[0];
     m4[1] = y[0];
@@ -141,21 +140,8 @@ const lookAt = (m4, point, eye, up) => {
     m4[9] = y[2];
     m4[10] = z[2];
     m4[11] = 0;
-    m4[12] = -vector3.dotProduct(x, eye);
-    m4[13] = -vector3.dotProduct(y, eye);
-    m4[14] = -vector3.dotProduct(z, eye);
+    m4[12] = -dotProductVector3(x, eye);
+    m4[13] = -dotProductVector3(y, eye);
+    m4[14] = -dotProductVector3(z, eye);
     m4[15] = 1;
-};
-
-export const matrix4 = {
-    components,
-    create,
-    orthographic,
-    perspective,
-    setIdentity,
-    setTranslation,
-    setRotation,
-    setScale,
-    multiply,
-    lookAt
 };

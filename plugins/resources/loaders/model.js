@@ -1,4 +1,4 @@
-import { loadText, loadResource, resourceOptions } from '../imports';
+import { loadText, loadResource, resourceOptions } from '../../../engine/main';
 import { parseObj } from '../parsers/obj';
 
 export const loadModel = async (resource) => {

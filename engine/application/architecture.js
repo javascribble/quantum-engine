@@ -6,25 +6,21 @@ const entities = new Map();
 export const systems = new Set();
 
 const addComponent = (entity) => {
-    const entitySystems = entities.get(entity);
-    const activeSystems = entitySystems.active;
-    const inactiveSystems = entitySystems.inactive;
-    for (const inactiveSystem of inactiveSystems) {
-        if (hasEveryProperty(entity, inactiveSystem.components)) {
-            moveSetValue(inactiveSystem, inactiveSystems, activeSystems);
-            inactiveSystem.add(entity);
+    const { proxy, active, inactive } = entities.get(entity);
+    for (const system of inactive) {
+        if (hasEveryProperty(entity, system.components)) {
+            moveSetValue(system, inactive, active);
+            system.add(proxy);
         }
     }
 };
 
 const deleteComponent = (entity) => {
-    const entitySystems = entities.get(entity);
-    const activeSystems = entitySystems.active;
-    const inactiveSystems = entitySystems.inactive;
-    for (const activeSystem of activeSystems) {
-        if (!hasEveryProperty(entity, activeSystem.components)) {
-            moveSetValue(activeSystem, activeSystems, inactiveSystems);
-            activeSystem.delete(entity);
+    const { proxy, active, inactive } = entities.get(entity);
+    for (const system of active) {
+        if (!hasEveryProperty(entity, system.components)) {
+            moveSetValue(system, active, inactive);
+            system.delete(proxy);
         }
     }
 };
@@ -36,12 +32,14 @@ const componentObserver = {
 };
 
 export const createEntity = (options) => {
-    const entity = new Proxy(options, componentObserver);
-    entities.set(entity, { active: new Set(), inactive: new Set() });
-    return entity;
+    const entity = { ...options };
+    const proxy = new Proxy(entity, componentObserver);
+    entities.set(entity, { proxy, active: new Set(), inactive: new Set(systems) });
+    return proxy;
 };
 
-export const deleteEntity = (entity) => {
-    entities.get(entity).active.forEach(curryDelete(entity));
+export const deleteEntity = (proxy) => {
+    const entity = proxy.target;
+    entities.get(entity).active.forEach(curryDelete(proxy));
     entities.delete(entity);
 };
