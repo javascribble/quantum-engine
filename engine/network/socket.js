@@ -1,6 +1,10 @@
 import { updates } from '../application/host';
 
-export const enableNetwork = () => updates.push(updateNetwork);
+export const defaultNetworkOptions = {
+
+};
+
+export const enableNetwork = (options = defaultNetworkOptions) => updates.push(updateNetwork);
 
 const updateNetwork = (deltaTime) => {
     // TODO: Add web sockets.

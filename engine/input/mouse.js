@@ -4,7 +4,7 @@ import { publish } from '../application/events';
 export const defaultMouseControls = {
 };
 
-export const enableMouse = () => {
+export const enableMouse = (options = defaultMouseControls) => {
     addListener('mousedown', mouseDown);
     addListener('mousemove', mouseMove);
     addListener('mouseup', mouseUp);

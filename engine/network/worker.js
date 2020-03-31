@@ -1,6 +1,10 @@
 import { addListener } from '../application/browser';
 
-export const enableOfflineSupport = () => {
+export const defaultWorkerOptions = {
+
+};
+
+export const enableOfflineSupport = (options = defaultWorkerOptions) => {
    addListener('online', onlineListener);
    addListener('offline', offlineListener);
 

@@ -26,7 +26,7 @@ export const defaultGamepadControls = {
     START: 'PAD_START'
 };
 
-export const enableGamepads = () => {
+export const enableGamepads = (options = defaultGamepadControls) => {
     const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
 
     addListener('ongamepadconnected', event => gamepads.add(event.gamepad));

@@ -1,0 +1,1 @@
+editor.loaderOptions.path = '/test/resources';

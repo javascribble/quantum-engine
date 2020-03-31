@@ -1,3 +1,7 @@
+export const localStorageOptions = {
+
+};
+
 const storage = localStorage;
 
 export const saveLocal = (state) => {

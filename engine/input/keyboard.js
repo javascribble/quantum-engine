@@ -9,7 +9,7 @@ export const defaultKeyboardControls = {
     ENTER: 'Enter'
 };
 
-export const enableKeyboard = () => {
+export const enableKeyboard = (options = defaultKeyboardControls) => {
     addListener('keydown', keyboardKeyDown);
     addListener('keyup', keyboardKeyUp);
 };

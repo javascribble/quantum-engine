@@ -4,7 +4,7 @@ import { publish } from '../application/events';
 export const defaultTouchControls = {
 };
 
-export const enableTouch = () => {
+export const enableTouch = (options = defaultTouchControls) => {
     addListener('touchstart', touchStart);
     addListener('touchmove', touchMove);
     addListener('touchend', touchEnd);
