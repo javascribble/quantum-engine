@@ -1,4 +1,4 @@
-const options = {
+const plugins = {
 	gamepad: {},
 	keyboard: {},
 	mouse: {},
@@ -9,7 +9,10 @@ const options = {
 	network: {},
 	workers: {},
 	audio: {},
-	video: {}
+	video: {},
+	scene: {
+		
+	}
 };
 
-engine.start(options);
+engine.start(plugins);

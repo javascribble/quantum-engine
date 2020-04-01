@@ -1,4 +1,4 @@
-﻿import { plugins, publish, assign, addListener, preventDefault } from '../../../engine/main';
+﻿import { plugins, publish, assign, addListener, preventDefault } from '../imports';
 
 export const mouseOptions = {
 };

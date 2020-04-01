@@ -1,6 +1,5 @@
-import { setElementParent } from '../../../engine/application/browser';
-import { assign } from '../../../engine/utilities/objects';
-import { videoOptions } from '../../../engine/output/video';
+import { assign, setElementParent } from '../imports';
+import { videoOptions } from '../systems/video';
 
 export const canvasOptions = {
     alpha: false,

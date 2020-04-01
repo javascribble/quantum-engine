@@ -1,4 +1,4 @@
-﻿import { plugins, publish, assign, addListener } from '../../../engine/main';
+﻿import { plugins, publish, assign, addListener } from '../imports';
 
 export const keyboardOptions = {
 };

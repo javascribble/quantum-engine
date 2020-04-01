@@ -3,13 +3,10 @@ import multi from '@rollup/plugin-multi-entry';
 
 const editor = './editor/main.js';
 const engine = './engine/main.js';
-const content = './plugins/content/main.js';
-const graphics = './plugins/graphics/main.js';
-const webgpu = './plugins/webgpu/main.js';
-const webaudio = './plugins/webaudio/main.js';
+const plugins = './plugins/main.js';
 const bundles = [
-	{ name: 'engine', input: [engine, content, graphics, webaudio, webgpu] },
-	{ name: 'editor', input: [editor, engine, content, graphics, webaudio, webgpu] }
+	{ name: 'engine', input: [engine, plugins] },
+	{ name: 'editor', input: [editor, engine, plugins] }
 ];
 
 const output = (name, plugins = []) => ({

@@ -1,4 +1,4 @@
-﻿import { plugins, updates, publish, assign, addListener } from '../../../engine/main';
+﻿import { plugins, updates, publish, assign, addListener } from '../imports';
 
 export const gamepadOptions = {
 };

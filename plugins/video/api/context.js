@@ -1,4 +1,4 @@
-import { getWebGPUContext } from '../../../engine/main';
+import { getWebGPUContext } from '../imports';
 import { outputAttachmentTextureUsage, copySourceTextureUsage } from './constants';
 
 export const createSwapChain = async (device, canvas) => {

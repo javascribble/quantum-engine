@@ -1,4 +1,4 @@
-import { load } from '../../../engine/main';
+import { load } from '../imports';
 import { parseGltf } from '../parsers/gltf';
 
 export const loadScene = async (resource) => {

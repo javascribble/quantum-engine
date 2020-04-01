@@ -1,4 +1,4 @@
-import { plugins, updates, assign } from '../../../engine/main';
+import { plugins, updates, assign } from '../imports';
 
 export const socketOptions = {
 };

@@ -1,5 +1,5 @@
 import { startAnimation, stopAnimation } from './host';
-import { configure } from './options';
+import { configure } from './plugins';
 
 export const start = (options) => {
     configure(options);

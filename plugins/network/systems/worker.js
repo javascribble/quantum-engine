@@ -1,4 +1,4 @@
-import { plugins, assign, addListener } from '../../../engine/main';
+import { plugins, assign, addListener } from '../imports';
 
 export const workerOptions = {
 };

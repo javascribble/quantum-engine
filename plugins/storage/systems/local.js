@@ -1,4 +1,4 @@
-import { plugins, assign } from '../../../engine/main';
+import { plugins, assign } from '../imports';
 
 export const storageOptions = {
 };

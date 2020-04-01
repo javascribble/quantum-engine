@@ -1,4 +1,4 @@
-﻿import { plugins, assign, isString, getExtension } from '../../../engine/main';
+﻿import { plugins, assign, isString, getExtension } from '../imports';
 
 export const loaderOptions = {
     path: '/resources'
@@ -14,6 +14,12 @@ export const loadFormData = (url) => fetch(url).then(response => response.formDa
 
 export const loadArrayBuffer = (url) => fetch(url).then(response => response.arrayBuffer());
 
+export const loaders = {
+    json: loadJson,
+    txt: loadText,
+    bin: loadBlob
+};
+
 export const load = async (resource, loader) => {
     if (isString(resource)) {
         const path = resource.startsWith('/') ? resource : `${loaderOptions.path}/${resource}`;
@@ -28,12 +34,6 @@ export const load = async (resource, loader) => {
 
         return object;
     }
-};
-
-export const loaders = {
-    json: loadJson,
-    txt: loadText,
-    bin: loadBlob
 };
 
 plugins.loader = (options) => assign(loaderOptions, options);
