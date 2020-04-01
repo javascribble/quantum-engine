@@ -1,12 +1,9 @@
-﻿import { assign } from '../utilities/objects';
-import { addListener } from '../application/browser';
-import { publish } from '../application/events';
-import { updates } from '../application/host';
+﻿import { plugins, updates, publish, assign, addListener } from '../../../engine/main';
 
 export const gamepadOptions = {
 };
 
-export const configureGamepads = (options) => {
+plugins.gamepad = (options) => {
     assign(gamepadOptions, options);
 
     const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();

@@ -3,7 +3,9 @@ import { createRenderableSystem } from './renderable';
 import { createRendererSystem } from './renderer';
 
 export const webGPUOptions = {
-    getCanvas: createCanvas
+    getCanvas: createCanvas,
+    scale: devicePixelRatio,
+    parent: document.body
 };
 
 export const registerWebGPU = async (options) => {

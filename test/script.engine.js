@@ -1,1 +1,15 @@
-engine.loadGame('/test/resources/game.json').then(game => engine.start()); // TODO: Add progress updates.
+const options = {
+	gamepad: {},
+	keyboard: {},
+	mouse: {},
+	touch: {},
+	loader: {
+		path: '/test/resources'
+	},
+	network: {},
+	workers: {},
+	audio: {},
+	video: {}
+};
+
+engine.start(options);

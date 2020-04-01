@@ -1,8 +1,6 @@
 export const addListener = addEventListener;
 export const removeListener = removeEventListener;
 
-export const getTimestamp = () => performance.now();
-
 export const preventDefault = (event) => event.preventDefault();
 
 export const setElementParent = (element, parent) => {

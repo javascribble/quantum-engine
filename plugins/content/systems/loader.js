@@ -1,11 +1,8 @@
-﻿import { isString, getExtension } from '../utilities/strings';
-import { assign } from '../utilities/objects';
+﻿import { plugins, assign, isString, getExtension } from '../../../engine/main';
 
 export const loaderOptions = {
     path: '/resources'
 };
-
-export const configureLoader = (options) => assign(loaderOptions, options);
 
 export const loadBlob = (url) => fetch(url).then(response => response.blob());
 
@@ -38,3 +35,5 @@ export const loaders = {
     txt: loadText,
     bin: loadBlob
 };
+
+plugins.loader = (options) => assign(loaderOptions, options);
