@@ -1,4 +1,8 @@
-export const defaultCanvasOptions = {
+import { setElementParent } from '../application/browser';
+import { assign } from '../utilities/objects';
+import { videoOptions } from './video';
+
+export const canvasOptions = {
     alpha: false,
     depth: true,
     stencil: false,
@@ -8,11 +12,25 @@ export const defaultCanvasOptions = {
     preserveDrawingBuffer: false
 };
 
-export const createCanvas = () => document.createElement('canvas');
+export const configureCanvas = (options) => assign(canvasOptions, options);
 
-export const getCanvasContext = (canvas, options = defaultCanvasOptions) => canvas.getContext('2d', options);
+export const createCanvas = (options = videoOptions) => {
+    const canvas = document.createElement('canvas');
 
-export const getWebGLContext = (canvas, options = defaultCanvasOptions) => canvas.getContext('webgl2', options) || canvas.getContext('webgl', options);
+    if (options.parent) {
+        setElementParent(canvas, options.parent);
+    }
+
+    if (options.scale) {
+        resizeCanvas(canvas, options.scale);
+    }
+
+    return canvas;
+}
+
+export const getCanvasContext = (canvas, options = canvasOptions) => canvas.getContext('2d', options);
+
+export const getWebGLContext = (canvas, options = canvasOptions) => canvas.getContext('webgl2', options) || canvas.getContext('webgl', options);
 
 export const getWebGPUContext = (canvas) => canvas.getContext('gpupresent');
 

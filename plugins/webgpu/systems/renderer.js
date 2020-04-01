@@ -1,6 +1,6 @@
-import { createSwapChain } from '../graphics/context';
-import { encodeCommand } from '../graphics/commands';
-import { updateStrategy } from '../graphics/strategy';
+import { createSwapChain } from '../api/context';
+import { encodeCommand } from '../api/commands';
+import { updateStrategy } from '../api/strategy';
 import { renderableComponent } from '../components/renderable';
 
 export const createRendererSystem = async (options) => {

@@ -1,4 +1,4 @@
-import { loadResource, splitNewLines } from '../../../engine/main';
+import { load, splitNewLines } from '../../../engine/main';
 import { isValidLine } from '../utilities/strings';
 import { parseMtl } from './mtl';
 
@@ -11,7 +11,7 @@ export const parseObj = async (text) => {
         const words = line.split(' ');
         switch (words.shift()) {
             case 'mtllib':
-                materials = materials.concat(parseMtl(await loadResource(words.shift())));
+                materials = materials.concat(parseMtl(await load(words.shift())));
                 break;
             case 'usemtl':
                 const materialName = words.shift();

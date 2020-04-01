@@ -1,12 +1,14 @@
-import { updates, systems, createRenderingCanvas } from '../../../engine/main';
+import { plugins, updates, systems, assign, createCanvas } from '../../../engine/main';
 import { createRenderableSystem } from './renderable';
 import { createRendererSystem } from './renderer';
 
-export const defaultVideoSystemOptions = {
-    getCanvas: createRenderingCanvas
-}
+export const webGPUOptions = {
+    getCanvas: createCanvas
+};
 
-export const registerVideoSystem = async (options = defaultVideoSystemOptions) => {
+export const registerWebGPU = async (options) => {
+    assign(webGPUOptions, options);
+
     const adapter = await navigator.gpu.requestAdapter();
     const device = await adapter.requestDevice();
 
@@ -26,3 +28,5 @@ export const registerVideoSystem = async (options = defaultVideoSystemOptions) =
     systems.add(renderableSystem);
     systems.add(rendererSystem);
 };
+
+plugins.webgpu = registerWebGPU;

@@ -1,17 +1,20 @@
-export const localStorageOptions = {
+import { assign } from '../utilities/objects';
 
+export const storageOptions = {
 };
 
-const storage = localStorage;
+export const configureStorage = (options) => {
+    assign(storageOptions, options);
+};
 
 export const saveLocal = (state) => {
     for (const name in state) {
-        state[name] = storage.getKey(name);
+        state[name] = localStorage.getKey(name);
     }
 };
 
 export const loadLocal = (state) => {
     for (const name in state) {
-        storage.setKey(name, state[name]);
+        localStorage.setKey(name, state[name]);
     }
 };

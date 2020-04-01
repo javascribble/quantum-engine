@@ -1,10 +1,13 @@
-﻿import { addListener } from '../application/browser';
+﻿import { assign } from '../utilities/objects';
+import { addListener } from '../application/browser';
 import { publish } from '../application/events';
 
-export const defaultTouchControls = {
+export const touchOptions = {
 };
 
-export const enableTouch = (options = defaultTouchControls) => {
+export const configureTouch = (options) => {
+    assign(touchOptions, options);
+
     addListener('touchstart', touchStart);
     addListener('touchmove', touchMove);
     addListener('touchend', touchEnd);

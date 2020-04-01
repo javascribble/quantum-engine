@@ -1,11 +1,9 @@
-import { resourceOptions } from '../../../engine/main';
+import { loaders } from '../../../engine/main';
 
-const loadImage = async (resource) => {
+loaders.png = async (resource) => {
     return new Promise((resolve, reject) => {
         const image = new Image();
         image.onload = () => resolve(image);
         image.src = resource;
     });
 };
-
-resourceOptions.extensions.png = loadImage;

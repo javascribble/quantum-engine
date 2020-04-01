@@ -1,10 +1,12 @@
+import { assign } from '../utilities/objects';
 import { addListener } from '../application/browser';
 
-export const defaultWorkerOptions = {
-
+export const workerOptions = {
 };
 
-export const enableOfflineSupport = (options = defaultWorkerOptions) => {
+export const configureWorker = (options) => {
+   assign(workerOptions, options);
+
    addListener('online', onlineListener);
    addListener('offline', offlineListener);
 

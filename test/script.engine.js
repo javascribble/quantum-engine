@@ -1,10 +1,1 @@
-engine.loaderOptions.path = '/test/resources';
-engine.enableEngineDefaults();
-engine.start();
-
-async function initialize() {	
-	await engine.registerVideoSystem();
-	await engine.load('game.json');
-}
-
-initialize();
+engine.loadGame('/test/resources/game.json').then(game => engine.start()); // TODO: Add progress updates.

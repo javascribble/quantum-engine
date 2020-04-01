@@ -5,7 +5,7 @@ export * from './application/device';
 export * from './application/events';
 export * from './application/host';
 export * from './application/options';
-export * from './application/presets';
+export * from './application/plugins';
 export * from './components/node';
 export * from './input/gamepads';
 export * from './input/keyboard';

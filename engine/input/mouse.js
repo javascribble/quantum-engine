@@ -1,10 +1,13 @@
-﻿import { addListener, preventDefault } from '../application/browser';
+﻿import { assign } from '../utilities/objects';
+import { addListener, preventDefault } from '../application/browser';
 import { publish } from '../application/events';
 
-export const defaultMouseControls = {
+export const mouseOptions = {
 };
 
-export const enableMouse = (options = defaultMouseControls) => {
+export const configureMouse = (options) => {
+    assign(mouseOptions, options);
+
     addListener('mousedown', mouseDown);
     addListener('mousemove', mouseMove);
     addListener('mouseup', mouseUp);

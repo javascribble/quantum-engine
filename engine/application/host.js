@@ -5,10 +5,6 @@ let frame = 0;
 
 export const updates = [];
 
-export const start = () => run(getTimestamp());
-
-export const stop = () => cancelAnimationFrame(frame);
-
 const run = (currentTime) => {
     let deltaTime = currentTime - previousTime;
     for (const update of updates) {
@@ -18,3 +14,7 @@ const run = (currentTime) => {
     previousTime = currentTime;
     frame = requestAnimationFrame(run);
 };
+
+export const start = () => run(getTimestamp());
+
+export const stop = () => cancelAnimationFrame(frame);

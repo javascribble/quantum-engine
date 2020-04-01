@@ -17,7 +17,7 @@ export const createRenderableSystem = (options) => {
 };
 
 // const loadLayout = async (resource) => {
-//     const layoutResource = await loadResource(resource);
+//     const layoutResource = await load(resource);
 
 //     for (const binding of layoutResource.bindings) {
 //         binding.visibility = getGPUShaderStageConstant(binding.visibility);
@@ -27,7 +27,7 @@ export const createRenderableSystem = (options) => {
 // };
 
 // const loadProgram = async (resource) => {
-//     const programResource = await loadResource(resource);
+//     const programResource = await load(resource);
 
 //     for (const colorState of programResource.colorStates) {
 //         colorState.writeMask = getGPUColorWriteConstant(colorState.writeMask);

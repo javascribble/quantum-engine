@@ -1,15 +1,13 @@
-﻿import { addListener } from '../application/browser';
+﻿import { assign } from '../utilities/objects';
+import { addListener } from '../application/browser';
 import { publish } from '../application/events';
 
-export const defaultKeyboardControls = {
-    UP: 'ArrowUp',
-    DOWN: 'ArrowDown',
-    LEFT: 'ArrowLeft',
-    RIGHT: 'ArrowRight',
-    ENTER: 'Enter'
+export const keyboardOptions = {
 };
 
-export const enableKeyboard = (options = defaultKeyboardControls) => {
+export const configureKeyboard = (options) => {
+    assign(keyboardOptions, options);
+
     addListener('keydown', keyboardKeyDown);
     addListener('keyup', keyboardKeyUp);
 };

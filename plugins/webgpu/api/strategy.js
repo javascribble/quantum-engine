@@ -35,7 +35,7 @@ export const updateStrategy = (commands, targets, adds, deletes) => {
 
         device.defaultQueue.copyImageBitmapToTexture(gpuImageBitmapCopyView, gpuTextureCopyView, imageSize);
 
-        const viewProjectionMatrix = orthographicMatrix4(100, canvas.width / canvas.height);
+        const viewProjectionMatrix = orthographicMatrix4(100, canvas.width / canvas.height); // TODO: Move to graphics plugin.
         const vertexUniformBuffer = createUniformBuffer(device, { size: viewProjectionMatrix.byteLength });
         bufferData(vertexUniformBuffer, 0, viewProjectionMatrix);
 

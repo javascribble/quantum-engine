@@ -1,17 +1,11 @@
 ﻿import { isString, getExtension } from '../utilities/strings';
+import { assign } from '../utilities/objects';
 
 export const loaderOptions = {
-    path: '/resources',
-    extensions: {
-        json: loadJson,
-        txt: loadText,
-        bin: loadBlob
-    }
+    path: '/resources'
 };
 
-const curryLoader = (loader) => async (resource) => await load(resource, loader);
-
-const resolveLoader = (resource) => loaderOptions.extensions[getExtension(resource)];
+export const configureLoader = (options) => assign(loaderOptions, options);
 
 export const loadBlob = (url) => fetch(url).then(response => response.blob());
 
@@ -23,11 +17,12 @@ export const loadFormData = (url) => fetch(url).then(response => response.formDa
 
 export const loadArrayBuffer = (url) => fetch(url).then(response => response.arrayBuffer());
 
-export const load = async (resource, loader = resolveLoader(resource)) => {
+export const load = async (resource, loader) => {
     if (isString(resource)) {
-        return await loader(`${loaderOptions.path}/${resource}`);
+        const path = resource.startsWith('/') ? resource : `${loaderOptions.path}/${resource}`;
+        return await (loader || loaders[getExtension(resource)])(path);
     } else if (Array.isArray(resource)) {
-        return resource.map(curryLoader(loader));
+        return resource.map(async (resource) => await load(resource, loader));
     } else {
         let object = {};
         for (const property in resource) {
@@ -36,4 +31,10 @@ export const load = async (resource, loader = resolveLoader(resource)) => {
 
         return object;
     }
+};
+
+export const loaders = {
+    json: loadJson,
+    txt: loadText,
+    bin: loadBlob
 };

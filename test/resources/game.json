@@ -1,3 +1,16 @@
 {
-	
+	"options": {
+		"gamepad": {},
+		"keyboard": {},
+		"mouse": {},
+		"touch": {},
+		"loader": {
+			"path": "/test/resources"
+		},
+		"network": {},
+		"workers": {},
+		"plugins": {
+			"webgpu": {}
+		}
+	}
 }
