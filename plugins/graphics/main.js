@@ -1,9 +1,18 @@
-export * from './components/angles';
-export * from './components/curves';
-export * from './components/matrix3';
-export * from './components/matrix4';
-export * from './components/scalar';
-export * from './components/shapes';
-export * from './components/vector2';
-export * from './components/vector3';
-export * from './components/vector4';
+import { plugins, updates, systems } from '../../engine/main';
+import { createTransformSystem } from './systems/transform';
+
+const defaultGraphicsOptions = {
+};
+
+plugins.graphics = (graphicsOptions) => {
+    const options = {
+        ...defaultGraphicsOptions,
+        graphicsOptions
+    };
+
+    const transformSystem = createTransformSystem(options);
+
+    updates.push(transformSystem.update);
+
+    systems.add(transformSystem);
+};

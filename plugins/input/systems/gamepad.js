@@ -1,9 +1,9 @@
-﻿import { plugins, updates, publish, addListener } from '../../../engine/main';
+﻿import { addListener } from '../utilities/aliases';
 
-export const defaultGamepadOptions = {
+const defaultGamepadOptions = {
 };
 
-plugins.gamepad = (gamepadOptions) => {
+export const createGamepadSystem = (gamepadOptions) => {
     const options = {
         ...defaultGamepadOptions,
         ...gamepadOptions
@@ -14,13 +14,13 @@ plugins.gamepad = (gamepadOptions) => {
     addListener('ongamepadconnected', event => gamepads.add(event.gamepad));
     addListener('ongamepaddisconnected', event => gamepads.delete(event.gamepad));
 
-    const updateGamepads = (deltaTime) => {
-        for (const gamepad of gamepads) {
-            //gamepad.buttons
-            //gamepad.axes
-            //publish
+    return {
+        update: (deltaTime) => {
+            for (const gamepad of gamepads) {
+                //gamepad.buttons
+                //gamepad.axes
+                //publish
+            }
         }
     }
-
-    updates.push(updateGamepads);
 };

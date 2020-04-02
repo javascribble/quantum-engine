@@ -1,6 +1,7 @@
-import { bufferData } from '../graphics/buffers';
-import { meshComponent } from '../../video/components/mesh';
-import { copyTransform, transformComponent } from '../components/transform';
+import { transformComponent } from '../components/transform';
+
+const defaultTransformOptions = {
+};
 
 const copyTransform = (transform, array) => {
     // TODO: Only multiply the parts that have changed.
@@ -23,22 +24,27 @@ const copyTransform = (transform, array) => {
     // array.set(transformation);
 };
 
-export const createTransformSystem = (options) => {
+export const createTransformSystem = (transformOptions) => {
+    const options = {
+        ...defaultTransformOptions,
+        ...transformOptions
+    }
+
     const entities = new Set();
     return {
         components: [transformComponent, meshComponent],
-        async add(entity) {
+        add: (entity) => {
             entities.add(entity);
         },
-        delete(entity) {
+        delete: (entity) => {
             entities.add(entity);
         },
-        update(deltaTime) {
+        update: (deltaTime) => {
             for (const entity of entities) {
                 const transform = entity.transform;
                 if (transform.changed) {
                     copyTransform(transform, renderable.data);
-                    bufferData(renderable.buffer, renderable.index, renderable.data);
+                    //bufferData(renderable.buffer, renderable.index, renderable.data);
                     transform.changed = false;
                 }
             }

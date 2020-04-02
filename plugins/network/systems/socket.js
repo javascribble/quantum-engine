@@ -1,17 +1,15 @@
-import { plugins, updates } from '../../../engine/main';
-
-export const defaultSocketOptions = {
+const defaultSocketOptions = {
 };
 
-const updateSocket = (deltaTime) => {
-    // TODO: Add web sockets.
-};
-
-plugins.socket = (socketOptions) => {
+export const createSocketSystem = (socketOptions) => {
     const options = {
         ...defaultSocketOptions,
         ...socketOptions
     };
 
-    updates.push(updateSocket);
+    return {
+        update: (deltaTime) => {
+
+        }
+    };
 };

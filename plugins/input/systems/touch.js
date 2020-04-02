@@ -1,6 +1,6 @@
-﻿import { plugins, publish, addListener } from '../../../engine/main';
+﻿import { addListener } from '../utilities/aliases';
 
-export const defaultTouchOptions = {
+const defaultTouchOptions = {
 };
 
 const touchStart = (event) => {
@@ -17,7 +17,7 @@ const touchEnd = (event) => {
 const touchCancel = (event) => {
 };
 
-plugins.touch = (touchOptions) => {
+export const createTouchSystem = (touchOptions) => {
     const options = {
         ...defaultTouchOptions,
         ...touchOptions
@@ -27,4 +27,6 @@ plugins.touch = (touchOptions) => {
     addListener('touchmove', touchMove);
     addListener('touchend', touchEnd);
     addListener('touchcancel', touchCancel);
+
+    return {};
 };

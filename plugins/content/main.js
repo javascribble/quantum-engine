@@ -1,6 +1,14 @@
-export * from './components/model';
-export * from './components/shader';
-export * from './components/texture';
-export * from './systems/loader';
-export * from './systems/loader';
-export * from './systems/loader';
+import { plugins, updates, systems } from '../../engine/main';
+import { createResourcesSystem } from './systems/resources';
+
+const defaultContentOptions = {
+};
+
+plugins.content = async (contentOptions) => {
+    const options = {
+        ...defaultContentOptions,
+        ...contentOptions
+    };
+
+    const resourcesSystem = createResourcesSystem(options);
+};

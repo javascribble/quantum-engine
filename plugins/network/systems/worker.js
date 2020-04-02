@@ -1,6 +1,6 @@
-import { plugins, addListener } from '../../../engine/main';
+import { addListener } from '../utilities/aliases';
 
-export const defaultWorkerOptions = {
+const defaultWorkerOptions = {
 };
 
 const onlineListener = () => {
@@ -9,7 +9,7 @@ const onlineListener = () => {
 const offlineListener = () => {
 };
 
-plugins.worker = (workerOptions) => {
+export const createWorkerSystem = (workerOptions) => {
     const options = {
         ...defaultWorkerOptions,
         ...workerOptions
@@ -22,4 +22,6 @@ plugins.worker = (workerOptions) => {
     if (serviceWorker) {
         //serviceWorker.register('service-worker.js', { scope: '/' });
     }
+
+    return {};
 };

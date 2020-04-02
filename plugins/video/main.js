@@ -1,5 +1,34 @@
-export * from './components/material';
-export * from './components/mesh';
-export * from './components/renderable';
-export * from './entities/camera';
-export * from './systems/video';
+import { plugins, updates, systems } from '../../engine/main';
+import { createRenderableSystem } from './systems/renderable';
+import { createRendererSystem } from './systems/renderer';
+
+const defaultVideoOptions = {
+    scale: devicePixelRatio,
+    parent: document.body
+};
+
+plugins.video = async (videoOptions) => {
+    const options = {
+        ...defaultVideoOptions,
+        ...videoOptions
+    };
+
+    const adapter = await navigator.gpu.requestAdapter();
+    const device = await adapter.requestDevice();
+
+    const renderableSystemOptions = {
+        device
+    };
+
+    const rendererSystemOptions = {
+        canvases: options.canvases || [options.getCanvas(options)],
+        device
+    };
+
+    const renderableSystem = createRenderableSystem(renderableSystemOptions);
+    const rendererSystem = await createRendererSystem(rendererSystemOptions);
+    updates.push(renderableSystem.update);
+    updates.push(rendererSystem.update);
+    systems.add(renderableSystem);
+    systems.add(rendererSystem);
+};

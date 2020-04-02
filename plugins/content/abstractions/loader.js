@@ -1,4 +1,4 @@
-﻿import { plugins, isString, getExtension } from '../../../engine/main';
+﻿
 
 export const defaultLoaderOptions = {
     path: '/resources'
@@ -36,9 +36,4 @@ export const load = async (resource, loader) => {
     }
 };
 
-plugins.loader = (loaderOptions) => {
-    const options = {
-        ...defaultLoaderOptions,
-        ...loaderOptions
-    }
-};
+

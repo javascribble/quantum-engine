@@ -2,16 +2,24 @@ import { meshComponent } from '../components/mesh';
 import { materialComponent } from '../components/material';
 //import { getGPUShaderStageConstant, getGPUColorWriteConstant } from '../../webgpu/graphics/constants';
 
-export const createRenderableSystem = (options) => {
+const defaultRenderableOptions = {
+};
+
+export const createRenderableSystem = async (renderableOptions) => {
+    const options = {
+        ...defaultRenderableOptions,
+        ...renderableOptions
+    };
+
     const device = options.device;
 
     return {
         components: [meshComponent, materialComponent],
-        add(entity) {
+        add: (entity) => {
         },
-        delete(entity) {
+        delete: (entity) => {
         },
-        update(deltaTime) {
+        update: (deltaTime) => {
         }
     }
 };

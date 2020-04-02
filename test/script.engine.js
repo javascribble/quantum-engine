@@ -1,14 +1,10 @@
 const plugins = {
-	gamepad: {},
-	keyboard: {},
-	mouse: {},
-	touch: {},
+	input: {},
 	loader: {
 		path: '/test/resources'
 	},
-	socket: {},
 	storage: {},
-	worker: {},
+	network: {},
 	audio: {},
 	video: {},
 	scene: {

@@ -1,13 +1,13 @@
-﻿import { plugins, publish, addListener } from '../../../engine/main';
+﻿import { addListener } from '../utilities/aliases';
 
-export const defaultKeyboardOptions = {
+const defaultKeyboardOptions = {
 };
 
 const keyboardKeyDown = (event) => publish(event.code, event);
 
 const keyboardKeyUp = (event) => publish(event.code, event);
 
-plugins.keyboard = (keyboardOptions) => {
+export const createKeyboardSystem = (keyboardOptions) => {
     const options = {
         ...defaultKeyboardOptions,
         ...keyboardOptions
@@ -15,4 +15,6 @@ plugins.keyboard = (keyboardOptions) => {
 
     addListener('keydown', keyboardKeyDown);
     addListener('keyup', keyboardKeyUp);
+
+    return {};
 };

@@ -1,29 +1,38 @@
-import { createSwapChain } from '../api/context';
-import { encodeCommand } from '../api/commands';
-import { updateStrategy } from '../api/strategy';
+import { createCanvas } from '../abstractions/canvas';
+import { createSwapChain } from '../abstractions/context';
+import { encodeCommand } from '../abstractions/commands';
+import { updateStrategy } from '../abstractions/strategy';
 import { renderableComponent } from '../components/renderable';
 
-export const createRendererSystem = async (options) => {
+const defaultRendererOptions = {
+};
+
+export const createRendererSystem = async (rendererOptions) => {
+    const options = {
+        ...defaultRendererOptions,
+        ...rendererOptions
+    };
+
     const adds = new Set();
     const deletes = new Set();
     const commands = new Map();
     const targets = new Map();
 
     const device = options.device;
-    for (const canvas of options.canvases) {
+    for (const canvas of options.canvases || [createCanvas()]) {
         const swapChain = await createSwapChain(device, canvas);
         targets.set(canvas.name, { canvas, swapChain });
     }
 
     return {
         components: [renderableComponent],
-        add(entity) {
+        add: (entity) => {
             adds.add(entity.renderable);
         },
-        delete(entity) {
+        delete: (entity) => {
             deletes.add(entity.renderable);
         },
-        update(deltaTime) {
+        update: (deltaTime) => {
             for (const target of targets.values()) {
                 target.texture = target.swapChain.getCurrentTexture().createView();
             }

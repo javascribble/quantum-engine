@@ -1,6 +1,4 @@
-import { plugins } from '../../../engine/main';
-
-export const defaultStorageOptions = {
+const defaultLocalStorageOptions = {
 };
 
 const saveLocal = (state) => {
@@ -15,9 +13,15 @@ const loadLocal = (state) => {
     }
 };
 
-plugins.storage = (storageOptions) => {
+export const createLocalStorageSystem = (localStorageOptions) => {
     const options = {
-        ...defaultStorageOptions,
-        storageOptions
+        ...defaultLocalStorageOptions,
+        ...localStorageOptions
+    };
+
+    return {
+        update: (deltaTime) => {
+
+        }
     };
 };
