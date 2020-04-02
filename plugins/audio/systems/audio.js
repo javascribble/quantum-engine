@@ -1,10 +1,11 @@
-import { plugins, updates, systems, assign } from '../imports';
+import { plugins, updates, systems } from '../../../engine/main';
 
-export const audioOptions = {
+export const defaultAudioOptions = {
 };
 
-export const registerAudio = async (options) => {
-    assign(audioOptions, options);
+plugins.audio = async (audioOptions) => {
+    const options = {
+        ...defaultAudioOptions,
+        ...audioOptions
+    }
 };
-
-plugins.audio = registerAudio;

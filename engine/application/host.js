@@ -1,6 +1,4 @@
-const timestamp = performance.now;
-
-let previousTime = timestamp();
+let previousTime = performance.now();
 let frame = 0;
 
 export const updates = [];
@@ -18,6 +16,6 @@ const animateFrame = (currentTime) => {
     frame = requestAnimationFrame(animateFrame);
 };
 
-export const startAnimation = () => animateFrame(timestamp());
+export const startAnimation = () => animateFrame(performance.now());
 
 export const stopAnimation = () => cancelAnimationFrame(frame);

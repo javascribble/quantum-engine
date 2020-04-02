@@ -1,7 +1,6 @@
-import { assign, setElementParent } from '../imports';
-import { videoOptions } from '../systems/video';
+import { setElementParent } from '../../../engine/main';
 
-export const canvasOptions = {
+export const defaultCanvasOptions = {
     alpha: false,
     depth: true,
     stencil: false,
@@ -11,9 +10,14 @@ export const canvasOptions = {
     preserveDrawingBuffer: false
 };
 
-export const configureCanvas = (options) => assign(canvasOptions, options);
+export const configureCanvas = (canvasOptions) => {
+    const options = {
+        ...defaultCanvasOptions,
+        ...canvasOptions
+    }
+};
 
-export const createCanvas = (options = videoOptions) => {
+export const createCanvas = (options) => {
     const canvas = document.createElement('canvas');
 
     if (options.parent) {

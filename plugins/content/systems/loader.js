@@ -1,6 +1,6 @@
-﻿import { plugins, assign, isString, getExtension } from '../imports';
+﻿import { plugins, isString, getExtension } from '../../../engine/main';
 
-export const loaderOptions = {
+export const defaultLoaderOptions = {
     path: '/resources'
 };
 
@@ -36,4 +36,9 @@ export const load = async (resource, loader) => {
     }
 };
 
-plugins.loader = (options) => assign(loaderOptions, options);
+plugins.loader = (loaderOptions) => {
+    const options = {
+        ...defaultLoaderOptions,
+        ...loaderOptions
+    }
+};

@@ -1,6 +1,6 @@
-﻿import { plugins, publish, assign, addListener, preventDefault } from '../imports';
+﻿import { plugins, publish, addListener, preventDefault } from '../../../engine/main';
 
-export const mouseOptions = {
+export const defaultMouseOptions = {
 };
 
 const mouseDown = (event) => {
@@ -23,8 +23,11 @@ const mouseWheel = (event) => {
 
 const contextMenu = (event) => preventDefault(event);
 
-plugins.mouse = (options) => {
-    assign(mouseOptions, options);
+plugins.mouse = (mouseOptions) => {
+    const options = {
+        ...defaultMouseOptions,
+        ...mouseOptions
+    }
 
     addListener('mousedown', mouseDown);
     addListener('mousemove', mouseMove);

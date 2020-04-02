@@ -1,6 +1,6 @@
-﻿import { plugins, publish, assign, addListener } from '../imports';
+﻿import { plugins, publish, addListener } from '../../../engine/main';
 
-export const touchOptions = {
+export const defaultTouchOptions = {
 };
 
 const touchStart = (event) => {
@@ -17,8 +17,11 @@ const touchEnd = (event) => {
 const touchCancel = (event) => {
 };
 
-plugins.touch = (options) => {
-    assign(touchOptions, options);
+plugins.touch = (touchOptions) => {
+    const options = {
+        ...defaultTouchOptions,
+        ...touchOptions
+    }
 
     addListener('touchstart', touchStart);
     addListener('touchmove', touchMove);

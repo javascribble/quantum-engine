@@ -6,8 +6,9 @@ const plugins = {
 	loader: {
 		path: '/test/resources'
 	},
-	network: {},
-	workers: {},
+	socket: {},
+	storage: {},
+	worker: {},
 	audio: {},
 	video: {},
 	scene: {

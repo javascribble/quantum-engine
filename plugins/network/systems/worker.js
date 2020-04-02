@@ -1,6 +1,6 @@
-import { plugins, assign, addListener } from '../imports';
+import { plugins, addListener } from '../../../engine/main';
 
-export const workerOptions = {
+export const defaultWorkerOptions = {
 };
 
 const onlineListener = () => {
@@ -9,8 +9,11 @@ const onlineListener = () => {
 const offlineListener = () => {
 };
 
-plugins.worker = (options) => {
-    assign(workerOptions, options);
+plugins.worker = (workerOptions) => {
+    const options = {
+        ...defaultWorkerOptions,
+        ...workerOptions
+    };
 
     addListener('online', onlineListener);
     addListener('offline', offlineListener);

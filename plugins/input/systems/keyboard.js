@@ -1,14 +1,17 @@
-﻿import { plugins, publish, assign, addListener } from '../imports';
+﻿import { plugins, publish, addListener } from '../../../engine/main';
 
-export const keyboardOptions = {
+export const defaultKeyboardOptions = {
 };
 
 const keyboardKeyDown = (event) => publish(event.code, event);
 
 const keyboardKeyUp = (event) => publish(event.code, event);
 
-plugins.keyboard = (options) => {
-    assign(keyboardOptions, options);
+plugins.keyboard = (keyboardOptions) => {
+    const options = {
+        ...defaultKeyboardOptions,
+        ...keyboardOptions
+    }
 
     addListener('keydown', keyboardKeyDown);
     addListener('keyup', keyboardKeyUp);

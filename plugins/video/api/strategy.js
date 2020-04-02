@@ -1,4 +1,4 @@
-import { orthographicMatrix4 } from '../../graphics/main';
+//import { orthographicMatrix4 } from '../../graphics/main';
 import { bufferData, createIndexBuffer, createUniformBuffer, createVertexBuffer } from './buffers';
 import { createDepthTexture, createSampledTexture } from './textures';
 import { createCanvasViewport } from './viewport';
@@ -35,7 +35,7 @@ export const updateStrategy = (commands, targets, adds, deletes) => {
 
         device.defaultQueue.copyImageBitmapToTexture(gpuImageBitmapCopyView, gpuTextureCopyView, imageSize);
 
-        const viewProjectionMatrix = orthographicMatrix4(100, canvas.width / canvas.height);
+        //const viewProjectionMatrix = orthographicMatrix4(100, canvas.width / canvas.height);
         const vertexUniformBuffer = createUniformBuffer(device, { size: viewProjectionMatrix.byteLength });
         bufferData(vertexUniformBuffer, 0, viewProjectionMatrix);
 

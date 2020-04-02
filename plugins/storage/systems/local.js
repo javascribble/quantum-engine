@@ -1,6 +1,6 @@
-import { plugins, assign } from '../imports';
+import { plugins } from '../../../engine/main';
 
-export const storageOptions = {
+export const defaultStorageOptions = {
 };
 
 const saveLocal = (state) => {
@@ -15,6 +15,9 @@ const loadLocal = (state) => {
     }
 };
 
-plugins.storage = (options) => {
-    assign(storageOptions, options);
+plugins.storage = (storageOptions) => {
+    const options = {
+        ...defaultStorageOptions,
+        storageOptions
+    };
 };

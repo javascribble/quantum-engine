@@ -1,16 +1,19 @@
-import { plugins, updates, systems, assign } from '../imports';
+import { plugins, updates, systems } from '../../../engine/main';
 import { createRenderableSystem } from './renderable';
 import { createRendererSystem } from './renderer';
 import { createCanvas } from '../api/canvas';
 
-export const videoOptions = {
+export const defaultVideoOptions = {
     getCanvas: createCanvas,
     scale: devicePixelRatio,
     parent: document.body
 };
 
-plugins.video = async (options) => {
-    assign(videoOptions, options);
+plugins.video = async (videoOptions) => {
+    const options = {
+        ...defaultVideoOptions,
+        ...videoOptions
+    };
 
     const adapter = await navigator.gpu.requestAdapter();
     const device = await adapter.requestDevice();
@@ -20,7 +23,7 @@ plugins.video = async (options) => {
     };
 
     const rendererSystemOptions = {
-        canvases: options.canvases || [options.getCanvas()],
+        canvases: options.canvases || [options.getCanvas(options)],
         device
     };
 
