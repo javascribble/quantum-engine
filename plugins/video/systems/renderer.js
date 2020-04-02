@@ -19,7 +19,7 @@ export const createRendererSystem = async (rendererOptions) => {
     const targets = new Map();
 
     const device = options.device;
-    for (const canvas of options.canvases || [createCanvas()]) {
+    for (const canvas of options.canvases || [createCanvas(options)]) {
         const swapChain = await createSwapChain(device, canvas);
         targets.set(canvas.name, { canvas, swapChain });
     }

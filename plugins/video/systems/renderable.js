@@ -5,7 +5,7 @@ import { materialComponent } from '../components/material';
 const defaultRenderableOptions = {
 };
 
-export const createRenderableSystem = async (renderableOptions) => {
+export const createRenderableSystem = (renderableOptions) => {
     const options = {
         ...defaultRenderableOptions,
         ...renderableOptions

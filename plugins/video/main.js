@@ -8,25 +8,17 @@ const defaultVideoOptions = {
 };
 
 plugins.video = async (videoOptions) => {
-    const options = {
-        ...defaultVideoOptions,
-        ...videoOptions
-    };
-
     const adapter = await navigator.gpu.requestAdapter();
     const device = await adapter.requestDevice();
 
-    const renderableSystemOptions = {
+    const options = {
+        ...defaultVideoOptions,
+        ...videoOptions,
         device
     };
 
-    const rendererSystemOptions = {
-        canvases: options.canvases || [options.getCanvas(options)],
-        device
-    };
-
-    const renderableSystem = createRenderableSystem(renderableSystemOptions);
-    const rendererSystem = await createRendererSystem(rendererSystemOptions);
+    const renderableSystem = createRenderableSystem(options);
+    const rendererSystem = await createRendererSystem(options);
     updates.push(renderableSystem.update);
     updates.push(rendererSystem.update);
     systems.add(renderableSystem);

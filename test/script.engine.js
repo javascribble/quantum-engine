@@ -1,6 +1,6 @@
 const plugins = {
 	input: {},
-	loader: {
+	content: {
 		path: '/test/resources'
 	},
 	storage: {},
