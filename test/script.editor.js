@@ -1,1 +1,1 @@
-editor.loaderOptions.path = '/test/resources';
+editor.start();

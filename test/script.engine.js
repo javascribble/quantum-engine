@@ -1,17 +1,11 @@
 engine.start({
 	content: {
 		path: '/test/resources',
-		scenes: [{
-			resources: [0]
-		}],
+		scenes: [
+			'webgpuScene.json'
+		],
 		resources: [
-			'webgpuStaticBuffers.json',
-			'webgpuRenderPass.json',
-			'triangle.vert.spv',
-			'triangle.frag.spv',
-			'webgpuLayout.json',
-			'webgpuProgram.json',
-			'webgpuTexture.json'
-		]		
+			'webgpuStaticBuffers.json'
+		]
 	}
 });

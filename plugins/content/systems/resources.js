@@ -1,19 +1,29 @@
-import { load, assign } from '../../../engine/main';
+import { systems, load, assign, publish } from '../../../engine/main';
+import { resourcesComponent } from '../components/resources';
 
-const defaultLoaderOptions = {
-    path: '/resources'
+const defaultResourcesOptions = {
+    path: '/' + resourcesComponent
 };
 
-export const enableLoaderSystem = (loaderOptions) => {
+export const enableResourcesSystem = (resourcesOptions) => {
     const options = {
-        ...defaultLoaderOptions,
-        ...loaderOptions
+        ...defaultResourcesOptions,
+        ...resourcesOptions
     };
 
-    const resources = new Map();
+    const resources = options.resources;
+
     systems.add({
-        components: ['resources'],
+        components: [resourcesComponent],
         add: (entity) => {
+            const resources = entity.resources;
+            for (let i = 0; i < resources.length; i++) {
+                const resource = resources[i]
+                if (isInteger(resource)) {
+                    resources[i] = options.resources[resource];
+                }
+            }
+
             const progress = { total: 0, completed: 0 };
             const loadResources = (urls, container) => {
                 const handleError = (error) => {
