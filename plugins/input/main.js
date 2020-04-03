@@ -1,8 +1,11 @@
-import { plugins, updates, systems } from '../../engine/main';
-import { createGamepadSystem } from './systems/gamepad';
-import { createKeyboardSystem } from './systems/keyboard';
-import { createMouseSystem } from './systems/mouse';
-import { createTouchSystem } from './systems/touch';
+//export * from './components';
+//export * from './entities';
+
+import { enableGamepadSystem } from './systems/gamepad';
+import { enableKeyboardSystem } from './systems/keyboard';
+import { enableMouseSystem } from './systems/mouse';
+import { enableTouchSystem } from './systems/touch';
+import { plugins } from '../../engine/main';
 
 const defaultInputOptions = {
 };
@@ -13,10 +16,8 @@ plugins.input = (inputOptions) => {
         ...inputOptions
     };
 
-    const gamepadSystem = createGamepadSystem(options);
-    const keyboardSystem = createKeyboardSystem(options);
-    const mouseSystem = createMouseSystem(options);
-    const touchSystem = createTouchSystem(options);
-
-    updates.push(gamepadSystem.update);
+    enableGamepadSystem(options);
+    enableKeyboardSystem(options);
+    enableMouseSystem(options);
+    enableTouchSystem(options);
 };

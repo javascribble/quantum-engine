@@ -1,3 +1,4 @@
+import { updates, systems } from '../../../engine/main';
 import { transformComponent } from '../components/transform';
 
 const defaultTransformOptions = {
@@ -24,30 +25,32 @@ const copyTransform = (transform, array) => {
     // array.set(transformation);
 };
 
-export const createTransformSystem = (transformOptions) => {
+export const enableTransformSystem = (transformOptions) => {
     const options = {
         ...defaultTransformOptions,
         ...transformOptions
     }
 
     const entities = new Set();
-    return {
+
+    systems.add({
         components: [transformComponent, meshComponent],
         add: (entity) => {
             entities.add(entity);
         },
         delete: (entity) => {
             entities.add(entity);
-        },
-        update: (deltaTime) => {
-            for (const entity of entities) {
-                const transform = entity.transform;
-                if (transform.changed) {
-                    copyTransform(transform, renderable.data);
-                    //bufferData(renderable.buffer, renderable.index, renderable.data);
-                    transform.changed = false;
-                }
+        }
+    });
+
+    updates.add((deltaTime) => {
+        for (const entity of entities) {
+            const transform = entity.transform;
+            if (transform.changed) {
+                copyTransform(transform, renderable.data);
+                //bufferData(renderable.buffer, renderable.index, renderable.data);
+                transform.changed = false;
             }
         }
-    }
+    });
 };

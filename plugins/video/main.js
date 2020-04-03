@@ -1,26 +1,14 @@
-import { plugins, updates, systems } from '../../engine/main';
-import { createRenderableSystem } from './systems/renderable';
-import { createRendererSystem } from './systems/renderer';
+//export * from './components';
+//export * from './entities';
 
-const defaultVideoOptions = {
-    scale: devicePixelRatio,
-    parent: document.body
-};
+import { enableRenderableSystem } from './systems/renderable';
+import { enableRendererSystem } from './systems/renderer';
+import { plugins } from '../../engine/main';
 
-plugins.video = async (videoOptions) => {
+plugins.video = async (options) => {
     const adapter = await navigator.gpu.requestAdapter();
     const device = await adapter.requestDevice();
 
-    const options = {
-        ...defaultVideoOptions,
-        ...videoOptions,
-        device
-    };
-
-    const renderableSystem = createRenderableSystem(options);
-    const rendererSystem = await createRendererSystem(options);
-    updates.push(renderableSystem.update);
-    updates.push(rendererSystem.update);
-    systems.add(renderableSystem);
-    systems.add(rendererSystem);
-};
+    enableRenderableSystem(options, device);
+    await enableRendererSystem(options, device);
+}; 

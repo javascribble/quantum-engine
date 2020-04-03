@@ -1,18 +1,11 @@
-import { plugins, updates, systems } from '../../engine/main';
-import { createTransformSystem } from './systems/transform';
+//export * from './components';
+//export * from './entities';
 
-const defaultGraphicsOptions = {
-};
+import { enableTransformSystem } from './systems/transform';
+import { enableGraphSystem } from './systems/graph';
+import { plugins } from '../../engine/main';
 
-plugins.graphics = (graphicsOptions) => {
-    const options = {
-        ...defaultGraphicsOptions,
-        graphicsOptions
-    };
-
-    const transformSystem = createTransformSystem(options);
-
-    updates.push(transformSystem.update);
-
-    systems.add(transformSystem);
+plugins.graphics = (options) => {
+    enableTransformSystem(options);
+    enableGraphSystem(options);
 };

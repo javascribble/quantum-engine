@@ -2,8 +2,8 @@ import { entries } from '../utilities/objects';
 
 export const plugins = {};
 
-export const configure = (options) => {
+export const configure = async (options) => {
     for (const [plugin, option] of entries(options)) {
-        plugins[plugin](option);
+        await plugins[plugin](option);
     }
 };

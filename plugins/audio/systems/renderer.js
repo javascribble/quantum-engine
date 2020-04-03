@@ -1,19 +1,14 @@
-const defaultRendererOptions = {
-};
+import { updates, systems } from '../../../engine/main';
 
-export const createRendererSystem = async (rendererOptions) => {
-    const options = {
-        ...defaultRendererOptions,
-        ...rendererOptions
-    };
-
-    return {
+export const enableRendererSystem = () => {
+    systems.add({
         components: [],
         add: (entity) => {
         },
         delete: (entity) => {
-        },
-        update: (deltaTime) => {
         }
-    }
-}; 
+    });
+
+    updates.add((deltaTime) => {
+    });
+};

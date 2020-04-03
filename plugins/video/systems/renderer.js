@@ -1,13 +1,16 @@
-import { createCanvas } from '../abstractions/canvas';
-import { createSwapChain } from '../abstractions/context';
-import { encodeCommand } from '../abstractions/commands';
-import { updateStrategy } from '../abstractions/strategy';
+import { updates, systems } from '../../../engine/main';
+import { createCanvas } from './canvas';
+import { createSwapChain } from './context';
+import { encodeCommand } from './commands';
+import { updateStrategy } from './strategy';
 import { renderableComponent } from '../components/renderable';
 
 const defaultRendererOptions = {
+    scale: devicePixelRatio,
+    parent: document.body
 };
 
-export const createRendererSystem = async (rendererOptions) => {
+export const enableRendererSystem = async (rendererOptions) => {
     const options = {
         ...defaultRendererOptions,
         ...rendererOptions
@@ -24,32 +27,33 @@ export const createRendererSystem = async (rendererOptions) => {
         targets.set(canvas.name, { canvas, swapChain });
     }
 
-    return {
+    systems.add({
         components: [renderableComponent],
         add: (entity) => {
             adds.add(entity.renderable);
         },
         delete: (entity) => {
             deletes.add(entity.renderable);
-        },
-        update: (deltaTime) => {
-            for (const target of targets.values()) {
-                target.texture = target.swapChain.getCurrentTexture().createView();
-            }
-
-            if (adds.size > 0 || deletes.size > 0) {
-                updateStrategy(commands, targets, adds, deletes);
-                adds.clear();
-                deletes.clear();
-            }
-
-            const encodedCommands = [];
-            for (const command of commands.values()) {
-                encodedCommands.push(encodeCommand(device, command));
-            }
-
-            // TODO: Support multiple queues.
-            device.defaultQueue.submit(encodedCommands);
         }
-    }
+    });
+
+    updates.push((deltaTime) => {
+        for (const target of targets.values()) {
+            target.texture = target.swapChain.getCurrentTexture().createView();
+        }
+
+        if (adds.size > 0 || deletes.size > 0) {
+            updateStrategy(commands, targets, adds, deletes);
+            adds.clear();
+            deletes.clear();
+        }
+
+        const encodedCommands = [];
+        for (const command of commands.values()) {
+            encodedCommands.push(encodeCommand(device, command));
+        }
+
+        // TODO: Support multiple queues.
+        device.defaultQueue.submit(encodedCommands);
+    });
 }; 

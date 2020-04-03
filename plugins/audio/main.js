@@ -1,14 +1,9 @@
-import { plugins, updates, systems } from '../../engine/main';
-import { createRendererSystem } from './systems/renderer';
+//export * from './components';
+//export * from './entities';
 
-export const defaultAudioOptions = {
-};
+import { enableRendererSystem } from './systems/renderer';
+import { plugins } from '../../engine/main';
 
-plugins.audio = async (audioOptions) => {
-    const options = {
-        ...defaultAudioOptions,
-        ...audioOptions
-    };
-
-    const rendererSystem = createRendererSystem(options);
+plugins.audio = (options) => {
+    enableRendererSystem(options);
 };

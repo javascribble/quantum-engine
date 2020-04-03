@@ -1,14 +1,7 @@
-import { plugins, updates, systems } from '../../engine/main';
-import { createResourcesSystem } from './systems/resources';
+//export * from './components';
+//export * from './entities';
 
-const defaultContentOptions = {
-};
+import { plugins } from '../../engine/main';
 
-plugins.content = async (contentOptions) => {
-    const options = {
-        ...defaultContentOptions,
-        ...contentOptions
-    };
-
-    const resourcesSystem = createResourcesSystem(options);
+plugins.content = (options) => {
 };

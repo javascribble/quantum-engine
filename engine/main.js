@@ -4,6 +4,7 @@ export * from './application/constants';
 export * from './application/device';
 export * from './application/events';
 export * from './application/host';
+export * from './application/loader';
 export * from './application/plugins';
 export * from './application/session';
 export * from './utilities/arrays';

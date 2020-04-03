@@ -1,18 +1,11 @@
-import { plugins, updates, systems } from '../../engine/main';
-import { createSocketSystem } from './systems/socket';
-import { createWorkerSystem } from './systems/worker';
+//export * from './components';
+//export * from './entities';
 
-const defaultNetworkOptions = {
-};
+import { enableSocketSystem } from './systems/socket';
+import { enableWorkerSystem } from './systems/worker';
+import { plugins } from '../../engine/main';
 
-plugins.network = (networkOptions) => {
-    const options = {
-        ...defaultNetworkOptions,
-        ...networkOptions
-    };
-
-    const socketSystem = createSocketSystem(options);
-    const workerSystem = createWorkerSystem(options);
-
-    updates.push(socketSystem.update);
+plugins.network = (options) => {
+    enableSocketSystem(options);
+    enableWorkerSystem(options);
 };

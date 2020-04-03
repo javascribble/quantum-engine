@@ -1,3 +1,4 @@
+import { updates, systems } from '../../../engine/main';
 import { meshComponent } from '../components/mesh';
 import { materialComponent } from '../components/material';
 //import { getGPUShaderStageConstant, getGPUColorWriteConstant } from '../../webgpu/graphics/constants';
@@ -5,23 +6,22 @@ import { materialComponent } from '../components/material';
 const defaultRenderableOptions = {
 };
 
-export const createRenderableSystem = (renderableOptions) => {
+export const enableRenderableSystem = (renderableOptions) => {
     const options = {
         ...defaultRenderableOptions,
         ...renderableOptions
     };
 
-    const device = options.device;
-
-    return {
+    systems.add({
         components: [meshComponent, materialComponent],
         add: (entity) => {
         },
         delete: (entity) => {
-        },
-        update: (deltaTime) => {
         }
-    }
+    });
+
+    updates.push((deltaTime) => {
+    });
 };
 
 // const loadLayout = async (resource) => {

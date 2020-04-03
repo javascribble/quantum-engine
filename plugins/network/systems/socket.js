@@ -1,15 +1,15 @@
+import { updates } from "../../../engine/main";
+
 const defaultSocketOptions = {
 };
 
-export const createSocketSystem = (socketOptions) => {
+export const enableSocketSystem = (socketOptions) => {
     const options = {
         ...defaultSocketOptions,
         ...socketOptions
     };
 
-    return {
-        update: (deltaTime) => {
+    updates.add((deltaTime) => {
 
-        }
-    };
+    });
 };

@@ -1,4 +1,4 @@
-import { addListener } from '../utilities/aliases';
+import { systems, updates, listeners } from '../../../engine/main';
 
 const defaultWorkerOptions = {
 };
@@ -9,19 +9,17 @@ const onlineListener = () => {
 const offlineListener = () => {
 };
 
-export const createWorkerSystem = (workerOptions) => {
+export const enableWorkerSystem = (workerOptions) => {
     const options = {
         ...defaultWorkerOptions,
         ...workerOptions
     };
 
-    addListener('online', onlineListener);
-    addListener('offline', offlineListener);
+    listeners.set('online', onlineListener);
+    listeners.set('offline', offlineListener);
 
     const serviceWorker = navigator.serviceWorker;
     if (serviceWorker) {
         //serviceWorker.register('service-worker.js', { scope: '/' });
     }
-
-    return {};
 };

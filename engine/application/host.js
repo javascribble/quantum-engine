@@ -1,7 +1,7 @@
 let previousTime = performance.now();
 let frame = 0;
 
-export const updates = [];
+export const updates = new Set();
 export const options = {
     timeScale: 1
 };

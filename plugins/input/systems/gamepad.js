@@ -1,9 +1,9 @@
-﻿import { addListener } from '../utilities/aliases';
+﻿import { updates, systems, listeners } from '../../../engine/main';
 
 const defaultGamepadOptions = {
 };
 
-export const createGamepadSystem = (gamepadOptions) => {
+export const enableGamepadSystem = (gamepadOptions) => {
     const options = {
         ...defaultGamepadOptions,
         ...gamepadOptions
@@ -11,16 +11,14 @@ export const createGamepadSystem = (gamepadOptions) => {
 
     const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
 
-    addListener('ongamepadconnected', event => gamepads.add(event.gamepad));
-    addListener('ongamepaddisconnected', event => gamepads.delete(event.gamepad));
+    listeners.set('ongamepadconnected', event => gamepads.add(event.gamepad));
+    listeners.set('ongamepaddisconnected', event => gamepads.delete(event.gamepad));
 
-    return {
-        update: (deltaTime) => {
-            for (const gamepad of gamepads) {
-                //gamepad.buttons
-                //gamepad.axes
-                //publish
-            }
+    updates.add((deltaTime) => {
+        for (const gamepad of gamepads) {
+            //gamepad.buttons
+            //gamepad.axes
+            //publish
         }
-    }
+    });
 };

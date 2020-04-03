@@ -1,6 +1,6 @@
 import { defineProperty } from './objects';
 
-export const createAssignPropertyTrap = (handler) => ({
+const createAssignPropertyTrap = (handler) => ({
     set(target, property, value) {
         target[property] = value;
         handler(target, property);
@@ -8,7 +8,7 @@ export const createAssignPropertyTrap = (handler) => ({
     }
 });
 
-export const createDefinePropertyTrap = (handler) => ({
+const createDefinePropertyTrap = (handler) => ({
     defineProperty(target, property, descriptor) {
         defineProperty(target, property, descriptor);
         handler(target, property);
@@ -16,18 +16,15 @@ export const createDefinePropertyTrap = (handler) => ({
     },
 });
 
-export const createDeletePropertyTrap = (handler) => ({
+const createDeletePropertyTrap = (handler) => ({
     deleteProperty(target, property) {
         handler(target, property);
         delete target[property];
     }
 });
 
-export const captureShallowObjectChanges = (object) => {
-    const handler = target => target.changed = true;
-    return new Proxy(object, {
-        ...createAssignPropertyTrap(handler),
-        //...createDefinePropertyTrap(handler),
-        //...createDeletePropertyTrap(handler)
-    });
-};
+export const createObjectObserver = (addPropertyHandler, deletePropertyHandler) => ({
+    ...createAssignPropertyTrap(addPropertyHandler),
+    ...createDefinePropertyTrap(addPropertyHandler),
+    ...createDeletePropertyTrap(deletePropertyHandler)
+});
