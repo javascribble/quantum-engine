@@ -1,48 +1,37 @@
-import { createObjectObserver } from '../utilities/proxies';
-import { hasEveryProperty, assign } from '../utilities/objects';
+import { createPropertyAssignmentHandler } from '../utilities/proxies';
 import { moveSetValue, curryDelete } from '../utilities/sets';
+import { hasEveryProperty } from '../utilities/objects';
 
-const entities = new Map();
+export const entities = new Map();
 export const systems = new Set();
 
-const addComponent = (entity) => {
-    const proxy = entities.get(entity);
-    const { active, inactive } = entity;
-    for (const system of inactive) {
-        if (hasEveryProperty(entity, system.components)) {
-            moveSetValue(system, inactive, active);
-            system.add(proxy);
+// TODO: Implement graph structure for more efficient component/system pairing.
+export const createEntity = (type, options) => {
+    const active = new Set();
+    const inactive = new Set(systems);
+
+    const addComponent = (entity) => {
+        for (const system of inactive) {
+            if (hasEveryProperty(entity, system.components)) {
+                moveSetValue(system, inactive, active);
+                system.add(entity.proxy);
+            }
         }
-    }
-};
-
-const deleteComponent = (entity) => {
-    const proxy = entities.get(entity);
-    const { active, inactive } = entity;
-    for (const system of active) {
-        if (!hasEveryProperty(entity, system.components)) {
-            moveSetValue(system, active, inactive);
-            system.delete(proxy);
-        }
-    }
-};
-
-const observer = createObjectObserver(addComponent, deleteComponent);
-
-export const createEntity = (options) => {
-    const entity = {
-        active: new Set(),
-        inactive: new Set(systems)
     };
 
-    const proxy = new Proxy(entity, observer);
-    assign(proxy, options);
-    entities.set(entity, proxy);
-    return proxy;
-};
+    const deleteComponent = (entity) => {
+        for (const system of active) {
+            if (!hasEveryProperty(entity, system.components)) {
+                moveSetValue(system, active, inactive);
+                system.delete(entity.proxy);
+            }
+        }
+    };
 
-export const deleteEntity = (proxy) => {
-    const entity = proxy.target;
-    entity.active.forEach(curryDelete(proxy));
-    entities.delete(entity);
+    const components = {};
+    const entity = { delete: () => active.forEach(curryDelete(entity)) };
+    const proxy = new Proxy(entity, createPropertyAssignmentHandler(addComponent, deleteComponent));
+    entity.proxy = proxy;
+    entities.get(type)(proxy, options);
+    return proxy;
 };

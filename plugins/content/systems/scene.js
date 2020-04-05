@@ -10,6 +10,8 @@ export const enableSceneSystem = async (sceneOptions) => {
     };
 
     const scenes = options.scenes;
+
+    createScene()
     systems.add({
         components: ['entities'],
         add: (entity) => {

@@ -1,8 +1,8 @@
 import { updates, systems } from '../../../engine/main';
-import { createCanvas } from './canvas';
-import { createSwapChain } from './context';
-import { encodeCommand } from './commands';
-import { updateStrategy } from './strategy';
+import { createCanvas } from '../api/canvas';
+import { createSwapChain } from '../api/context';
+import { encodeCommand } from '../api/commands';
+import { updateStrategy } from '../api/strategy';
 import { renderableComponent } from '../components/renderable';
 
 const defaultRendererOptions = {

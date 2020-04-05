@@ -1,27 +1,30 @@
-import { systems, load, assign, publish } from '../../../engine/main';
+import { systems, load, assign, isInteger, createEntity } from '../../../engine/main';
 import { resourcesComponent } from '../components/resources';
 
 const defaultResourcesOptions = {
     path: '/' + resourcesComponent
 };
 
-export const enableResourcesSystem = (resourcesOptions) => {
+export const enableResourcesSystem = async (resourcesOptions) => {
     const options = {
         ...defaultResourcesOptions,
         ...resourcesOptions
     };
 
-    const resources = options.resources;
+    const entity = createEntity();
+    entity.delete();
+
+    const resources = new Map();
+    for (const resource of options.resources) {
+        resource.set(resource, await load(resource));
+    }
 
     systems.add({
         components: [resourcesComponent],
         add: (entity) => {
-            const resources = entity.resources;
+            const resources = entity.resources.filter(isInteger);
             for (let i = 0; i < resources.length; i++) {
-                const resource = resources[i]
-                if (isInteger(resource)) {
-                    resources[i] = options.resources[resource];
-                }
+                resources[i] = options.resources[resources[i]];
             }
 
             const progress = { total: 0, completed: 0 };

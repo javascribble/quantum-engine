@@ -23,7 +23,7 @@ const createDeletePropertyTrap = (handler) => ({
     }
 });
 
-export const createObjectObserver = (addPropertyHandler, deletePropertyHandler) => ({
+export const createPropertyAssignmentHandler = (addPropertyHandler, deletePropertyHandler) => ({
     ...createAssignPropertyTrap(addPropertyHandler),
     ...createDefinePropertyTrap(addPropertyHandler),
     ...createDeletePropertyTrap(deletePropertyHandler)
