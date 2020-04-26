@@ -1,9 +1,15 @@
 import { entries } from '../utilities/objects';
 
-export const plugins = {};
+export const plugins = new Map();
 
-export const configure = async (options) => {
+export const startPlugins = async (options) => {
     for (const [plugin, option] of entries(options)) {
-        await plugins[plugin](option);
+        await plugins.get(plugin).start(option);
+    }
+};
+
+export const stopPlugins = async () => {
+    for (const plugin of plugins.values()) {
+        await plugin.stop();
     }
 };
