@@ -1,1 +1,1 @@
-# in progress webgpu game engine
+# in progress 2d game engine
