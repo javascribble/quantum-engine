@@ -2,11 +2,10 @@ import { createPropertyAssignmentHandler } from '../utilities/proxies';
 import { moveSetValue, curryDelete } from '../utilities/sets';
 import { hasOwnProperties } from '../utilities/objects';
 
-export const entities = new Map();
 export const systems = new Set();
 
 // TODO: Implement graph structure for more efficient component/system pairing.
-export const createEntity = (type, options) => {
+export const createEntity = () => {
     const active = new Set();
     const inactive = new Set(systems);
 
@@ -32,6 +31,5 @@ export const createEntity = (type, options) => {
     const entity = { delete: () => active.forEach(curryDelete(entity)) };
     const proxy = new Proxy(entity, createPropertyAssignmentHandler(addComponent, deleteComponent));
     entity.proxy = proxy;
-    entities.get(type)(proxy, options);
     return proxy;
 };
