@@ -2,7 +2,7 @@ export const assign = Object.assign;
 export const entries = Object.entries;
 export const defineProperty = Object.defineProperty;
 
-export const hasEveryProperty = (object, properties) => properties.every(property => object.hasOwnProperty(property));
+export const hasOwnProperties = (object, properties) => properties.every(property => object.hasOwnProperty(property));
 
 export const defineObservedProperty = (object, property, target, handler) => {
     defineProperty(object, property, {

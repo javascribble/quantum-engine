@@ -1,5 +1,6 @@
 import { subscribeEvents, unsubscribeEvents } from './browser';
 import { startAnimation, stopAnimation } from './host';
+import { shutdownEvent } from './constants';
 import { configure } from './plugins';
 import { publish } from './events';
 
@@ -9,8 +10,8 @@ export const start = async (options) => {
 };
 
 export const pause = () => {
-    unsubscribeEvents();
     stopAnimation();
+    unsubscribeEvents();
 }
 
 export const resume = () => {
@@ -20,5 +21,5 @@ export const resume = () => {
 
 export const stop = () => {
     pause();
-    publish('shutdown');
+    publish(shutdownEvent);
 };
