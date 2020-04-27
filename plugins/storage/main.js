@@ -1,6 +1,9 @@
+import { plugins, systems, updates } from '../../engine/main';
 import { enableLocalStorageSystem } from './systems/localStorage';
-import { plugins } from '../../engine/main';
 
-plugins.storage = (options) => {
-    enableLocalStorageSystem(options);
-};
+plugins.set('storage', {
+    start: (options) => {
+        enableLocalStorageSystem(options, systems, updates);
+    },
+    stop: () => { }
+});

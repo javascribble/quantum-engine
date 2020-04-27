@@ -1,16 +1,7 @@
-import { systems, load, assign, isInteger, createEntity } from '../../../engine/main';
+import { load, assign, isInteger, createEntity } from '../../../engine/main';
 import { resourcesComponent } from '../components/resources';
 
-const defaultResourcesOptions = {
-    path: '/' + resourcesComponent
-};
-
-export const enableResourcesSystem = async (resourcesOptions) => {
-    const options = {
-        ...defaultResourcesOptions,
-        ...resourcesOptions
-    };
-
+export const enableResourcesSystem = async (options, systems, updates) => {
     const entity = createEntity();
     entity.delete();
 
@@ -48,7 +39,7 @@ export const enableResourcesSystem = async (resourcesOptions) => {
                         assign(container, resource);
                     } else {
                         progress.total++;
-                        load(url.startsWith('/') ? url : `${options.path}/${url}`)
+                        load(url.startsWith('/') ? url : `${options.path || ('/' + resourcesComponent)}/${url}`)
                             .then(completeResource)
                             .catch(handleError);
                     }

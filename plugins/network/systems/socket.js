@@ -1,14 +1,4 @@
-import { updates } from "../../../engine/main";
-
-const defaultSocketOptions = {
-};
-
-export const enableSocketSystem = (socketOptions) => {
-    const options = {
-        ...defaultSocketOptions,
-        ...socketOptions
-    };
-
+export const enableSocketSystem = (options, systems, updates) => {
     updates.add((deltaTime) => {
 
     });

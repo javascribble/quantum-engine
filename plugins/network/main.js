@@ -1,11 +1,11 @@
-//export * from './components';
-//export * from './entities';
-
+import { plugins, systems, updates } from '../../engine/main';
 import { enableSocketSystem } from './systems/socket';
 import { enableWorkerSystem } from './systems/worker';
-import { plugins } from '../../engine/main';
 
-plugins.network = (options) => {
-    enableSocketSystem(options);
-    enableWorkerSystem(options);
-};
+plugins.set('network', {
+    start: (options) => {
+        enableSocketSystem(options, systems, updates);
+        enableWorkerSystem(options, systems, updates);
+    },
+    stop: () => { }
+});

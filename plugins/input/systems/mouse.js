@@ -1,14 +1,4 @@
-﻿import { updates, systems, listeners } from '../../../engine/main';
-
-const defaultMouseOptions = {
-};
-
-export const enableMouseSystem = (mouseOptions) => {
-    const options = {
-        ...defaultMouseOptions,
-        ...mouseOptions
-    }
-
+﻿export const enableMouseSystem = (options, systems, updates, listeners) => {
     const mouseDown = (event) => {
         // TODO: Use pointer lock API.
         //let canvas = event.target;

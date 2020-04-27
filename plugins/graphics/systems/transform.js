@@ -1,8 +1,4 @@
-import { updates, systems } from '../../../engine/main';
 import { transformComponent } from '../components/transform';
-
-const defaultTransformOptions = {
-};
 
 const copyTransform = (transform, array) => {
     // TODO: Only multiply the parts that have changed.
@@ -25,12 +21,7 @@ const copyTransform = (transform, array) => {
     // array.set(transformation);
 };
 
-export const enableTransformSystem = (transformOptions) => {
-    const options = {
-        ...defaultTransformOptions,
-        ...transformOptions
-    }
-
+export const enableTransformSystem = (options, systems, updates, listeners) => {
     const entities = new Set();
 
     systems.add({

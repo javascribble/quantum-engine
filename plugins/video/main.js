@@ -1,9 +1,9 @@
-//export * from './components';
-//export * from './entities';
-
+import { plugins, systems, updates } from '../../engine/main';
 import { enableRendererSystem } from './systems/renderer';
-import { plugins } from '../../engine/main';
 
-plugins.video = async (options) => {
-    enableRendererSystem(options, device);
-}; 
+plugins.set('video', {
+    start: (options) => {
+        enableRendererSystem(options, systems, updates);
+    },
+    stop: () => { }
+});

@@ -1,16 +1,16 @@
 {
-	"folders": [
-		{
-			"name": "editor",
-			"path": "editor"
-		},
-		{
-			"name": "engine",
-			"path": "engine"
-		},
-		{
-			"name": "plugins",
-			"path": "plugins"
-		}
-	]
+    "folders": [
+        {
+            "name": "editor",
+            "path": "editor"
+        },
+        {
+            "name": "engine",
+            "path": "engine"
+        },
+        {
+            "name": "plugins",
+            "path": "plugins"
+        }
+    ]
 }

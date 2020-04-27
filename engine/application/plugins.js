@@ -9,7 +9,7 @@ export const startPlugins = async (options) => {
 };
 
 export const stopPlugins = async () => {
-    for (const plugin of plugins.values()) {
+    for (const plugin of plugins.values().reverse()) {
         await plugin.stop();
     }
 };

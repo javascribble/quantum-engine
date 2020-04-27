@@ -1,20 +1,10 @@
-import { systems, updates, listeners } from '../../../engine/main';
-
-const defaultWorkerOptions = {
-};
-
 const onlineListener = () => {
 };
 
 const offlineListener = () => {
 };
 
-export const enableWorkerSystem = (workerOptions) => {
-    const options = {
-        ...defaultWorkerOptions,
-        ...workerOptions
-    };
-
+export const enableWorkerSystem = (options, systems, updates, listeners) => {
     listeners.set('online', onlineListener);
     listeners.set('offline', offlineListener);
 

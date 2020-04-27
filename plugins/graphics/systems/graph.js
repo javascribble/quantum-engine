@@ -1,15 +1,6 @@
-import { updates, systems } from '../../../engine/main';
 import { parentComponent } from '../components/parent';
 
-const defaultGraphOptions = {
-};
-
-export const enableGraphSystem = (graphOptions) => {
-    const options = {
-        ...defaultGraphOptions,
-        ...graphOptions
-    };
-
+export const enableGraphSystem = (options, systems, updates) => {
     const root = {};
 
     systems.add({

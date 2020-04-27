@@ -1,17 +1,4 @@
-import { systems } from '../../../engine/main';
-
-const defaultSceneOptions = {
-};
-
-export const enableSceneSystem = async (sceneOptions) => {
-    const options = {
-        ...defaultSceneOptions,
-        ...sceneOptions
-    };
-
-    const scenes = options.scenes;
-
-    createScene()
+export const enableSceneSystem = async (options, systems, updates, listeners) => {
     systems.add({
         components: ['entities'],
         add: (entity) => {

@@ -1,14 +1,4 @@
-import { updates, systems } from '../../../engine/main';
-
-const defaultLocalStorageOptions = {
-};
-
-export const enableLocalStorageSystem = (localStorageOptions) => {
-    const options = {
-        ...defaultLocalStorageOptions,
-        ...localStorageOptions
-    };
-
+export const enableLocalStorageSystem = (options, systems, updates) => {
     const saveLocal = (state) => {
         for (const name in state) {
             state[name] = localStorage.getKey(name);

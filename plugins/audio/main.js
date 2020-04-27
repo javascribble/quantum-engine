@@ -1,9 +1,7 @@
-//export * from './components';
-//export * from './entities';
+import { plugins, systems, updates } from '../../engine/main';
 
-import { enableRendererSystem } from './systems/renderer';
-import { plugins } from '../../engine/main';
-
-plugins.audio = (options) => {
-    enableRendererSystem(options);
-};
+plugins.set('audio', {
+    start: (options) => {
+    },
+    stop: () => { }
+});
