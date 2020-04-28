@@ -1,6 +1,4 @@
-﻿export const isArray = Array.isArray;
-
-export const lastArrayElement = (array) => array[array.length - 1];
+﻿export const lastArrayElement = (array) => array[array.length - 1];
 
 export const insertArrayElement = (array, element, index) => array.splice(index, 0, element);
 

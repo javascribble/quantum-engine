@@ -1,10 +1,10 @@
-const onlineListener = () => {
-};
+export const initializeServiceWorker = (engine) => {
+    const onlineListener = () => {
+    };
 
-const offlineListener = () => {
-};
+    const offlineListener = () => {
+    };
 
-export const enableWorkerSystem = (options, systems, updates, listeners) => {
     listeners.set('online', onlineListener);
     listeners.set('offline', offlineListener);
 

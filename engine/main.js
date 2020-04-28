@@ -1,6 +1,5 @@
 export * from './application/architecture';
 export * from './application/browser';
-export * from './application/constants';
 export * from './application/device';
 export * from './application/events';
 export * from './application/host';

@@ -1,9 +1,4 @@
-import { load, assign, isInteger, createEntity } from '../../../engine/main';
-import { resourcesComponent } from '../components/resources';
-
-export const enableResourcesSystem = async (options, systems, updates) => {
-    const entity = createEntity();
-    entity.delete();
+export const initializeResources = async (engine) => {
 
     const resources = new Map();
     for (const resource of options.resources) {
@@ -50,7 +45,7 @@ export const enableResourcesSystem = async (options, systems, updates) => {
 
             loadResources(entity.resources, entity);
         },
-        delete: (entity) => {
+        remove: (entity) => {
             for (const resource of entity.resources) {
                 if (resources.has(resource) && resources.get(resource).references-- === 0) {
                     resources.delete(resource);

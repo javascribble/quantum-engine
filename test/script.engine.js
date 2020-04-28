@@ -1,9 +1,7 @@
 engine.start({
-	content: {
-		path: '/test/resources',
-		scenes: [
-		],
-		resources: [
-		]
-	}
+	path: '/test/resources',
+	scenes: [
+	],
+	resources: [
+	]
 });

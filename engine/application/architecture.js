@@ -1,8 +1,7 @@
 import { createPropertyTraps } from '../utilities/proxies';
+import { curryDeleteSetsValue } from '../utilities/sets';
 import { hasOwnProperties } from '../utilities/objects';
-import { curryDelete } from '../utilities/sets';
 
-// TODO: Implement graph structure for more efficient component/system pairing.
 export const systems = new Set();
 
 const addComponent = (entity) => {
@@ -27,11 +26,11 @@ const deleteComponent = (entity) => {
     }
 };
 
-export const createEntity = (options) => {
-    const entity = { ...options, systems: { active: new Set(), inactive: new Set(systems) } };
+export const createEntity = () => {
+    const entity = { systems: { active: new Set(), inactive: new Set(systems) } };
     const proxy = new Proxy(entity, createPropertyTraps(addComponent, deleteComponent));
     entity.proxy = proxy;
     return proxy;
 };
 
-export const deleteEntity = (entity) => entity.systems.active.forEach(curryDelete(entity));
+export const deleteEntity = (entity) => entity.systems.active.forEach(curryDeleteSetsValue(entity));

@@ -1,4 +1,4 @@
-import { parentComponent } from '../components/parent';
+import { parentComponent } from '../geometry/parent';
 
 export const enableGraphSystem = (options, systems, updates) => {
     const root = {};
