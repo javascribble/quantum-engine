@@ -1,6 +1,4 @@
 import * as engine from '../../engine/main';
-import { initializeFormats } from './loading/formats';
-import { initializeResources } from './loading/resources';
+import adaptContent from './adapters/content';
 
-initializeFormats(engine);
-initializeResources(engine);
+adaptContent(engine);

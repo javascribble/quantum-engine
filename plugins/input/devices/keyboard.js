@@ -3,7 +3,7 @@
 
     const keyboardKeyUp = (event) => publish(event.code, event);
 
-    const events = engine.events;
-    events.set('keydown', keyboardKeyDown);
-    events.set('keyup', keyboardKeyUp);
+    const listeners = engine.listeners;
+    listeners.set('keydown', keyboardKeyDown);
+    listeners.set('keyup', keyboardKeyUp);
 };

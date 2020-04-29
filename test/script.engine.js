@@ -5,10 +5,8 @@ engine.start({
 			entities: [
 				{
 					renderable: {
-						texture: {
-							resources: [0]
-						}
-					}
+					},
+					resources: [0]
 				}
 			]
 		}

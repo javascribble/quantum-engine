@@ -21,7 +21,7 @@ export const initializeResources = async (engine) => {
         }
     });
 
-    engine.plugins.add({
+    engine.modules.add({
         start: (options) => resources = options.resources.map(path => path.startsWith('/') ? path : `${options.path}/${path}`),
         stop: () => resources = []
     });

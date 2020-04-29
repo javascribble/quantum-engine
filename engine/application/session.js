@@ -1,9 +1,9 @@
 import { subscribeEvents, unsubscribeEvents } from './browser';
 import { startAnimation, stopAnimation } from './host';
-import { startPlugins, stopPlugins } from './plugins';
+import { startModules, stopModules } from './modules';
 
 export const start = async (options) => {
-    await startPlugins(options);
+    await startModules(options);
     resume();
 };
 
@@ -19,5 +19,5 @@ export const resume = () => {
 
 export const stop = async () => {
     pause();
-    await stopPlugins();
+    await stopModules();
 };

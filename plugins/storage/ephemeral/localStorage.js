@@ -9,30 +9,3 @@ const loadLocal = (state) => {
         localStorage.setKey(name, state[name]);
     }
 };
-
-export const initializeLocalStorage = (engine) => {
-    engine.systems.add({
-        validate: (entity) => entity.state,
-        add: (entity) => {
-
-        },
-        remove: (entity) => {
-
-        }
-    });
-
-    engine.executables.add({
-        execute: (deltaTime) => {
-
-        }
-    });
-
-    engine.plugins.add({
-        start: (options) => {
-
-        },
-        stop: () => {
-
-        }
-    });
-};

@@ -4,7 +4,7 @@ export * from './application/device';
 export * from './application/events';
 export * from './application/host';
 export * from './application/loader';
-export * from './application/plugins';
+export * from './application/modules';
 export * from './application/session';
 export * from './utilities/arrays';
 export * from './utilities/numbers';

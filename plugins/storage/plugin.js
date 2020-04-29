@@ -1,4 +1,4 @@
 import * as engine from '../../engine/main';
-import { initializeLocalStorage } from './ephemeral/localStorage';
+import adaptStorage from './adapters/storage';
 
-initializeLocalStorage(engine);
+adaptStorage(engine);

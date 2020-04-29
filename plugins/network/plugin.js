@@ -1,6 +1,4 @@
 import * as engine from '../../engine/main';
-import { initializeWebSocket } from './communication/webSocket';
-import { initializeServiceWorker } from './availability/serviceWorker';
+import adaptNetwork from './adapters/network';
 
-initializeWebSocket(engine);
-initializeServiceWorker(engine);
+adaptNetwork(engine);

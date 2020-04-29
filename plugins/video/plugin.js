@@ -1,4 +1,4 @@
 import * as engine from '../../engine/main';
-import { initializeCanvasRenderer } from './rendering/canvasRenderer';
+import adaptCanvas from './adapters/canvas';
 
-initializeCanvasRenderer(engine);
+adaptCanvas(engine);

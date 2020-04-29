@@ -13,9 +13,9 @@
     const touchCancel = (event) => {
     };
 
-    const events = engine.events;
-    events.set('touchstart', touchStart);
-    events.set('touchmove', touchMove);
-    events.set('touchend', touchEnd);
-    events.set('touchcancel', touchCancel);
+    const listeners = engine.listeners;
+    listeners.set('touchstart', touchStart);
+    listeners.set('touchmove', touchMove);
+    listeners.set('touchend', touchEnd);
+    listeners.set('touchcancel', touchCancel);
 };
