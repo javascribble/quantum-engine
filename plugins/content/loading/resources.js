@@ -1,5 +1,5 @@
 export const initializeResources = async (engine) => {
-    const resources = [];
+    let resources = [];
 
     engine.systems.add({
         validate: (entity) => entity.resources,

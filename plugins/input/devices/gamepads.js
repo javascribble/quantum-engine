@@ -1,8 +1,9 @@
 ﻿const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
 
 export const initializeGamepads = (engine) => {
-    listeners.set('ongamepadconnected', event => gamepads.add(event.gamepad));
-    listeners.set('ongamepaddisconnected', event => gamepads.delete(event.gamepad));
+    const events = engine.events;
+    events.set('ongamepadconnected', event => gamepads.add(event.gamepad));
+    events.set('ongamepaddisconnected', event => gamepads.delete(event.gamepad));
 
     engine.executables.add({
         execute: (deltaTime) => {

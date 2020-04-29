@@ -5,8 +5,9 @@ export const initializeServiceWorker = (engine) => {
     const offlineListener = () => {
     };
 
-    listeners.set('online', onlineListener);
-    listeners.set('offline', offlineListener);
+    const events = engine.events;
+    events.set('online', onlineListener);
+    events.set('offline', offlineListener);
 
     const serviceWorker = navigator.serviceWorker;
     if (serviceWorker) {

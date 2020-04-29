@@ -19,9 +19,10 @@
 
     const contextMenu = (event) => event.preventDefault();
 
-    listeners.set('mousedown', mouseDown);
-    listeners.set('mousemove', mouseMove);
-    listeners.set('mouseup', mouseUp);
-    listeners.set('mousewheel', mouseWheel);
-    listeners.set('contextmenu', contextMenu);
+    const events = engine.events;
+    events.set('mousedown', mouseDown);
+    events.set('mousemove', mouseMove);
+    events.set('mouseup', mouseUp);
+    events.set('mousewheel', mouseWheel);
+    events.set('contextmenu', contextMenu);
 };
