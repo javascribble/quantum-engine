@@ -1,14 +1,15 @@
 import { defineProperty } from './objects';
 
-const createAssignPropertyTrap = (handler) => ({
+const createPropertyTrap = (handler) => ({
     set(target, property, value) {
+        const invoke = !target.hasOwnProperty(property);
         target[property] = value;
-        handler(target, property);
-        return true;
-    }
-});
+        if (invoke) {
+            handler(target, property);
+        }
 
-const createDefinePropertyTrap = (handler) => ({
+        return true;
+    },
     defineProperty(target, property, descriptor) {
         defineProperty(target, property, descriptor);
         handler(target, property);
@@ -16,15 +17,14 @@ const createDefinePropertyTrap = (handler) => ({
     },
 });
 
-const createDeletePropertyTrap = (handler) => ({
+const deletePropertyTrap = (handler) => ({
     deleteProperty(target, property) {
         handler(target, property);
         delete target[property];
     }
 });
 
-export const createPropertyTraps = (addPropertyHandler, deletePropertyHandler) => ({
-    ...createAssignPropertyTrap(addPropertyHandler),
-    ...createDefinePropertyTrap(addPropertyHandler),
-    ...createDeletePropertyTrap(deletePropertyHandler)
+export const createPropertyTraps = (createPropertyHandler, deletePropertyHandler) => ({
+    ...createPropertyTrap(createPropertyHandler),
+    ...deletePropertyTrap(deletePropertyHandler)
 });

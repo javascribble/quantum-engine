@@ -2,7 +2,7 @@
 
 export const profileDevice = () => ({
     isTv: userAgent.match(/webOS/i),
-    isMobile: 
+    isMobile:
         userAgent.match(/Android/i) ||
         userAgent.match(/iPhone/i) ||
         userAgent.match(/iPad/i) ||

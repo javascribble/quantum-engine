@@ -1,56 +1,28 @@
 export const initializeResources = async (engine) => {
+    const resources = [];
 
-    const resources = new Map();
-    for (const resource of options.resources) {
-        resource.set(resource, await load(resource));
-    }
-
-    systems.add({
+    engine.systems.add({
         validate: (entity) => entity.resources,
         add: (entity) => {
-            const resources = entity.resources.filter(isInteger);
-            for (let i = 0; i < resources.length; i++) {
-                resources[i] = options.resources[resources[i]];
+            const load = entity.resources.map(resource => resources[resource]);
+            if (load.length > 0) {
+                entity.loading = { current: 0, total: load.length };
+                const progress = () => entity.loading.current++;
+                const complete = (values) => {
+                    entity.resources = values;
+                    delete entity.loading;
+                };
+
+                engine.loadMany(load, progress).then(complete);
             }
-
-            const progress = { total: 0, completed: 0 };
-            const loadResources = (urls, container) => {
-                const handleError = (error) => {
-                    console.log(error); // TODO: Retry.
-                };
-
-                const completeResource = (resource) => {
-                    progress.completed++;
-                    assign(container, resource);
-                    if (resource.resources) {
-                        loadResources(resource.resources, resource);
-                    }
-                };
-
-                const loadResource = (url) => {
-                    if (resources.has(url)) {
-                        const resource = resources.get(url);
-                        resource.references++;
-                        assign(container, resource);
-                    } else {
-                        progress.total++;
-                        load(url.startsWith('/') ? url : `${options.path || ('/' + resourcesComponent)}/${url}`)
-                            .then(completeResource)
-                            .catch(handleError);
-                    }
-                };
-
-                urls.forEach(loadResource);
-            };
-
-            loadResources(entity.resources, entity);
         },
         remove: (entity) => {
-            for (const resource of entity.resources) {
-                if (resources.has(resource) && resources.get(resource).references-- === 0) {
-                    resources.delete(resource);
-                }
-            }
+            // TODO: Cancel pending requests.
         }
+    });
+
+    engine.plugins.add({
+        start: (options) => resources = options.resources.map(path => path.startsWith('/') ? path : `${options.path}/${path}`),
+        stop: () => resources = []
     });
 };

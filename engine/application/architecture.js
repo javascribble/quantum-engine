@@ -5,30 +5,28 @@ export const systems = new Set();
 export const createEntity = () => {
     const active = new Set();
     const inactive = new Set(systems);
-    const entity = { components: {}, systems: { active, inactive } };
+    const entity = { delete: () => active.forEach(system => system.delete(entity)) };
 
-    const addComponent = (components) => {
+    const componentAdded = (components) => {
         for (const system of inactive) {
             if (system.validate(components)) {
-                system.add(entity.components);
+                system.add(entity);
                 inactive.delete(system);
                 active.add(system);
             }
         }
     };
 
-    const deleteComponent = (components) => {
+    const componentDeleted = (components) => {
         for (const system of active) {
             if (!system.validate(components)) {
-                system.delete(entity.components);
+                system.delete(entity);
                 active.delete(system);
                 inactive.add(system);
             }
         }
     };
 
-    entity.components = new Proxy(entity.components, createPropertyTraps(addComponent, deleteComponent));
+    entity.components = new Proxy({}, createPropertyTraps(componentAdded, componentDeleted));
     return entity;
 };
-
-export const deleteEntity = (entity) => entity.systems.active.forEach(system => system.delete(entity));
