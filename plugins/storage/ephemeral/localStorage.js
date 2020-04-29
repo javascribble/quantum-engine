@@ -12,8 +12,8 @@ const loadLocal = (state) => {
 
 export const initializeLocalStorage = (engine) => {
     engine.systems.add({
-        components: ['state'],
-        add: (options) => {
+        validate: (entity) => entity.state,
+        add: (entity) => {
 
         },
         remove: (entity) => {
@@ -28,7 +28,7 @@ export const initializeLocalStorage = (engine) => {
     });
 
     engine.plugins.add({
-        start: (entity) => {
+        start: (options) => {
 
         },
         stop: () => {

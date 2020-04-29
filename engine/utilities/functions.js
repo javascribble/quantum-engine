@@ -1,1 +1,0 @@
-export const curryApply = (command) => (object) => command.apply(null, object);

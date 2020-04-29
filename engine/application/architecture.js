@@ -1,36 +1,34 @@
 import { createPropertyTraps } from '../utilities/proxies';
-import { curryDeleteSetsValue } from '../utilities/sets';
-import { hasOwnProperties } from '../utilities/objects';
 
 export const systems = new Set();
 
-const addComponent = (entity) => {
-    const { active, inactive } = entity.systems;
-    for (const system of inactive) {
-        if (hasOwnProperties(entity, system.components)) {
-            system.add(entity.proxy);
-            inactive.delete(system);
-            active.add(system);
-        }
-    }
-};
-
-const deleteComponent = (entity) => {
-    const { active, inactive } = entity.systems;
-    for (const system of active) {
-        if (!hasOwnProperties(entity, system.components)) {
-            system.delete(entity.proxy);
-            active.delete(system);
-            inactive.add(system);
-        }
-    }
-};
-
 export const createEntity = () => {
-    const entity = { systems: { active: new Set(), inactive: new Set(systems) } };
-    const proxy = new Proxy(entity, createPropertyTraps(addComponent, deleteComponent));
-    entity.proxy = proxy;
-    return proxy;
+    const active = new Set();
+    const inactive = new Set(systems);
+    const entity = { components: {}, systems: { active, inactive } };
+
+    const addComponent = (components) => {
+        for (const system of inactive) {
+            if (system.validate(components)) {
+                system.add(entity.components);
+                inactive.delete(system);
+                active.add(system);
+            }
+        }
+    };
+
+    const deleteComponent = (components) => {
+        for (const system of active) {
+            if (!system.validate(components)) {
+                system.delete(entity.components);
+                active.delete(system);
+                inactive.add(system);
+            }
+        }
+    };
+
+    entity.components = new Proxy(entity.components, createPropertyTraps(addComponent, deleteComponent));
+    return entity;
 };
 
-export const deleteEntity = (entity) => entity.systems.active.forEach(curryDeleteSetsValue(entity));
+export const deleteEntity = (entity) => entity.systems.active.forEach(system => system.delete(entity));

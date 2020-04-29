@@ -6,7 +6,7 @@ export const initializeResources = async (engine) => {
     }
 
     systems.add({
-        components: [resourcesComponent],
+        validate: (entity) => entity.resources,
         add: (entity) => {
             const resources = entity.resources.filter(isInteger);
             for (let i = 0; i < resources.length; i++) {

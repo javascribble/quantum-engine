@@ -1,7 +1,7 @@
 export const initializeCanvasRenderer = (engine) => {
     engine.systems.add({
-        components: ['renderable'],
-        add: (options) => {
+        validate: (entity) => entity.renderable,
+        add: (entity) => {
 
         },
         remove: (entity) => {
@@ -16,7 +16,7 @@ export const initializeCanvasRenderer = (engine) => {
     });
 
     engine.plugins.add({
-        start: (entity) => {
+        start: (options) => {
 
         },
         stop: () => {
