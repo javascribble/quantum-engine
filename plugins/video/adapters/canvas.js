@@ -5,19 +5,13 @@ export default (engine) => {
     const context = getCanvasContext(canvas);
     engine.setElementParent(canvas, document.body);
 
-    engine.systems.add({
-        validate: (entity) => entity.renderable,
-        add: (entity) => {
-
-        },
-        remove: (entity) => {
-
-        }
-    });
-
-    engine.executables.add({
-        execute: (deltaTime) => {
-
+    const renderables = new Set();
+    engine.systems.set('renderable', renderables);
+    engine.updates.add({
+        update: (deltaTime) => {
+            for (const renderable of renderables) {
+                context.drawImage(renderable.image, 0, 0);
+            }
         }
     });
 };

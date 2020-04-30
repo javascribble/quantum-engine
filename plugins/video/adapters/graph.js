@@ -1,13 +1,6 @@
 export default (engine) => {
     const root = {};
 
-    engine.systems.add({
-        validate: (entity) => entity.parent,
-        add: (entity) => {
-
-        },
-        delete: (entity) => {
-
-        }
-    });
+    const entities = new Set();
+    engine.systems.set('node', entities);
 };

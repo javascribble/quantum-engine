@@ -14,5 +14,5 @@ engine.start({
 	resources: [
 		'Kal16.png',
 		'Kal256.png'
-	]	
+	]
 });

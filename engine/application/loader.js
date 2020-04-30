@@ -14,10 +14,14 @@ export const loaders = {
 
 export const load = (resource, loader = loaders[getExtension(resource)], options) => loader(resource, options);
 
-export const loadMany = (resources, progress, loader, options) => {
+export const loadMany = (resources, update, loader, options) => {
+    const progress = { completed: 0, total: resources.length };
+    update(progress);
+
     const loadOne = async (resource) => {
         const data = await load(resource, loader, options);
-        progress();
+        progress.completed++;
+        update(progress);
         return data;
     };
 

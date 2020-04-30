@@ -1,15 +1,15 @@
 let previousTime = performance.now();
 let frame = 0;
 
-export const executables = new Set();
+export const updates = new Set();
 export const options = {
     timeScale: 1
 };
 
 const animateFrame = (currentTime) => {
     let deltaTime = (currentTime - previousTime) * options.timeScale;
-    for (const executable of executables) {
-        executable.execute(deltaTime);
+    for (const object of updates) {
+        object.update(deltaTime);
     }
 
     previousTime = currentTime;

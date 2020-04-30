@@ -1,28 +1,20 @@
 export const initializeResources = async (engine) => {
-    let resources = [];
+    let urls = [];
 
-    engine.systems.add({
-        validate: (entity) => entity.resources,
-        add: (entity) => {
-            const load = entity.resources.map(resource => resources[resource]);
+    engine.systems.set('resources', {
+        add: (resources) => {
+            const load = resources.indices.map(index => urls[index]);
             if (load.length > 0) {
-                entity.loading = { current: 0, total: load.length };
-                const progress = () => entity.loading.current++;
-                const complete = (values) => {
-                    entity.resources = values;
-                    delete entity.loading;
-                };
-
-                engine.loadMany(load, progress).then(complete);
+                engine.loadMany(load, resources.update).then(resources.complete).catch(resources.error);
             }
         },
-        remove: (entity) => {
+        delete: (resources) => {
             // TODO: Cancel pending requests.
         }
     });
 
     engine.modules.add({
-        start: (options) => resources = options.resources.map(path => path.startsWith('/') ? path : `${options.path}/${path}`),
-        stop: () => resources = []
+        start: (options) => urls = options.resources.map(path => path.startsWith('/') ? path : `${options.path}/${path}`),
+        stop: () => { }
     });
 };

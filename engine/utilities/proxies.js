@@ -5,14 +5,14 @@ const createPropertyTrap = (handler) => ({
         const invoke = !target.hasOwnProperty(property);
         target[property] = value;
         if (invoke) {
-            handler(target, property);
+            handler(target, property, value);
         }
 
         return true;
     },
     defineProperty(target, property, descriptor) {
         defineProperty(target, property, descriptor);
-        handler(target, property);
+        handler(target, property, descriptor.value);
         return true;
     },
 });

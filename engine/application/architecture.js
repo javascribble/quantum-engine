@@ -1,32 +1,16 @@
 import { createPropertyTraps } from '../utilities/proxies';
+import { entries } from '../utilities/objects';
 
-export const systems = new Set();
+export const systems = new Map();
 
-export const createEntity = () => {
-    const active = new Set();
-    const inactive = new Set(systems);
-    const entity = { delete: () => active.forEach(system => system.delete(entity)) };
+const addComponent = (entity, name, value) => systems.has(name) && systems.get(name).add(value);
 
-    const componentAdded = (components) => {
-        for (const system of inactive) {
-            if (system.validate(components)) {
-                system.add(entity);
-                inactive.delete(system);
-                active.add(system);
-            }
-        }
-    };
+const deleteComponent = (entity, name, value) => systems.has(name) && systems.get(name).delete(value);
 
-    const componentDeleted = (components) => {
-        for (const system of active) {
-            if (!system.validate(components)) {
-                system.delete(entity);
-                active.delete(system);
-                inactive.add(system);
-            }
-        }
-    };
+const updateComponents = (entity, method) => entries(entity).forEach(([name, value]) => method(entity, name, value));
 
-    entity.components = new Proxy({}, createPropertyTraps(componentAdded, componentDeleted));
-    return entity;
-};
+export const proxyEntity = (entity) => new Proxy(entity || {}, createPropertyTraps(addComponent, deleteComponent));
+
+export const attachEntity = (entity) => updateComponents(entity, addComponent);
+
+export const detachEntity = (entity) => updateComponents(entity, deleteComponent);
