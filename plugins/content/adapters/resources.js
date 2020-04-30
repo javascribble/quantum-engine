@@ -1,4 +1,4 @@
-export const initializeResources = async (engine) => {
+export default (engine) => {
     let urls = [];
 
     engine.systems.set('resources', {

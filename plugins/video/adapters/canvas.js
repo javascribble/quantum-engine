@@ -1,4 +1,4 @@
-import { createCanvas, getCanvasContext } from '../rendering/canvas';
+import { createCanvas, getCanvasContext } from '../renderers/canvas';
 
 export default (engine) => {
     const canvas = createCanvas();

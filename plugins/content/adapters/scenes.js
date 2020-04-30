@@ -1,4 +1,4 @@
-export const initializeScenes = (engine) => {
+export default (engine) => {
     engine.modules.add({
         start: (options) => {
             // TODO: Add scene transitions.

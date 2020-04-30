@@ -5,3 +5,5 @@ export const loadImage = async (resource) => {
         image.src = resource;
     });
 };
+
+//const loadImageBitmap = (image, options) => createImageBitmap(image, options.x, options.y, options.w, options.h);
