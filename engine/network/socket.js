@@ -1,4 +1,4 @@
-import { listeners } from '../application/browser';
+import { eventListeners } from '../application/browser';
 
 const online = () => {
 };
@@ -6,5 +6,5 @@ const online = () => {
 const offline = () => {
 };
 
-listeners.set('online', online);
-listeners.set('offline', offline);
+eventListeners.set('online', online);
+eventListeners.set('offline', offline);

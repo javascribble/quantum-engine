@@ -1,15 +1,6 @@
-﻿import { listeners } from '../application/browser';
-import { updates } from '../application/host';
+﻿import { eventListeners } from '../application/browser';
 
-const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
-
-updates.add({
-    update: (deltaTime) => {
-        for (const gamepad of gamepads) {
-            // TODO: Publish updates to buttons and axes.
-        }
-    }
-});
+export const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
 
 const onGamepadConnected = (event) => {
     gamepads.add(event.gamepad);
@@ -19,5 +10,5 @@ const onGamepadDisconnected = (event) => {
     gamepads.delete(event.gamepad);
 };
 
-listeners.set('ongamepadconnected', onGamepadConnected);
-listeners.set('ongamepaddisconnected', onGamepadDisconnected);
+eventListeners.set('ongamepadconnected', onGamepadConnected);
+eventListeners.set('ongamepaddisconnected', onGamepadDisconnected);

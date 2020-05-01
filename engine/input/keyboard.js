@@ -1,4 +1,4 @@
-﻿import { listeners } from '../application/browser';
+﻿import { eventListeners } from '../application/browser';
 
 const keyDown = (event) => {
 };
@@ -6,5 +6,5 @@ const keyDown = (event) => {
 const keyUp = (event) => {
 };
 
-listeners.set('keydown', keyDown);
-listeners.set('keyup', keyUp);
+eventListeners.set('keydown', keyDown);
+eventListeners.set('keyup', keyUp);

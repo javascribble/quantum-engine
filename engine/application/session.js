@@ -1,4 +1,4 @@
-import { subscribeEvents, unsubscribeEvents } from './browser';
+import { addEventListeners, removeEventListeners } from './browser';
 import { startAnimation, stopAnimation } from './host';
 import { startModules, stopModules } from './modules';
 
@@ -9,11 +9,11 @@ export const start = async (options) => {
 
 export const pause = () => {
     stopAnimation();
-    unsubscribeEvents();
+    removeEventListeners();
 }
 
 export const resume = () => {
-    subscribeEvents();
+    addEventListeners();
     startAnimation();
 };
 

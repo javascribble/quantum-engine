@@ -12,18 +12,18 @@ export const loaders = {
     bin: loadBlob
 };
 
-export const load = (resource, loader = loaders[getExtension(resource)], options) => loader(resource, options);
+export const load = (url, loader = loaders[getExtension(url)], options) => loader(url, options);
 
-export const loadMany = (resources, update, loader, options) => {
-    const progress = { completed: 0, total: resources.length };
+export const loadMany = (urls, update, loader, options) => {
+    const progress = { completed: 0, total: urls.length };
     update(progress);
 
-    const loadOne = async (resource) => {
-        const data = await load(resource, loader, options);
+    const loadOne = async (url) => {
+        const data = await load(url, loader, options);
         progress.completed++;
         update(progress);
         return data;
     };
 
-    return Promise.all(resources.map(loadOne));
+    return Promise.all(urls.map(loadOne));
 };

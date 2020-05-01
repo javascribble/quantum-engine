@@ -1,4 +1,4 @@
-﻿import { listeners } from '../application/browser';
+﻿import { eventListeners } from '../application/browser';
 
 // TODO: Use pointer lock API.
 
@@ -16,8 +16,8 @@ const mouseWheel = (event) => {
 
 const contextMenu = (event) => event.preventDefault();
 
-listeners.set('mousedown', mouseDown);
-listeners.set('mousemove', mouseMove);
-listeners.set('mouseup', mouseUp);
-listeners.set('mousewheel', mouseWheel);
-listeners.set('contextmenu', contextMenu);
+eventListeners.set('mousedown', mouseDown);
+eventListeners.set('mousemove', mouseMove);
+eventListeners.set('mouseup', mouseUp);
+eventListeners.set('mousewheel', mouseWheel);
+eventListeners.set('contextmenu', contextMenu);

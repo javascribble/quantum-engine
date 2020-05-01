@@ -1,14 +1,14 @@
-export const listeners = new Map();
+export const eventListeners = new Map();
 
-export const subscribeEvents = () => {
-    for (const [event, handler] of listeners) {
-        addEventListener(event, handler);
+export const addEventListeners = () => {
+    for (const [event, listener] of eventListeners) {
+        addEventListener(event, listener);
     }
 };
 
-export const unsubscribeEvents = () => {
-    for (const [event, handler] of listeners) {
-        removeEventListener(event, handler);
+export const removeEventListeners = () => {
+    for (const [event, listener] of eventListeners) {
+        removeEventListener(event, listener);
     }
 }
 
