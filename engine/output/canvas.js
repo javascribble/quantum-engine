@@ -10,8 +10,6 @@ export const defaultCanvasOptions = {
 
 export const createCanvas = () => document.createElement('canvas');
 
-export const getCanvasContext = (canvas, options = defaultCanvasOptions) => canvas.getContext('2d', options);
-
 export const resizeCanvas = (canvas, scale = devicePixelRatio) => {
     const scaledWidth = canvas.clientWidth * scale;
     const scaledHeight = canvas.clientHeight * scale;

@@ -1,8 +1,8 @@
-import { createCanvas, resizeCanvas, getCanvasContext } from '../renderers/canvas';
+import { createCanvas, resizeCanvas } from '../renderers/canvas';
 
 export default (engine) => {
     const canvas = createCanvas();
-    const context = getCanvasContext(canvas);
+    const context = canvas.getContext('2d', engine.defaultCanvasOptions);
     engine.setElementParent(canvas, document.body);
     resizeCanvas(canvas);
 
