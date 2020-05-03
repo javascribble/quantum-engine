@@ -1,3 +1,3 @@
-export * from './audio/plugin';
-export * from './content/plugin';
-export * from './video/plugin';
+export * from './audio/main';
+export * from './content/main';
+export * from './video/main';

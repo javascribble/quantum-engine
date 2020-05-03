@@ -1,5 +1,4 @@
 export const modules = new Set();
-export const extensions = {};
 
 export const startModules = async (options) => {
     for (const module of modules) {

@@ -1,4 +1,4 @@
-engine.start({
+{
 	resources: {
 		path: '/test/resources',
 		locators: [
@@ -25,4 +25,4 @@ engine.start({
 			]
 		}
 	]
-});
+}

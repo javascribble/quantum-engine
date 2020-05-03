@@ -1,5 +1,5 @@
-export default class Editor extends HTMLElement {
-    constructor() {
+export default class Component extends HTMLElement {
+    constructor(template) {
         super();
 
         const shadow = this.attachShadow({ mode: 'closed' });
@@ -30,5 +30,3 @@ export default class Editor extends HTMLElement {
         //Moved into a new document via adoptNode().
     }
 }
-
-customElements.define(`ws-editor`, Editor);

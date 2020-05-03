@@ -1,23 +1,34 @@
-export * from './application/architecture';
-export * from './application/browser';
-export * from './application/device';
-export * from './application/events';
-export * from './application/host';
-export * from './application/modules';
-export * from './application/session';
-export * from './input/gamepads';
-export * from './input/keyboard';
-export * from './input/mouse';
-export * from './input/touch';
-export * from './network/loader';
-export * from './network/socket';
-export * from './network/worker';
-export * from './output/audio';
-export * from './output/video';
-export * from './storage/local';
-export * from './storage/remote';
-export * from './utilities/arrays';
-export * from './utilities/numbers';
-export * from './utilities/objects';
-export * from './utilities/proxies';
-export * from './utilities/strings';
+export default class Engine extends HTMLElement {
+    constructor() {
+        super();
+
+        const shadow = this.attachShadow({ mode: 'closed' });
+        shadow.appendChild(template.content.cloneNode(true));
+    }
+
+    static get observedAttributes() {
+        return ['disabled'];
+    }
+
+    get enabled() {
+        return !this.hasAttribute('disabled');
+    }
+
+    connectedCallback() {
+        //Added to DOM.
+    }
+
+    disconnectedCallback() {
+        //Removed from DOM.
+    }
+
+    attributeChangedCallback(name, previousValue, currentValue) {
+        //Called when an observed attribute (observableAttributes) is added/removed/updated/replaced.
+    }
+
+    adoptedCallback() {
+        //Moved into a new document via adoptNode().
+    }
+}
+
+customElements.define(`ws-engine`, Engine);

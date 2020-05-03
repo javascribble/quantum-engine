@@ -1,20 +1,9 @@
 ﻿<html>
 <head>
-    <link rel="stylesheet" href="styles.editor.css">
+    <link rel="stylesheet" href="/test/editor.css">
+	<script type="module" src="/editor/main.js"></script>
 </head>
 <body>
-	<editable-list
-			title="TODO"
-			list-item-0="First item on the list"
-			list-item-1="Second item on the list"
-			list-item-2="Third item on the list"
-			list-item-3="Fourth item on the list"
-			list-item-4="Fifth item on the list"
-			listItem="This will not appear"
-			add-item-text="Add new list item:"
-		>
-    </editable-list>
-    <script src="/build/whitestone.editor.js"></script>
-	<script src="script.editor.js"></script>
+	<w-editor load="/test/example.json"></w-editor>
 </body>
 </html>
