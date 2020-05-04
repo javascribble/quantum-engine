@@ -1,23 +1,15 @@
-import { addEventListeners, removeEventListeners } from '../utilities/browser.js';
-import { startAnimation, stopAnimation } from './host.js';
+import { startAnimation, stopAnimation } from './animation.js';
+import { startServices, stopServices } from './services.js';
 import { startPlugins, stopPlugins } from './plugins.js';
 
 export const start = (options) => {
     startPlugins(options);
-    resume();
-};
-
-export const pause = () => {
-    stopAnimation();
-    removeEventListeners();
-}
-
-export const resume = () => {
-    addEventListeners();
+    startServices(options);
     startAnimation();
 };
 
 export const stop = () => {
-    pause();
+    stopAnimation();
+    stopServices();
     stopPlugins();
 };

@@ -1,19 +1,13 @@
-export class Component extends HTMLElement {
+export default class Component extends HTMLElement {
     constructor() {
         super();
     }
 
-    static get observedAttributes() {
-        return [];
-    }
-
-    connectedCallback() {
-    }
-
-    disconnectedCallback() {
-    }
-
     attributeChangedCallback(name, previous, current) {
         this[name] = current;
+    }
+
+    shadow() {
+        return this.attachShadow({ mode: 'closed' });
     }
 }

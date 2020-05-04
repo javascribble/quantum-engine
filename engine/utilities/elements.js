@@ -1,4 +1,13 @@
-export const createElement = document.createElement;
+const createElement = document.createElement.bind(document);
+
+export const createSlot = (name) => {
+    const slot = createElement('slot');
+    if (name) {
+        slot.name = name;
+    }
+
+    return slot;
+};
 
 export const createTemplate = (html) => {
     const template = createElement('template');
@@ -9,13 +18,4 @@ export const createTemplate = (html) => {
     return template;
 };
 
-export const move = (element, node) => {
-    let parent = element.parentNode;
-    if (parent) {
-        parent.removeChild(element);
-    }
-
-    if (node) {
-        node.appendChild(element);
-    }
-};
+export const define = (name, type) => customElements.define(`w-${name}`, type);

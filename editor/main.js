@@ -1,1 +1,1 @@
-export * from './extensions/editor.js';
+export * from './application/editor.js';

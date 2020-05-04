@@ -4,10 +4,6 @@ export class Editor extends Engine {
     constructor() {
         super();
     }
-
-    static get observedAttributes() {
-        return [...super.observedAttributes];
-    }
 }
 
-define('editor', Editor);
+define('editor', Editor); 

@@ -1,15 +1,12 @@
 let previousTime = performance.now();
 let frame = 0;
 
-export const updates = new Set();
-export const options = {
-    timeScale: 1
-};
+export const animations = new Set();
 
 const animateFrame = (currentTime) => {
-    let deltaTime = (currentTime - previousTime) * options.timeScale;
-    for (const object of updates) {
-        object.update(deltaTime);
+    let deltaTime = (currentTime - previousTime);
+    for (const animation of animations) {
+        animation.update(deltaTime);
     }
 
     previousTime = currentTime;

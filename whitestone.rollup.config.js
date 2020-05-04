@@ -6,7 +6,7 @@ const engine = './engine/main.js';
 const plugins = './plugins/main.js';
 const bundles = [
 	{ name: 'engine', input: [engine, plugins] },
-	{ name: 'editor', input: [editor] }
+	{ name: 'editor', input: [editor, plugins] }
 ];
 
 const output = (name, plugins = []) => ({

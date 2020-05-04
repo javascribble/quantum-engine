@@ -1,29 +1,21 @@
-export default (engine) => {
-    const canvas = engine.createCanvas();
-    const context = canvas.getContext('2d', engine.defaultCanvasOptions);
+export const defaultCanvasOptions = {
+    alpha: false,
+    depth: true,
+    stencil: false,
+    antialias: false,
+    desynchronized: true,
+    premultipliedAlpha: true,
+    preserveDrawingBuffer: false
+};
 
-    engine.setElementParent(canvas, document.body);
-    engine.resizeCanvas(canvas);
+export const resizeCanvas = (canvas, scale = devicePixelRatio) => {
+    const scaledWidth = canvas.clientWidth * scale;
+    const scaledHeight = canvas.clientHeight * scale;
+    if (canvas.width !== scaledWidth || canvas.height !== scaledHeight) {
+        canvas.width = scaledWidth;
+        canvas.height = scaledHeight;
+        return true;
+    }
 
-    const renderables = new Set();
-    engine.systems.set('renderable', {
-        add: (renderable) => {
-            // TODO: Implement custom and default placeholders.
-            engine.extensions.loadResource(renderable.image).then(image => {
-                renderable.image = image;
-                renderables.add(renderable);
-            });
-        },
-        delete: (renderable) => {
-            renderables.delete(renderable);
-        }
-    });
-
-    engine.updates.add({
-        update: (deltaTime) => {
-            for (const { image, sx, sy, sw, sh, dx, dy, dw, dh } of renderables) {
-                context.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
-            }
-        }
-    });
+    return false;
 };
