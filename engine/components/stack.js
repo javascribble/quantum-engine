@@ -1,5 +1,6 @@
 import Component from '../abstractions/component.js';
-import { define } from '../../../engine/utilities/elements.js';
+import { defineElement } from '../application/components.js';
+import { createTemplate } from '../utilities/templates.js';
 
 const template = createTemplate(`<slot name="content" />`);
 
@@ -9,4 +10,4 @@ export default class StackComponent extends Component {
     }
 }
 
-define('stack', StackComponent);
+defineElement('stack', StackComponent);

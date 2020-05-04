@@ -1,3 +1,5 @@
+export const defineElement = (name, type) => customElements.define(`ws-${name}`, type);
+
 export const createTemplate = (html) => {
     const template = document.createElement('template');
     template.innerHTML = html;

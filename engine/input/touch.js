@@ -1,4 +1,4 @@
-﻿import { eventListeners } from '../application/browser';
+﻿import { eventListeners } from '../utilities/browser.js';
 
 const touchStart = (event) => {
 };

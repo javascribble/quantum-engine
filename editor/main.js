@@ -3,15 +3,6 @@ export default class Editor extends HTMLElement {
         super();
 
         const shadow = this.attachShadow({ mode: 'closed' });
-        shadow.appendChild(template.content.cloneNode(true));
-    }
-
-    static get observedAttributes() {
-        return ['disabled'];
-    }
-
-    get enabled() {
-        return !this.hasAttribute('disabled');
     }
 
     connectedCallback() {
@@ -22,7 +13,7 @@ export default class Editor extends HTMLElement {
         //Removed from DOM.
     }
 
-    attributeChangedCallback(name, previousValue, currentValue) {
+    attributeChangedCallback(name, previous, current) {
         //Called when an observed attribute (observableAttributes) is added/removed/updated/replaced.
     }
 
@@ -31,4 +22,4 @@ export default class Editor extends HTMLElement {
     }
 }
 
-customElements.define(`ws-editor`, Editor);
+customElements.define('w-editor', Editor);

@@ -1,3 +1,5 @@
+import { defineElement } from './application/components.js';
+
 export default class Engine extends HTMLElement {
     constructor() {
         super();
@@ -22,7 +24,7 @@ export default class Engine extends HTMLElement {
         //Removed from DOM.
     }
 
-    attributeChangedCallback(name, previousValue, currentValue) {
+    attributeChangedCallback(name, previous, current) {
         //Called when an observed attribute (observableAttributes) is added/removed/updated/replaced.
     }
 
@@ -31,4 +33,4 @@ export default class Engine extends HTMLElement {
     }
 }
 
-customElements.define(`ws-engine`, Engine);
+defineElement('engine', Engine);

@@ -1,6 +1,6 @@
-import { addEventListeners, removeEventListeners } from './browser';
-import { startAnimation, stopAnimation } from './host';
-import { startModules, stopModules } from './modules';
+import { addEventListeners, removeEventListeners } from './browser.js';
+import { startAnimation, stopAnimation } from './host.js';
+import { startModules, stopModules } from './modules.js';
 
 export const start = async (options) => {
     await startModules(options);

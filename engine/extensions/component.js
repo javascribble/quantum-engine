@@ -1,9 +1,6 @@
 export default class Component extends HTMLElement {
     constructor(template) {
         super();
-
-        const shadow = this.attachShadow({ mode: 'closed' });
-        shadow.appendChild(template.content.cloneNode(true));
     }
 
     static get observedAttributes() {
@@ -22,7 +19,7 @@ export default class Component extends HTMLElement {
         //Removed from DOM.
     }
 
-    attributeChangedCallback(name, previousValue, currentValue) {
+    attributeChangedCallback(name, previous, current) {
         //Called when an observed attribute (observableAttributes) is added/removed/updated/replaced.
     }
 

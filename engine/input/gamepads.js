@@ -1,4 +1,4 @@
-﻿import { eventListeners } from '../application/browser';
+﻿import { eventListeners } from '../utilities/browser.js';
 
 export const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
 

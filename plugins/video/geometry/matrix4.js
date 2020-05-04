@@ -1,4 +1,4 @@
-import { normalizeVector3, subtractVector3, crossProductVector3, dotProductVector3 } from './vector3';
+import { normalizeVector3, subtractVector3, crossProductVector3, dotProductVector3 } from './vector3.js';
 
 export const createMatrix4 = (type = Float32Array) => {
     const m4 = new type(16);

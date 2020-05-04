@@ -1,4 +1,4 @@
-import { createPropertyTraps } from '../utilities/proxies';
+import { createPropertyTraps } from '../utilities/proxies.js';
 
 export const systems = new Map();
 

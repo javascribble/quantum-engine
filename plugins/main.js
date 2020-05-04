@@ -1,3 +1,2 @@
-export * from './audio/main';
-export * from './content/main';
-export * from './video/main';
+export * from './audio/main.js';
+export * from './video/main.js';

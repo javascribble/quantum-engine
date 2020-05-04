@@ -1,10 +1,7 @@
 {
 	resources: {
-		path: '/test/resources',
-		locators: [
-			'Kal16.png',
-			'Kal256.png'
-		]
+		'Kal16.png',
+		'Kal256.png'
 	},	
 	scenes: [ 
 		{
