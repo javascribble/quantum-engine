@@ -1,29 +1,19 @@
 export class Component extends HTMLElement {
-    constructor(template) {
+    constructor() {
         super();
     }
 
     static get observedAttributes() {
-        return ['disabled'];
-    }
-
-    get enabled() {
-        return !this.hasAttribute('disabled');
+        return [];
     }
 
     connectedCallback() {
-        //Added to DOM.
     }
 
     disconnectedCallback() {
-        //Removed from DOM.
     }
 
     attributeChangedCallback(name, previous, current) {
-        //Called when an observed attribute (observableAttributes) is added/removed/updated/replaced.
-    }
-
-    adoptedCallback() {
-        //Moved into a new document via adoptNode().
+        this[name] = current;
     }
 }

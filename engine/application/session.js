@@ -1,9 +1,9 @@
-import { addEventListeners, removeEventListeners } from './browser.js';
+import { addEventListeners, removeEventListeners } from '../utilities/browser.js';
 import { startAnimation, stopAnimation } from './host.js';
-import { startModules, stopModules } from './modules.js';
+import { startPlugins, stopPlugins } from './plugins.js';
 
-export const start = async (options) => {
-    await startModules(options);
+export const start = (options) => {
+    startPlugins(options);
     resume();
 };
 
@@ -17,7 +17,7 @@ export const resume = () => {
     startAnimation();
 };
 
-export const stop = async () => {
+export const stop = () => {
     pause();
-    await stopModules();
+    stopPlugins();
 };

@@ -1,5 +1,7 @@
+export const createElement = document.createElement;
+
 export const createTemplate = (html) => {
-    const template = document.createElement('template');
+    const template = createElement('template');
     if (html) {
         template.innerHTML = html;
     }

@@ -1,4 +1,4 @@
-import { eventListeners } from '../application/browser.js';
+import { eventListeners } from '../utilities/browser.js';
 
 const online = () => {
 };

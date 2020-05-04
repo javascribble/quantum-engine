@@ -1,3 +1,4 @@
+import { start, stop } from '../application/session.js';
 import { define } from '../application/components.js';
 import { Component } from './component.js';
 
@@ -10,27 +11,17 @@ export class Engine extends Component {
     }
 
     static get observedAttributes() {
-        return ['disabled'];
+        return [...super.observedAttributes, 'src'];
     }
 
-    get enabled() {
-        return !this.hasAttribute('disabled');
+    set src(value) {
+
     }
 
     connectedCallback() {
-        //Added to DOM.
     }
 
     disconnectedCallback() {
-        //Removed from DOM.
-    }
-
-    attributeChangedCallback(name, previous, current) {
-        //Called when an observed attribute (observableAttributes) is added/removed/updated/replaced.
-    }
-
-    adoptedCallback() {
-        //Moved into a new document via adoptNode().
     }
 }
 
