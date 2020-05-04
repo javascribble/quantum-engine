@@ -1,14 +1,10 @@
-export class Component extends HTMLElement {
-    constructor(template) {
+import { Component, define } from '../../engine/main.js';
+
+export class Editor extends Component {
+    constructor() {
         super();
-    }
 
-    static get observedAttributes() {
-        return ['disabled'];
-    }
-
-    get enabled() {
-        return !this.hasAttribute('disabled');
+        const shadow = this.attachShadow({ mode: 'closed' });
     }
 
     connectedCallback() {
@@ -27,3 +23,5 @@ export class Component extends HTMLElement {
         //Moved into a new document via adoptNode().
     }
 }
+
+define('editor', Editor);

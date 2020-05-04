@@ -1,6 +1,12 @@
-export class Component extends HTMLElement {
-    constructor(template) {
+import { define } from '../application/components.js';
+import { Component } from './component.js';
+
+export class Engine extends Component {
+    constructor() {
         super();
+
+        const shadow = this.attachShadow({ mode: 'closed' });
+        //shadow.appendChild(template.content.cloneNode(true));
     }
 
     static get observedAttributes() {
@@ -27,3 +33,5 @@ export class Component extends HTMLElement {
         //Moved into a new document via adoptNode().
     }
 }
+
+define('engine', Engine);
