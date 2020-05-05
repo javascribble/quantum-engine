@@ -1,17 +1,12 @@
-export const services = new Map();
+import { addEventListeners, removeEventListeners } from '../utilities/browser.js';
+import { startAnimation, stopAnimation } from './animation.js';
 
-export const startServices = (options) => {
-    for (const option in options) {
-        if (services.has(option)) {
-            services.get(option).enable(options[option], addEventListener);
-        }
-    }
+export const start = () => {
+    addEventListeners();
+    startAnimation();
 };
 
-export const stopServices = () => {
-    for (const option in options) {
-        if (services.has(option)) {
-            services.get(option).disable(options[option], removeEventListener);
-        }
-    }
+export const stop = () => {
+    removeEventListeners();
+    stopAnimation();
 };

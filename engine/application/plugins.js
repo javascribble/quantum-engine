@@ -1,13 +1,20 @@
-export const plugins = new Set();
+import { animations } from './animation.js';
+import { systems } from './architecture.js';
 
-export const startPlugins = async (options) => {
-    for (const plugin of plugins) {
-        await plugin.start(options);
+const plugins = new Set();
+
+export const register = (plugin) => {
+    if (plugin.add && plugin.delete) {
+        systems.add(plugin);
     }
+
+    if (plugin.update) {
+        animations.add(plugin);
+    }
+
+    // connect options to plugin load event.
 };
 
-export const stopPlugins = async () => {
-    for (const plugin of plugins.reverse()) {
-        await plugin.stop();
-    }
+export const configure = (options) => {
+    // call load on plugins.
 };

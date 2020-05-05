@@ -1,6 +1,6 @@
-import { Engine, define } from '../../engine/main.js';
+import { define } from '../../engine/main.js';
 
-export class Editor extends Engine {
+export class Editor extends HTMLElement {
     constructor() {
         super();
     }

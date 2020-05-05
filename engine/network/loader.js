@@ -1,4 +1,4 @@
-﻿import { getExtension } from '../utilities/strings.js';
+﻿import { getExtension } from '../decorators/string.js';
 
 export const loadJson = (url, options) => fetch(url, options).then(response => response.json());
 

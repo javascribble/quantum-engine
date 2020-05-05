@@ -1,7 +1,5 @@
 ﻿import { eventListeners } from '../utilities/browser.js';
 
-// TODO: Use pointer lock API.
-
 const mouseDown = (event) => {
 };
 
@@ -15,6 +13,8 @@ const mouseWheel = (event) => {
 };
 
 const contextMenu = (event) => event.preventDefault();
+
+// TODO: Use pointer lock API.
 
 eventListeners.set('mousedown', mouseDown);
 eventListeners.set('mousemove', mouseMove);
