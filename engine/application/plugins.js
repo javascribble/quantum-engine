@@ -1,5 +1,4 @@
 import { animations } from './animation.js';
-import { systems } from './architecture.js';
 
 const plugins = new Set();
 

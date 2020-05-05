@@ -1,4 +1,4 @@
-import { register, configure } from './plugins.js';
+import { register } from './plugins.js';
 import { start, stop } from './services.js';
 import { define } from '../utilities/elements.js';
 import { load } from '../network/loader.js';
@@ -6,6 +6,8 @@ import { load } from '../network/loader.js';
 export class Engine extends HTMLElement {
     constructor() {
         super();
+
+        load(this.getAttribute('src')).then(this.configure)
     }
 
     connectedCallback() {
@@ -16,8 +18,8 @@ export class Engine extends HTMLElement {
         stop();
     }
 
-    load(options) {
-        load(this.getAttribute('src')).then(configure);
+    configure(options) {
+
     }
 }
 
