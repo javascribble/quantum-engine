@@ -1,13 +1,10 @@
-import Component from '../abstractions/component.js';
-import { defineElement } from '../application/components.js';
-import { createTemplate } from '../utilities/templates.js';
-
-const template = createTemplate(`<slot name="content" />`);
+import { Component } from '../extensions/component.js';
+import { define, template } from '../utilities/elements.js';
 
 export default class DockComponent extends Component {
     constructor() {
-        super(template);
+        super();
     }
 }
 
-defineElement('dock', DockComponent);
+define('dock', DockComponent);

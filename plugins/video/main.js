@@ -1,1 +1,1 @@
-export * from './adapters/canvas.js';
+export * from './elements/canvas.js';

@@ -1,10 +1,12 @@
 import { Component } from '../extensions/component.js';
 import { define, template } from '../utilities/elements.js';
 
-export default class StackComponent extends Component {
+const template = template(tabs);
+
+export default class TabsComponent extends Component {
     constructor() {
-        super();
+        super(template);
     }
 }
 
-define('stack', StackComponent);
+define('tabs', TabsComponent);
