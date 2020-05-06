@@ -1,11 +1,14 @@
 import { Component } from '../extensions/component.js';
-import { define, template } from '../utilities/elements.js';
-
-const template = template(tabs);
+import { define } from '../utilities/elements.js';
+import { tabs } from '../templates/tabs.js';
 
 export default class TabsComponent extends Component {
     constructor() {
-        super(template);
+        super(tabs);
+    }
+
+    activate(index) {
+
     }
 }
 

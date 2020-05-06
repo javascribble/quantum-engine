@@ -6,7 +6,6 @@ export const editor = template(`
     }
 </style>
 <div>
-    <slot name="menu"></slot>
-    <slot name="tabs"></slot>
+    <w-tabs></w-tabs>
 </div>
 `);
