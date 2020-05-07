@@ -1,13 +1,10 @@
-import { clone } from '../utilities/elements.js';
-
 export class Component extends HTMLElement {
-    constructor(template) {
+    constructor() {
         super();
-
-        this.appendChild(clone(template));
     }
 
+    static get observedAttributes() { return [] }
+
     attributeChangedCallback(name, previous, current) {
-        this[name] = current;
     }
 }

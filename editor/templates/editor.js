@@ -5,7 +5,16 @@ export const editor = template(`
     div {
     }
 </style>
+<script>
+function drag(event) {
+  console.log(event);
+}
+</script>
 <div>
-    <w-tabs></w-tabs>
+    <w-tabs>
+        <div slot="menu"></div>
+        <div slot="tab" name="tab1">test1</div>
+        <div slot="tab" name="tab2">test1</div>
+    </w-tabs>
 </div>
 `);

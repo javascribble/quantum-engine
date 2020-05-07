@@ -1,6 +1,6 @@
 export const define = (name, type) => customElements.define(`w-${name}`, type);
 
-export const shadow = (element) => element.attachShadow({ mode: 'open' });
+export const shadow = (element) => element.attachShadow({ mode: 'closed' });
 
 export const clone = (template) => template.content.cloneNode(true);
 
