@@ -1,18 +1,18 @@
-import { Component } from '../extensions/component.js';
+import { Stack } from './stack.js';
 import { define, shadow, clone } from '../utilities/elements.js';
 import { tabs } from '../templates/tabs.js';
 
-export class TabsComponent extends Component {
+export class Tabs extends Stack {
     constructor() {
         super();
 
-        const root = shadow(this);
-        root.appendChild(clone(tabs));
+        // const root = shadow(this);
+        // root.appendChild(clone(tabs));
 
-        this.menu = root.querySelector('slot[name="menu"]').assignedNodes()[0];
+        // this.menu = root.querySelector('slot[name="menu"]').assignedNodes()[0];
 
-        const slot = root.querySelector('slot[name="tab"]');
-        slot.addEventListener('slotchange', event => slot.assignedElements().forEach(this.addTab.bind(this)));
+        // const slot = root.querySelector('slot[name="tab"]');
+        // slot.addEventListener('slotchange', event => slot.assignedElements().forEach(this.addTab.bind(this)));
     }
 
     addTab(node) {
@@ -45,4 +45,4 @@ export class TabsComponent extends Component {
     }
 }
 
-define('tabs', TabsComponent);
+define('tabs', Tabs);

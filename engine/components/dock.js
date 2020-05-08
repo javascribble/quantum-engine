@@ -1,10 +1,10 @@
 import { Component } from '../extensions/component.js';
 import { define } from '../utilities/elements.js';
 
-export class DockComponent extends Component {
+export class Dock extends Component {
     constructor() {
         super();
     }
 }
 
-define('dock', DockComponent);
+define('dock', Dock);

@@ -1,3 +1,5 @@
+import { all } from '../aliases/promise.js';
+
 export const trackPromises = (promises, update) => {
     const progress = { completed: 0, total: promises.length };
     update(progress);
@@ -9,5 +11,5 @@ export const trackPromises = (promises, update) => {
         return result;
     };
 
-    return Promise.all(promises.map(trackPromise));
+    return all(promises.map(trackPromise));
 };

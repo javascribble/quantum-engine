@@ -2,7 +2,7 @@ import { Component } from '../extensions/component.js';
 import { define, shadow, clone } from '../utilities/elements.js';
 import { menu } from '../templates/menu.js';
 
-export class MenuComponent extends Component {
+export class Menu extends Component {
     constructor() {
         super();
 
@@ -10,4 +10,4 @@ export class MenuComponent extends Component {
     }
 }
 
-define('menu', MenuComponent);
+define('menu', Menu);
