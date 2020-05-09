@@ -6,10 +6,19 @@ export const loadText = (url, options) => fetch(url, options).then(response => r
 
 export const loadBlob = (url, options) => fetch(url, options).then(response => response.blob());
 
+export const loadImage = async (resource) => {
+    return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.src = resource;
+    });
+};
+
 export const loaders = {
     json: loadJson,
     txt: loadText,
-    bin: loadBlob
+    bin: loadBlob,
+    png: loadImage
 };
 
 export const load = (url, options) => loaders[getExtension(url)](url, options);

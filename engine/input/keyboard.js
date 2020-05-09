@@ -1,10 +1,9 @@
-﻿import { eventListeners } from '../utilities/browser.js';
-
+﻿import { addListener } from '../aliases/browser.js';
 const keyDown = (event) => {
 };
 
 const keyUp = (event) => {
 };
 
-eventListeners.set('keydown', keyDown);
-eventListeners.set('keyup', keyUp);
+addListener('keydown', keyDown);
+addListener('keyup', keyUp);

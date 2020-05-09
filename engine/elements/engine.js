@@ -1,13 +1,16 @@
-import { register } from '../application/plugins.js';
+import { define, shadow } from '../utilities/elements.js';
 import { start, stop } from '../application/services.js';
-import { define } from '../utilities/elements.js';
+import { plugins } from '../application/plugins.js';
 import { load } from '../network/loader.js';
 
 export class Engine extends HTMLElement {
     constructor() {
         super();
 
-        shadow(this);
+        const canvas = createCanvas();
+        resizeCanvas(canvas);
+
+        shadow(this).appendChild(canvas);
 
         load(this.getAttribute('src')).then(this.configure)
     }

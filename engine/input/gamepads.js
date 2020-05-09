@@ -1,4 +1,4 @@
-﻿import { eventListeners } from '../utilities/browser.js';
+﻿import { addListener } from '../aliases/browser.js';
 
 export const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
 
@@ -10,5 +10,5 @@ const onGamepadDisconnected = (event) => {
     gamepads.delete(event.gamepad);
 };
 
-eventListeners.set('ongamepadconnected', onGamepadConnected);
-eventListeners.set('ongamepaddisconnected', onGamepadDisconnected);
+addListener('ongamepadconnected', onGamepadConnected);
+addListener('ongamepaddisconnected', onGamepadDisconnected);

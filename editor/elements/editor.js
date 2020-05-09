@@ -1,5 +1,6 @@
-import { shadow, define, clone } from '../imports.js';
+import { define, shadow } from '../imports.js';
 import { editor } from '../templates/editor.js';
+import { clone } from '../utilities/elements.js';
 
 export class Editor extends HTMLElement {
     constructor() {

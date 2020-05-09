@@ -1,6 +1,6 @@
 {
   "name": "whitestone",
-  "description": "simple, web based game engine",
+  "description": "web based game engine",
   "author": "Adonai Games",
   "version": "0.0.1",
   "license": "MIT",
@@ -36,7 +36,7 @@
     "build/",
     "editor/",
     "engine/",
-	"interface/",
+    "interface/",
     "plugins/"
   ]
 }

@@ -1,4 +1,4 @@
-﻿import { eventListeners } from '../utilities/browser.js';
+﻿import { addListener } from '../aliases/browser.js';
 
 const touchStart = (event) => {
 };
@@ -12,7 +12,7 @@ const touchEnd = (event) => {
 const touchCancel = (event) => {
 };
 
-eventListeners.set('touchstart', touchStart);
-eventListeners.set('touchmove', touchMove);
-eventListeners.set('touchend', touchEnd);
-eventListeners.set('touchcancel', touchCancel);
+addListener('touchstart', touchStart);
+addListener('touchmove', touchMove);
+addListener('touchend', touchEnd);
+addListener('touchcancel', touchCancel);
