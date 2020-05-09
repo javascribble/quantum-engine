@@ -1,18 +1,16 @@
+import { publish } from './events.js';
+
 let previousTime = performance.now();
 let frame = 0;
 
-export const animations = new Set();
+export const animateEvent = 'animate';
 
-const animateFrame = (currentTime) => {
-    let deltaTime = (currentTime - previousTime);
-    for (const animation of animations) {
-        animation.animate(deltaTime);
-    }
-
+const animate = (currentTime) => {
+    publish(animateEvent, currentTime - previousTime);
     previousTime = currentTime;
-    frame = requestAnimationFrame(animateFrame);
+    frame = requestAnimationFrame(animate);
 };
 
-export const startAnimation = () => animateFrame(performance.now());
+export const startAnimation = () => animate(performance.now());
 
 export const stopAnimation = () => cancelAnimationFrame(frame);

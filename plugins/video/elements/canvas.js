@@ -9,6 +9,8 @@ export class Canvas extends Plugin {
         this.appendChild(canvas);
         resizeCanvas(canvas);
 
+        this.subscribe('animate', this.animate);
+
         this.context = getContext(canvas);
     }
 

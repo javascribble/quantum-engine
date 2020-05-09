@@ -4,9 +4,10 @@
 	<script type="module" src="/plugins/main.js"></script>
 	<script type="module" src="/engine/main.js"></script>
 </head>
-<body>
-    <w-engine src="/test/engine.json">
+<body onload="load()">
+    <w-engine>
 		<w-canvas></w-canvas>
 	</w-engine>
+	<script src="/test/engine.js"></script>
 </body>
 </html>

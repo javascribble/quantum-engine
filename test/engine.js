@@ -1,4 +1,4 @@
-{
+const test = {
 	"scenes": [ 
 		{
 			"entities": [
@@ -18,4 +18,8 @@
 			]
 		}
 	]
+}
+
+function load() {
+	
 }
