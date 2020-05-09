@@ -1,15 +1,10 @@
 {
-	"path": "/test/resources",
-	"resources": [
-		"Kal16.png",
-		"Kal256.png"
-	],	
 	"scenes": [ 
 		{
 			"entities": [
 				{
 					"renderable": {
-						"image": 0,
+						"image": "/test/resources/Kal16.png",
 						"sx": 0,
 						"sy": 0,
 						"sw": 16,

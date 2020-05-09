@@ -5,3 +5,5 @@ export const template = (html) => {
 };
 
 export const clone = (template) => template.content.cloneNode(true);
+
+export const shadow = (element) => element.attachShadow({ mode: 'closed' });

@@ -6,7 +6,7 @@ export const animations = new Set();
 const animateFrame = (currentTime) => {
     let deltaTime = (currentTime - previousTime);
     for (const animation of animations) {
-        animation.update(deltaTime);
+        animation.animate(deltaTime);
     }
 
     previousTime = currentTime;

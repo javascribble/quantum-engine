@@ -1,1 +1,1 @@
-export { shadow, define } from '../engine/exports.js';
+export { define } from '../engine/exports.js';

@@ -1,6 +1,6 @@
 ﻿import { addListener } from '../aliases/browser.js';
 
-export const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
+const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
 
 const onGamepadConnected = (event) => {
     gamepads.add(event.gamepad);
