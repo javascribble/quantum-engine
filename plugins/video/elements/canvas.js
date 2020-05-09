@@ -1,17 +1,20 @@
 import { Plugin, define } from '../imports.js';
 import { createCanvas, resizeCanvas, getContext } from '../output/canvas.js';
+import { loadImage } from '../network/loader.js';
 
 export class Canvas extends Plugin {
     constructor() {
         super();
 
+        this.loaders.png = loadImage;
+
         const canvas = createCanvas();
         this.appendChild(canvas);
         resizeCanvas(canvas);
 
-        this.subscribe('animate', this.animate);
-
         this.context = getContext(canvas);
+
+        this.subscribe('animate', this.animate);
     }
 
     add(renderable) {
