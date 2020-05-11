@@ -10,6 +10,9 @@ export class Video extends HTMLElement {
         this.appendChild(this.canvas);
 
         this.entities = new Set();
+        this.add = (entity) => this.entities.add(entity);
+        this.delete = (entity) => this.entities.delete(entity);
+        this.validate = (entity) => entity.renderable;
 
         const engine = this.parentElement;
         engine.loaders.png = loadImage;
@@ -17,13 +20,7 @@ export class Video extends HTMLElement {
         engine.systems.add(this);
     }
 
-    add = (entity) => this.entities.add(entity);
-
-    delete = (entity) => this.entities.delete(entity);
-
-    validate = (entity) => entity.renderable;
-
-    animate = (deltaTime) => {
+    animate(deltaTime) {
         resizeCanvas(this.canvas);
         for (const { renderable } of this.entities) {
             // TODO: Support more primitives (animation, text, rectangle, circle, arc, line).
