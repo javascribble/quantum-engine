@@ -1,23 +1,20 @@
-import { createSystemHandler } from './systems.js';
-import { createComponentHandler } from './components.js';
+import { createSystemProxy } from './systems.js';
 
 const entities = new Map();
 
 export const createEntity = () => {
-    // TODO: Make this less of a nightmare without exposing anything.
-    const container = {};
-    const { addComponent, deleteComponent, deleteEntity } = createSystemHandler(container);
-    const { proxy, revoke } = Proxy.revocable({}, createComponentHandler(addComponent, deleteComponent));
-    container.proxy = proxy;
-    container.revoke = revoke;
-    container.deleteEntity = deleteEntity;
-    entities.set(proxy, container);
+    const { active, proxy, revoke } = createSystemProxy();
+    entities.set(proxy, {
+        delete: () => {
+            active.forEach(system => system.delete(proxy));
+            revoke();
+        }
+    });
+
     return proxy;
 };
 
 export const deleteEntity = (entity) => {
-    const container = entities.get(entity);
-    container.deleteEntity();
-    container.revoke();
+    entities.get(entity).delete();
     entities.delete(entity);
 };

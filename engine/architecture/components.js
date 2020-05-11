@@ -1,30 +1,21 @@
 import { defineProperty } from '../aliases/object.js';
 
-const createAssignPropertyTrap = (handler) => ({
-    set(target, property, value) {
-        target[property] = value;
-        handler(target, property);
-        return true;
+export const createComponentHandler = (observers) => {
+    const { addComponent, deleteComponent } = observers;
+    return {
+        set(target, property, value) {
+            target[property] = value;
+            addComponent(target, property);
+            return true;
+        },
+        defineProperty(target, property, descriptor) {
+            defineProperty(target, property, descriptor);
+            addComponent(target, property);
+            return true;
+        },
+        deleteProperty(target, property) {
+            delete target[property];
+            deleteComponent(target, property);
+        }
     }
-});
-
-const createDefinePropertyTrap = (handler) => ({
-    defineProperty(target, property, descriptor) {
-        defineProperty(target, property, descriptor);
-        handler(target, property);
-        return true;
-    },
-});
-
-const createDeletePropertyTrap = (handler) => ({
-    deleteProperty(target, property) {
-        delete target[property];
-        handler(target, property);
-    }
-});
-
-export const createComponentHandler = (addPropertyHandler, deletePropertyHandler) => ({
-    ...createAssignPropertyTrap(addPropertyHandler),
-    ...createDefinePropertyTrap(addPropertyHandler),
-    ...createDeletePropertyTrap(deletePropertyHandler)
-});
+};
