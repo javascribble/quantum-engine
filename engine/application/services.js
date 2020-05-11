@@ -1,4 +1,4 @@
-import { startAnimation, stopAnimation } from './animation.js';
+import { startAnimation, stopAnimation } from './browser.js';
 
 export const start = () => {
     startAnimation();

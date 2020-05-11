@@ -1,9 +1,7 @@
-import { Plugin, define } from '../imports.js';
-
-export class Scene extends Plugin {
+export class Scene extends HTMLElement {
     constructor() {
         super();
     }
 }
 
-define('scene', Scene);
+customElements.define('scene-plugin', Scene);

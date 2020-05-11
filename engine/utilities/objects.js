@@ -1,0 +1,1 @@
+export const hasOwnProperties = (object, properties) => properties.every(object.hasOwnProperty);

@@ -1,6 +1,6 @@
 ﻿const userAgent = navigator.userAgent;
 
-export const profileDevice = () => ({
+export const profile = () => ({
     isTv: userAgent.match(/webOS/i),
     isMobile:
         userAgent.match(/Android/i) ||
