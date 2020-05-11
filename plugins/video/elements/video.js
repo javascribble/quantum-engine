@@ -11,16 +11,31 @@ export class Video extends HTMLElement {
 
         this.context = getContext(canvas);
 
-        this.draws = new Set();
+        this.entities = new Set();
 
         const engine = this.parentElement;
-        engine.loader.extensions.png = loadImage;
+        engine.loaders.png = loadImage;
         engine.animations.add(this);
+        engine.systems.add(this);
+    }
+
+    add(entity) {
+        this.entities.add(entity);
+    }
+
+    delete(entity) {
+        this.entities.delete(entity);
+    }
+
+    validate(entity) {
+        return entity.renderable;
     }
 
     animate(deltaTime) {
-        for (const draw of this.draws) {
-            this.context.drawImage(draw.image, draw.sx, draw.sy, draw.sw, draw.sh, draw.dx, draw.dy, draw.dw, draw.dh);
+        for (const { renderable } of this.entities) {
+            // TODO: Support more primitives (animation, text, rectangle, circle, arc, line).
+            const { image, sx, sy, sw, sh, dx, dy, dw, dh } = renderable;
+            this.context.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
         }
     }
 }

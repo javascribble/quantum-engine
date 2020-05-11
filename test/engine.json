@@ -1,7 +1,7 @@
 {
 	"scenes": [ 
 		{
-			"entities": [
+			"nodes": [
 				{
 					"renderable": {
 						"image": "/test/resources/Kal16.png",

@@ -7,12 +7,12 @@ export const loadText = (url, options) => fetch(url, options).then(response => r
 
 export const loadBlob = (url, options) => fetch(url, options).then(response => response.blob());
 
-export const extensions = {
+export const loaders = {
     json: loadJson,
     txt: loadText,
     bin: loadBlob
 };
 
-export const load = (url, options) => extensions[getExtension(url)](url, options);
+export const load = (url, options) => loaders[getExtension(url)](url, options);
 
 export const loadMany = (urls, update, options) => trackPromises(urls.map(url => load(url, options)), update);
