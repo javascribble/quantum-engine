@@ -12,6 +12,8 @@ export class Scene extends HTMLElement {
                 entity.renderable = node.renderable;
             })
         });
+
+        engine.start();
     }
 }
 

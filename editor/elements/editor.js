@@ -5,7 +5,7 @@ export class Editor extends HTMLElement {
     constructor() {
         super();
 
-        shadow(this).appendChild(clone(editor(['TODO: collect plugins'])));
+        shadow(this).appendChild(clone(editor));
     }
 
     connectedCallback() {
@@ -15,4 +15,4 @@ export class Editor extends HTMLElement {
     }
 }
 
-customElements.define('game-editor', Editor); 
+customElements.define('game-editor', Editor);

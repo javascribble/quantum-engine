@@ -1,4 +1,3 @@
-import { start, stop } from '../application/services.js';
 import { expose } from '../application/bridge.js';
 
 export class Engine extends HTMLElement {
@@ -6,14 +5,6 @@ export class Engine extends HTMLElement {
         super();
 
         expose(this);
-    }
-
-    connectedCallback() {
-        start();
-    }
-
-    disconnectedCallback() {
-        stop();
     }
 }
 
