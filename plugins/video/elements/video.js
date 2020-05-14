@@ -1,5 +1,4 @@
 import { createCanvas, resizeCanvas, getContext } from '../output/canvas.js';
-import { loadImage } from '../network/loader.js';
 
 export class Video extends HTMLElement {
     constructor() {
@@ -15,7 +14,6 @@ export class Video extends HTMLElement {
         this.validate = (entity) => entity.renderable;
 
         const engine = this.parentElement;
-        engine.loaders.png = loadImage;
         engine.animations.add(this);
         engine.systems.add(this);
     }

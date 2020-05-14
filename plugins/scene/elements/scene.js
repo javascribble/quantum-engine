@@ -1,16 +1,27 @@
+import { loadImage } from '../network/loader.js';
+
 export class Scene extends HTMLElement {
     constructor() {
         super();
+    }
 
+    connectedCallback() {
         const engine = this.parentElement;
-        engine.load('/test/engine.json').then(options => {
-            const scene = options.scenes[0];
-            const node = scene.nodes[0];
-            engine.load(node.renderable.image).then(image => {
-                node.renderable.image = image;
-                const entity = engine.createEntity();
-                entity.renderable = node.renderable;
-            })
+        engine.loaders.png = loadImage;
+
+        engine.load("/test/resources/Kal16.png").then(image => {
+            const entity = engine.createEntity();
+            entity.renderable = {
+                image,
+                sx: 0,
+                sy: 0,
+                sw: 16,
+                sh: 16,
+                dx: 100,
+                dy: 100,
+                dw: 16,
+                dh: 16
+            };
         });
 
         engine.start();

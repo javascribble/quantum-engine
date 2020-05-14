@@ -5,13 +5,18 @@ export class Editor extends HTMLElement {
     constructor() {
         super();
 
-        shadow(this).appendChild(clone(editor));
-    }
+        const template = clone(editor);
 
-    connectedCallback() {
-    }
+        this.properties = template.querySelector('.properties');
+        this.objects = template.querySelector('.objects');
 
-    disconnectedCallback() {
+        this.properties.style.width = localStorage.getItem('propertiesWidth') || '300px';
+        this.objects.style.width = localStorage.getItem('objectsWidth') || '300px';
+
+        // localStorage.setItem('propertiesWidth', this.properties.style.width);
+        // localStorage.setItem('objectsWidth', this.objects.style.width);
+
+        shadow(this).appendChild(template);
     }
 }
 
