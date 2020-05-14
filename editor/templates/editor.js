@@ -10,14 +10,27 @@ export const editor = template(`
         height: 100%;
     }
 
-    .viewport {
-        border: 1px solid;
+    .icon {
+        cursor: pointer;
+    }
+
+    .menu {
+        display: flex;
+    }
+
+    .vitals {
+
+    }
+
+    .control {
         justify-self: center;
         align-self: center;
+    }
+
+    .viewport {
+        border: 1px solid;
         resize: both;
         overflow: auto;
-        width: 300px;
-        height: 300px;
     }
 
     .objects {
@@ -40,9 +53,13 @@ export const editor = template(`
     <div class="objects panel">
         <div>objects</div>
     </div>
-    <div>top controls</div>
-    <div class="viewport"><slot></slot></div>
-    <div>bottom controls</div>    
+    <div class="menu control">
+        <span>&#128427; &#128449;</span>
+        <span>&#9654; &#10074;&#10074; &#9209;</span>
+        <span></span>
+    </div>
+    <div class="viewport control"><slot></slot></div>
+    <div class="vitals control">vitals</div>    
     <div class="properties panel" style="direction: rtl;">
         <div style="direction: ltr;">properties</div>
     </div>
