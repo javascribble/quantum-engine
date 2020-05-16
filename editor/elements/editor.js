@@ -1,20 +1,28 @@
-import { editor } from '../templates/editor.js';
-import { objects } from '../templates/objects.js';
+import { editorTemplate } from '../templates/editor.js';
 import { shadow, clone } from '../utilities/elements.js';
-import { syncStyles } from '../storage/local.js';
+import { syncLayout } from '../application/layout.js';
+import { syncState } from '../application/state.js';
 
 export class Editor extends HTMLElement {
     constructor() {
         super();
 
+        const template = clone(editorTemplate);
+        syncLayout(template);
+        syncState(template);
+
         const root = shadow(this);
-        root.appendChild(clone(editor));
+        root.appendChild(template);
 
-        syncStyles(root, '#properties', ['width'], ['300px']);
-        syncStyles(root, '#objects', ['width'], ['300px']);
-        syncStyles(root, '#viewport', ['width', 'height'], ['300px', '300px']);
-
-        root.querySelector('#objects').appendChild(clone(objects));
+        // let scale = 1;
+        // const factor = 1.2;
+        // const viewport = root.querySelector('#viewport');
+        // viewport.addEventListener("wheel", (event) => {
+        //     event.preventDefault();
+        //     scale = Math.clamp(event.deltaY < 0 ? scale * factor : scale / factor, 0, 1);
+        //     viewport.style.transform = `scale(${scale})`;
+        //     viewport.style.transformOrigin = "50% 50% 0px";
+        // });
     }
 }
 

@@ -1,14 +1,19 @@
-export const syncStyles = (document, selector, properties, defaults, delay) => {
-    let style = document.querySelector(selector).style;
+export const saveObject = (key, object) => localStorage.setItem(key, JSON.stringify(object));
+
+export const loadObject = (key) => JSON.parse(localStorage.getItem(key));
+
+export const saveStyles = (element, properties) => {
+    const style = element.style;
     for (let i = 0; i < properties.length; i++) {
         const property = properties[i];
-        const key = `${selector}-${property}`;
-        let value = style[property] = localStorage.getItem(key) || defaults[i];
-        setInterval(() => {
-            if (style[property] !== value) {
-                value = style[property];
-                localStorage.setItem(key, value);
-            }
-        }, delay || 1000);
+        localStorage.setItem(`${element.id}-${property}`, style[property]);
+    }
+};
+
+export const loadStyles = (element, properties, defaults) => {
+    const style = element.style;
+    for (let i = 0; i < properties.length; i++) {
+        const property = properties[i];
+        style[property] = localStorage.getItem(`${element.id}-${property}`) || defaults[i];
     }
 };

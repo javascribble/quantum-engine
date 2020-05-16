@@ -1,6 +1,6 @@
 import { template } from '../utilities/elements.js';
 
-export const editor = template(`
+export const editorTemplate = template(`
 <style>
     #editor { 
         display: grid;
@@ -15,11 +15,11 @@ export const editor = template(`
     }
 
     #viewport {
+        box-shadow: 0px 0px 1px 1px var(--primary-highlight-color);
         justify-self: center;
         align-self: center;
         resize: both;
         overflow: hidden;
-        box-shadow: 0px 0px 1px 1px chartreuse;
         max-width: calc(100% - 30px);
     }
 
@@ -30,12 +30,10 @@ export const editor = template(`
     }
 
     #objects {
-        grid-row: 2;
         grid-column: 1;
     }
 
     #properties {
-        grid-row: 2;
         grid-column: 2;
         direction: rtl;
         justify-self: end;
@@ -58,6 +56,7 @@ export const editor = template(`
 
     .panel {
         background-color: var(--secondary-background-color);
+        grid-row: 2;
         resize: horizontal;
         overflow: auto;
         max-width: 100%;

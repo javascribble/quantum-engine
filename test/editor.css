@@ -1,6 +1,7 @@
 :root {
 	--primary-background-color: grey;
 	--secondary-background-color: darkgrey;
+	--primary-highlight-color: chartreuse;
 }
 
 body {
