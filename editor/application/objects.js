@@ -1,18 +1,29 @@
-import { parentTemplate, childTemplate, orphanTemplate } from '../templates/objects.js';
+import { parentTemplate, childTemplate } from '../templates/objects.js';
 import { clone } from '../utilities/elements.js';
 
 export const addObjects = (objects, parent, indent = 0) => {
     for (const object of objects) {
         if (object.children && object.children.length > 0) {
             const template = clone(parentTemplate);
+
             const details = template.querySelector('details');
-            details.querySelector('summary').innerText = object.name;
             details.style.paddingLeft = `${indent}px`;
+
+            const input = details.querySelector('summary > input');
+            input.value = object.name;
+
             parent.appendChild(template);
-            addObjects(object.children, details, indent + 10);
+
+            addObjects(object.children, details, 12);
         } else {
-            const template = clone(indent ? childTemplate : orphanTemplate);
-            template.querySelector('div > span').innerText = object.name;
+            const template = clone(childTemplate);
+
+            const div = template.querySelector('div');
+            div.style.paddingLeft = `${indent + 17}px`;
+
+            const input = div.querySelector('input');
+            input.value = object.name;
+
             parent.appendChild(template);
         }
     }

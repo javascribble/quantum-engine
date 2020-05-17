@@ -1,7 +1,7 @@
 {
   "name": "whitestone",
   "description": "web based game engine",
-  "author": "Adonai Games",
+  "author": "javascribble",
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {},
@@ -19,13 +19,13 @@
     "start": "npm-run-all --parallel serve watch",
     "postversion": "npm publish --access public"
   },
-  "homepage": "https://github.com/adonaigames/whitestone#readme",
+  "homepage": "https://github.com/javascribble/whitestone#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adonaigames/whitestone.git"
+    "url": "git+https://github.com/javascribble/whitestone.git"
   },
   "bugs": {
-    "url": "https://github.com/adonaigames/whitestone/issues"
+    "url": "https://github.com/javascribble/whitestone/issues"
   },
   "keywords": [
     "game",

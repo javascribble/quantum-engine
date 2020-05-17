@@ -10,6 +10,10 @@ export const editorTemplate = template(`
         height: 100%;
     }
 
+    #editor * {
+        user-select: none;
+    }
+
     #engine {
         padding: 0 15px;
     }
@@ -33,6 +37,10 @@ export const editorTemplate = template(`
         grid-column: 1;
     }
 
+    #objects input {
+        width: calc(100% - 17px);
+    }
+
     #properties {
         grid-column: 2;
         direction: rtl;
@@ -41,6 +49,12 @@ export const editorTemplate = template(`
 
     #properties:after {
         direction: ltr;
+    }
+
+    #selection {
+        position: absolute;
+        border: 1px dashed var(--primary-highlight-color); 
+        z-index: 2;
     }
 
     .control {
@@ -58,11 +72,21 @@ export const editorTemplate = template(`
 
     .panel {
         background-color: var(--secondary-background-color);
-        grid-row: 2;
+        white-space: nowrap;
         resize: horizontal;
-        overflow: auto;
         max-width: 100%;
+        overflow: auto;
+        grid-row: 2;
         z-index: 1;
+    }
+
+    input {
+        background-color: var(--secondary-background-color);
+        font-family: inherit;
+        font-size: inherit;
+        outline: none;
+        border: none;
+        padding: 0;
     }
 </style>
 <div id="editor">

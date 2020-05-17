@@ -2,18 +2,12 @@ import { template } from '../utilities/elements.js';
 
 export const parentTemplate = template(`
 <details>
-    <summary></summary>
+    <summary style="outline: none;"><input type="text" /></summary>
 </details>
 `);
 
 export const childTemplate = template(`
-<div style="padding-left: 1px;">
-    &#65372;<span></span>
-</div>
-`);
-
-export const orphanTemplate = template(`
-<div style="padding-left: 17px;">
-    <span></span>
+<div>
+    <input type="text" />
 </div>
 `);
