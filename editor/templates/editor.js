@@ -44,6 +44,8 @@ export const editorTemplate = template(`
     }
 
     .control {
+        display: flex;
+        justify-content: space-between;        
         background-color: var(--primary-background-color);
         grid-column-start: span 2;
         padding: 0 5px;
@@ -73,6 +75,10 @@ export const editorTemplate = template(`
             <span>&#9654;</span>
             <span>&#10074;&#10074;</span>
             <span>&#9209;</span>
+        </span>
+        <span>
+            <span>&#128427;</span>
+            <span>&#128449;</span>
         </span>
     </div>
     <div id="engine" class="view"><slot></slot></div>
