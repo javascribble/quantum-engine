@@ -28,17 +28,15 @@ export const editorTemplate = template(`
     }
 
     #menu {
+        background: linear-gradient(var(--secondary-background-color), var(--primary-background-color));
     }
-
+    
     #vitals {
+        background: linear-gradient(var(--primary-background-color), var(--secondary-background-color));
     }
 
     #objects {
         grid-column: 1;
-    }
-
-    #objects input {
-        width: calc(100% - 17px);
     }
 
     #properties {
@@ -59,8 +57,7 @@ export const editorTemplate = template(`
 
     .control {
         display: flex;
-        justify-content: space-between;        
-        background-color: var(--primary-background-color);
+        justify-content: space-between;
         grid-column-start: span 2;
         padding: 0 5px;
     }
@@ -84,9 +81,7 @@ export const editorTemplate = template(`
         background-color: var(--secondary-background-color);
         font-family: inherit;
         font-size: inherit;
-        outline: none;
         border: none;
-        padding: 0;
     }
 </style>
 <div id="editor">

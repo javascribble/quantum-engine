@@ -10,6 +10,7 @@ export const addObjects = (objects, parent, indent = 0) => {
             details.style.paddingLeft = `${indent}px`;
 
             const input = details.querySelector('summary > input');
+            input.style.width = `calc(100% - 17px)`;
             input.value = object.name;
 
             parent.appendChild(template);
@@ -22,6 +23,7 @@ export const addObjects = (objects, parent, indent = 0) => {
             div.style.paddingLeft = `${indent + 17}px`;
 
             const input = div.querySelector('input');
+            input.style.width = '100%';
             input.value = object.name;
 
             parent.appendChild(template);
