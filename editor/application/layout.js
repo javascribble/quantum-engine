@@ -6,13 +6,10 @@ const resizeObserver = new ResizeObserver(entries => {
     for (const { target } of entries) {
         const observable = observables.get(target.id);
         if (observable.timeout) {
-            clearTimeout(observable.timer);
+            clearTimeout(observable.timeout);
         }
 
-        const update = () => {
-            saveStyles(target, observable.properties);
-        };
-
+        const update = () => { saveStyles(target, observable.properties); };
         observable.timeout = setTimeout(update, 1000);
     }
 });

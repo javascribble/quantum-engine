@@ -1,2 +1,3 @@
-export const addProperties = (object, parent) => {
+export const addProperties = (objects, parent) => {
+
 };

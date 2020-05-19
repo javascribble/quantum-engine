@@ -1,7 +1,14 @@
 :root {
 	--primary-background-color: grey;
+	--primary-highlight-color: lightgrey;
+	--primary-hover-color: black;
+	--primary-active-color: black;
 	--secondary-background-color: darkgrey;
-	--primary-highlight-color: chartreuse;
+	--secondary-highlight-color: chartreuse;
+	--secondary-hover-color: black;
+	--secondary-active-color: black;
+	
+	--primary-indention-units: 14;
 }
 
 body {

@@ -1,30 +1,55 @@
 import { parentTemplate, childTemplate } from '../templates/objects.js';
+import { addListener, addStopPropagation } from '../utilities/events.js';
+import { onClick } from '../constants/events.js';
 import { clone } from '../utilities/elements.js';
 
-export const addObjects = (objects, parent, indent = 0) => {
+const indent = getComputedStyle(document.documentElement).getPropertyValue('--primary-indention-units');
+
+export const addObjects = (objects, parent, level = 0) => {
+    const singleIndent = level * indent;
+    const doubleIndent = ++level * indent;
     for (const object of objects) {
         if (object.children && object.children.length > 0) {
             const template = clone(parentTemplate);
 
-            const details = template.querySelector('details');
-            details.style.paddingLeft = `${indent}px`;
+            const container = template.querySelector('details');
 
-            const input = details.querySelector('summary > input');
-            input.style.width = `calc(100% - 17px)`;
-            input.value = object.name;
+            const summary = container.querySelector('summary');
+            summary.style.paddingLeft = `${singleIndent}px`;
+
+            const title = template.querySelector('div');
+
+            const select = () => {
+                title.classList.toggle('selected');
+            };
+
+            addListener(title, onClick, select);
+
+            const name = title.querySelector('span');
+            name.style.marginLeft = `${doubleIndent}px`;
+            name.innerText = object.name;
+            addStopPropagation(name, onClick);
 
             parent.appendChild(template);
 
-            addObjects(object.children, details, 12);
+            addObjects(object.children, container, level);
         } else {
             const template = clone(childTemplate);
 
-            const div = template.querySelector('div');
-            div.style.paddingLeft = `${indent + 17}px`;
 
-            const input = div.querySelector('input');
-            input.style.width = '100%';
-            input.value = object.name;
+            const title = template.querySelector('div');
+            const select = (event) => {
+                console.log(event);
+                title.classList.toggle('selected');
+            };
+
+            addListener(title, onClick, select);
+
+            const name = title.querySelector('span');
+            addStopPropagation(name, onClick);
+
+            name.style.marginLeft = `${doubleIndent}px`;
+            name.innerText = object.name;
 
             parent.appendChild(template);
         }

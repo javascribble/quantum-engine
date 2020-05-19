@@ -71,10 +71,15 @@ export const editorTemplate = template(`
         background-color: var(--secondary-background-color);
         white-space: nowrap;
         resize: horizontal;
+        position: relative;
         max-width: 100%;
         overflow: auto;
         grid-row: 2;
         z-index: 1;
+    }
+
+    .selected {
+        background-color: var(--primary-highlight-color);
     }
 
     input {
@@ -87,17 +92,19 @@ export const editorTemplate = template(`
 <div id="editor">
     <div id="menu" class="control">
         <span>
-            <span>&#128427;</span>
-            <span>&#128449;</span>
+            <span class="icon">&#128190;</span>
+            <span class="icon">&#128193;</span>
+            <span class="icon">&#128194;</span>
         </span>
         <span>
-            <span>&#9654;</span>
-            <span>&#10074;&#10074;</span>
-            <span>&#9209;</span>
+            <span class="icon">&#9654;</span>
+            <span class="icon">&#10074;&#10074;</span>
+            <span class="icon">&#9209;</span>
         </span>
         <span>
-            <span>&#128427;</span>
-            <span>&#128449;</span>
+            <span class="icon">&#10021;</span>
+            <span class="icon">&#128472;</span>
+            <span class="icon">&#9878;</span>
         </span>
     </div>
     <div id="engine" class="view"><slot></slot></div>
@@ -105,7 +112,7 @@ export const editorTemplate = template(`
     <div id="objects" class="panel"></div>
     <div id="properties" class="panel"></div>
     <div id="vitals" class="control">
-        <span>vitals</span>
+        <span>&#10004;&#9876;&#9874;&#128736;&#9935;&#128296;&#128295;</span>
     </div> 
 </div>
 `);
