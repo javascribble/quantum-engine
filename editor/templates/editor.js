@@ -1,9 +1,9 @@
 import { template } from '../utilities/elements.js';
 import { editorStyles } from '../styles/editor.js';
-import { headerIcons, footerIcons } from './icons.js';
-import { propertiesPanel } from './properties.js';
-import { objectPanel } from './objects.js';
-import { viewport } from './viewport.js';
+import { headerIcons, footerIcons } from '../markup/icons.js';
+import { propertiesPanel } from '../markup/properties.js';
+import { objectPanel } from '../markup/objects.js';
+import { viewport } from '../markup/viewport.js';
 
 export const editor = template(`
 <style>${editorStyles}</style>

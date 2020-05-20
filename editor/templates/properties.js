@@ -1,1 +1,1 @@
-export const propertiesPanel = ``;
+import { template } from '../utilities/elements.js';

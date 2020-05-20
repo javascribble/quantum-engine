@@ -1,4 +1,4 @@
-import { saveStyles, loadStyles } from '../storage/local.js';
+import { saveStyles, loadStyles } from './storage.js';
 
 const observables = new Map();
 

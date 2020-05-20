@@ -1,6 +1,6 @@
 import { addObjects } from './objects.js';
 import { addProperties } from './properties.js';
-import { saveObject, loadObject } from '../storage/local.js';
+import { saveObject, loadObject } from './storage.js';
 
 export const syncState = (root) => {
     //const state = loadObject('state') || [];

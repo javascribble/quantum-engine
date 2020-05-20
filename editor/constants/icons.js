@@ -1,7 +1,7 @@
 export const settingsIcon = { code: 128736, title: "settings" };
 export const editorIcons = [settingsIcon];
 
-export const saveIcon = { code: 128427, title: "save" };
+export const saveIcon = { code: 128427, title: "save in memory" };
 export const exportIcon = { code: 128448, title: "export file" };
 export const importIcon = { code: 128449, title: "import file" };
 export const projectIcons = [saveIcon, exportIcon, importIcon];

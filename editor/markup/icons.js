@@ -6,7 +6,7 @@ const flatten = code => isArray(code) ? code.join(';&#') : code;
 
 export const icon = (model) => `<span class="icon" title="${model.title}">&#${flatten(model.code)};</span>`;
 
-export const icons = (models) => `<span class="icons">${joinTemplateModels(icon, models)}</span>`;
+export const icons = (models) => `<span class="icons">${joinTemplateModels(icon, models, '&nbsp;')}</span>`;
 
 export const headerIcons = joinTemplateModels(icons, [projectIcons, debugIcons, editorIcons]);
 
