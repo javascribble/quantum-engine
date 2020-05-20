@@ -12,9 +12,7 @@ export const themeStyles = `
     }
 
     #selection {
-        position: absolute;
-        border: 1px dashed var(--primary-highlight-color); 
-        z-index: 2;
+        border: 1px dashed var(--primary-highlight-color);
     }
 
     .selected {

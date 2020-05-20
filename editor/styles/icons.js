@@ -4,6 +4,6 @@ export const iconStyles = `
     }
 
     .icons {
-        
+        padding: 0 5px;
     }
 `;

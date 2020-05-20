@@ -1,0 +1,1 @@
+export const joinMarkup = (interpolator, models, separator) => models.map(interpolator).join(separator || '');

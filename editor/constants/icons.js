@@ -14,13 +14,20 @@ export const debugIcons = [playIcon, pauseIcon, stopIcon];
 export const transformIcon = { code: 10021, title: "transform" };
 export const rotateIcon = { code: 128472, title: "rotate" };
 export const scaleIcon = { code: 9878, title: "scale" };
-export const viewportIcons = [transformIcon, rotateIcon, scaleIcon];
+export const geometryIcons = [transformIcon, rotateIcon, scaleIcon];
 
+export const expandIcon = { code: 8794, title: "expand" };
+export const collapseIcon = { code: 8793, title: "collapse" };
+export const hierarchyIcons = [expandIcon, collapseIcon];
+
+export const addIcon = { code: 43, title: "add" };
 export const editIcon = { code: 9998, title: "edit" };
-export const propertiesIcons = [editIcon];
+export const deleteIcon = { code: 215, title: "delete" };
+export const editingIcons = [editIcon];
 
 export const confirmIcon = { code: 9998, title: "confirm" };
 export const cancelIcon = { code: 9733, title: "cancel" };
+export const commitmentIcons = [confirmIcon, cancelIcon];
 
 export const fullStarIcon = { code: 9733, title: "rate" };
 export const emptyStarIcon = { code: 9734, title: "rate" };

@@ -33,14 +33,20 @@ export const layoutStyles = `
         direction: ltr;
     }
 
-    .menu {
-        display: flex;
-        justify-content: space-between;
+    #selection {
+        position: absolute;
+        z-index: 2;
     }
 
     .bar {
         grid-column-start: span 2;
-        padding: 0 5px;
+    }
+
+    .bar > div {
+        padding: 0 15px 0 5px;
+        resize: horizontal;
+        overflow: auto;
+        float: left;
     }
 
     .view {
@@ -56,5 +62,10 @@ export const layoutStyles = `
         overflow: auto;
         grid-row: 2;
         z-index: 1;
-    }    
+    }
+
+    .menu {
+        display: flex;
+        justify-content: space-between;
+    }
 `;

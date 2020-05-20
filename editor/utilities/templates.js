@@ -1,1 +1,0 @@
-export const joinTemplateModels = (template, models, separator) => models.map(template).join(separator || '');

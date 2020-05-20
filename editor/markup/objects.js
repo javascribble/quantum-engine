@@ -1,1 +1,3 @@
-export const objectPanel = `<div class="menu section"><span></span><span>&#43;&#215;</span></div>`;
+import { objectsIcons } from '../markup/icons.js';
+
+export const objectPanel = `<div class="menu section">${objectsIcons}</div>`;
