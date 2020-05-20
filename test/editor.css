@@ -3,10 +3,12 @@
 	--primary-highlight-color: lightgrey;
 	--primary-hover-color: black;
 	--primary-active-color: black;
+	--primary-border-color: black;
 	--secondary-background-color: darkgrey;
 	--secondary-highlight-color: chartreuse;
 	--secondary-hover-color: black;
 	--secondary-active-color: black;
+	--secondary-border-color: black;	
 	
 	--primary-indention-units: 14;
 }

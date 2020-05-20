@@ -9,7 +9,7 @@ const resizeObserver = new ResizeObserver(entries => {
             clearTimeout(observable.timeout);
         }
 
-        const update = () => { saveStyles(target, observable.properties); };
+        const update = () => saveStyles(target, observable.properties);
         observable.timeout = setTimeout(update, 1000);
     }
 });

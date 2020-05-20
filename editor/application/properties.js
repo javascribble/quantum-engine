@@ -1,3 +1,3 @@
-export const addProperties = (objects, parent) => {
+export const addProperties = (state, root) => {
 
 };
