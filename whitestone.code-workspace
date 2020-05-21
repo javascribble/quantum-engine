@@ -1,16 +1,19 @@
 {
     "folders": [
         {
-            "name": "editor",
             "path": "editor"
         },
         {
-            "name": "engine",
             "path": "engine"
         },
         {
-            "name": "plugins",
             "path": "plugins"
+        },
+        {
+            "path": "shared"
+        },
+        {
+            "path": "test"
         }
     ]
 }

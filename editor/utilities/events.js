@@ -2,9 +2,11 @@ export const preventDefaultHandler = (event) => event.preventDefault();
 
 export const stopPropagationHandler = (event) => event.stopPropagation();
 
+export const dispatch = (element, event) => element.dispatchEvent(event);
+
 export const addListener = (element, event, handler) => element.addEventListener(event, handler);
 
-export const removeListener = (element, event, handler) => element.addEventListener(event, handler);
+export const removeListener = (element, event, handler) => element.removeEventListener(event, handler);
 
 export const addPreventDefault = (element, event) => addListener(element, event, preventDefaultHandler);
 

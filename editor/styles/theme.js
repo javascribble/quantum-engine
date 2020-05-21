@@ -15,7 +15,7 @@ export const themeStyles = `
         border: 1px dashed var(--primary-highlight-color);
     }
 
-    .selected {
+    .selection {
         background-color: var(--primary-highlight-color);
     }
 

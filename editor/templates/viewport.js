@@ -1,1 +1,1 @@
-import { template } from '../utilities/elements.js';
+import { template } from '../../shared/utilities/elements.js';

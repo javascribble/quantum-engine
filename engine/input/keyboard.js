@@ -1,10 +1,10 @@
-﻿import { addListener } from '../aliases/browser.js';
+﻿export const enableKeyboard = (element) => {
+    const keyDown = (event) => {
+    };
 
-const keyDown = (event) => {
+    const keyUp = (event) => {
+    };
+
+    element.addEventListener('keydown', keyDown);
+    element.addEventListener('keyup', keyUp);
 };
-
-const keyUp = (event) => {
-};
-
-addListener('keydown', keyDown);
-addListener('keyup', keyUp);

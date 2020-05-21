@@ -1,10 +1,2 @@
-import { addListener } from '../aliases/browser.js';
-
-const online = () => {
+export const enableSocket = (element) => {
 };
-
-const offline = () => {
-};
-
-addListener('online', online);
-addListener('offline', offline);

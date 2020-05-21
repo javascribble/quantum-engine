@@ -1,7 +1,8 @@
-import { editor } from '../templates/editor.js';
-import { shadow, clone } from '../utilities/elements.js';
+import { clone, shadow } from '../../shared/utilities/elements.js';
+import { enableServices } from '../application/services.js';
+import { syncProject } from '../application/project.js';
 import { syncLayout } from '../application/layout.js';
-import { syncState } from '../application/state.js';
+import { editor } from '../templates/editor.js';
 
 export class Editor extends HTMLElement {
     constructor() {
@@ -9,10 +10,12 @@ export class Editor extends HTMLElement {
 
         const template = clone(editor);
         syncLayout(template);
-        syncState(template);
+        syncProject(template);
 
         const root = shadow(this);
         root.appendChild(template);
+
+        enableServices(root);
     }
 }
 

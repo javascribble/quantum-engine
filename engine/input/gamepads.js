@@ -1,14 +1,14 @@
-﻿import { addListener } from '../aliases/browser.js';
+﻿export const enableGamepads = (element) => {
+    const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
 
-const gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
+    const onGamepadConnected = (event) => {
+        gamepads.add(event.gamepad);
+    };
 
-const onGamepadConnected = (event) => {
-    gamepads.add(event.gamepad);
+    const onGamepadDisconnected = (event) => {
+        gamepads.delete(event.gamepad);
+    };
+
+    element.addEventListener('ongamepadconnected', onGamepadConnected);
+    element.addEventListener('ongamepaddisconnected', onGamepadDisconnected);
 };
-
-const onGamepadDisconnected = (event) => {
-    gamepads.delete(event.gamepad);
-};
-
-addListener('ongamepadconnected', onGamepadConnected);
-addListener('ongamepaddisconnected', onGamepadDisconnected);
