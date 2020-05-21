@@ -1,4 +1,5 @@
 import { saveStyles, loadStyles } from './storage.js';
+import { query } from '../utilities/elements.js';
 
 const observables = new Map();
 
@@ -15,13 +16,13 @@ const resizeObserver = new ResizeObserver(entries => {
 });
 
 const observeElement = (root, selector, properties, defaults) => {
-    const element = root.querySelector(selector);
+    const element = query(root, selector);
     loadStyles(element, properties, defaults);
     observables.set(element.id, { properties });
     resizeObserver.observe(element);
 };
 
-export const syncLayout = (root) => {
+export const configureLayout = (root) => {
     observeElement(root, '#objects', ['width'], ['300px']);
     observeElement(root, '#properties', ['width'], ['300px']);
     observeElement(root, '#viewport', ['width', 'height'], ['300px', '300px']);

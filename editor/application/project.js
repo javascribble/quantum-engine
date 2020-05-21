@@ -1,8 +1,9 @@
+import { configurePropertiesPanel } from '../controls/properties.js';
+import { configureObjectPanel } from '../controls/objects.js';
 import { saveJson, loadJson } from './storage.js';
-import { addObjects } from '../controls/objects.js';
-import { addProperties } from '../controls/properties.js';
+import { query } from '../utilities/elements.js';
 
-export const syncProject = root => {
+export const configureProject = root => {
     //const project = loadJson('project') || [];
     const project = {
         "test name": {
@@ -13,9 +14,13 @@ export const syncProject = root => {
                     children: {}
                 }
             }
+        },
+        "test name2": {
+        },
+        "test name3": {
         }
     };
 
-    addObjects(project, root.querySelector('#objects'));
-    addProperties(project, root.querySelector('#properties'));
+    configureObjectPanel(project, query(root, '#objects'));
+    configurePropertiesPanel(project, query(root, '#properties'));
 };

@@ -1,3 +1,3 @@
-export const addProperties = (state, root) => {
+export const configurePropertiesPanel = (state, root) => {
 
 };

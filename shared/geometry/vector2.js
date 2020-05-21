@@ -13,4 +13,7 @@ export const distanceVector2 = (v2a, v2b) => Math.sqrt(distanceSquaredVector2(v2
 
 export const distanceSquaredVector2 = (v2a, v2b) => Math.pow(v2a[0] - v2b[0], 2) + Math.pow(v2a[1] - v2b[1], 2);
 
+// TODO: Add object versions of all geometry functions.
+export const distanceSquaredVector2Object = (v2a, v2b) => Math.pow(v2a.x - v2b.x, 2) + Math.pow(v2a.y - v2b.y, 2);
+
 export const distanceSquaredNormalizedVector2 = (v2a, v2b, v2c) => Math.pow(v2a[0] - v2b[0], 2) / Math.pow(v2c[0], 2) + Math.pow(v2a[1] - v2b[1], 2) / Math.pow(v2c[1], 2);
