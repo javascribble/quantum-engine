@@ -1,27 +1,27 @@
 const visible = 'visible', hidden = 'hidden', selection = 'selection', active = 'active';
 
-export const hide = style => style.visibility = hidden;
+export const show = element => element.style.visibility = visible;
 
-export const show = style => style.visibility = visible;
+export const hide = element => element.style.visibility = hidden;
 
-export const shown = style => style.visibility == visible;
+export const shown = element => element.style.visibility == visible;
 
-export const toggleVisibility = style => style.visibility = visible(style) ? hidden : visible;
+export const toggleVisibility = element => shown(element) ? hide(element) : show(element);
 
-export const select = style => style.classList.add(selection);
+export const select = element => element.classList.add(selection);
 
-export const deselect = style => style.classList.remove(selection);
+export const deselect = element => element.classList.remove(selection);
 
-export const selected = style => style.classList.contains(selection);
+export const selected = element => element.classList.contains(selection);
 
-export const toggleSelection = style => selected(style) ? deselect(style) : select(style);
+export const toggleSelection = element => selected(element) ? deselect(element) : select(element);
 
-export const activate = style => style.classList.add(active);
+export const activate = element => element.classList.add(active);
 
-export const deactivate = style => style.classList.remove(active);
+export const deactivate = element => element.classList.remove(active);
 
-export const activated = style => style.classList.contains(active);
+export const activated = element => element.classList.contains(active);
 
-export const toggleActive = style => activated(style) ? deactivate(style) : activate(style);
+export const toggleActive = element => activated(element) ? deactivate(element) : activate(element);
 
 export const styleSheet = getComputedStyle(document.documentElement);

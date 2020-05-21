@@ -1,8 +1,8 @@
 import { clone } from '../../shared/utilities/elements.js';
 import { parentObject, childObject } from '../templates/objects.js';
-import { addStopPropagation } from '../utilities/events.js';
-import { keys, entries } from '../aliases/object.js';
+import { addStopPropagation, addListener } from '../utilities/events.js';
 import { styleSheet } from '../utilities/styles.js';
+import { keys, entries } from '../aliases/object.js';
 import { clickEvent } from '../constants/events.js';
 
 const indent = styleSheet.getPropertyValue('--primary-indention-units');

@@ -1,6 +1,6 @@
 export const createVector2 = (type = Float32Array) => {
-    const v2 = new type(2);
-    setIdentityVector2(v2);
+    const v2 = type ? new type(2) : [];
+    setIdentityVector2Array(v2);
     return v2;
 };
 

@@ -4,5 +4,6 @@ export const circleContainsPoint = (point, center, radius) => distanceSquaredVec
 
 export const ellipseContainsPoint = (point, center, size, rotation) => distanceSquaredNormalizedVector2(point, center, size) <= 1;
 
-export const rectangleContainsPoint = (point, center, size, rotation) => {
-};
+export const rectangleContainsPoint = (point, center, size, rotation) => { };
+
+export const rectanglesOverlap = (a, b) => !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);

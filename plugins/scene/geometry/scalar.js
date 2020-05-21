@@ -1,1 +1,0 @@
-export const lerp = (number, prime, ratio) => number + (number - prime) * ratio;
