@@ -1,4 +1,3 @@
-import { define, clone } from '../../shared/utilities/elements.js';
 import { objectsTemplate } from '../templates/objects.js';
 import { parentObject, childObject } from '../templates/objects.js';
 import { addStopPropagation, addListener } from '../utilities/events.js';
@@ -7,7 +6,7 @@ import { query } from '../utilities/elements.js';
 import { keys, entries } from '../aliases/object.js';
 import { clickEvent } from '../constants/events.js';
 import { handleClick } from '../input/selection.js';
-import { Component } from '../elements/component.js';
+import { Component } from '../extensions/component.js';
 
 const indent = styleSheet.getPropertyValue('--primary-indention-units');
 
@@ -46,5 +45,3 @@ export class Objects extends Component {
         //addObjects(objects, query(root, '#hierarchy'));
     }
 }
-
-define('game-objects', Objects);

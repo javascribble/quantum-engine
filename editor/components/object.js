@@ -1,10 +1,8 @@
-import { clone, define } from '../../shared/utilities/elements.js';
-import { Component } from '../elements/component.js';
+import { objectTemplate } from '../templates/object.js';
+import { Component } from '../extensions/component.js';
 
 export class Object extends Component {
     constructor() {
-        super();
+        super(objectTemplate);
     }
 }
-
-define('game-object', Object);

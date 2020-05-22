@@ -121,13 +121,13 @@ export const editorTemplate = template(`
         background-color: var(--secondary-background-color);
     }    
 </style>
-<div id="editor">
-    <div id="header" class="bar">${headerIcons}</div>
+<editor-layout id="editor">
+    <div id="header" slot="header" class="bar">${headerIcons}</div>
     <div id="engine" class="view"><slot></slot></div>
     <div id="viewport" class="view"></div>  
     <game-objects id="objects" class="panel"></game-objects>
     <game-properties id="properties" class="panel"></game-properties>
-    <div id="footer" class="bar">${footerIcons}</div>
+    <div id="footer" slot="header" class="bar">${footerIcons}</div>
     <div id="selection" style="position: absolute; z-index: 1;"></div>
-</div>
+</editor-layout>
 `);
