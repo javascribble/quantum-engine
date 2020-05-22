@@ -43,7 +43,7 @@ export const enableSelection = (root) => {
         style.left = `${x < origin.x ? x : origin.x}px`;
         style.width = `${Math.abs(x - origin.x)}px`;
         style.height = `${Math.abs(y - origin.y)}px`;
-        if (!shown(selection) && distanceSquaredVector2Object(origin, { x, y }) > 10) {
+        if (!shown(selection) && distanceSquaredVector2Object(origin, { x, y }) > 30) {
             show(selection);
         }
     };

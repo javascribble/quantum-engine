@@ -1,7 +1,6 @@
 import { template } from '../../shared/utilities/elements.js';
-import { headerIcons, footerIcons } from './icons.js';
 
-export const editorTemplate = template(`
+export const layoutTemplate = template(`
 <style>
     * {
         box-sizing: border-box;
@@ -122,12 +121,12 @@ export const editorTemplate = template(`
     }    
 </style>
 <div id="editor">
-    <div id="header" class="bar">${headerIcons}</div>
-    <div id="engine" class="view"><slot></slot></div>
-    <div id="viewport" class="view"></div>  
-    <game-objects id="objects" class="panel"></game-objects>
-    <game-properties id="properties" class="panel"></game-properties>
-    <div id="footer" class="bar">${footerIcons}</div>
+    <slot id="header" name="header" class="bar"></slot>
+    <game-objects id="objects"></game-objects>
+    <slot id="engine" name="view" class="view"></slot>
+    <div id="viewport" class="view"></div>
+    <game-properties id="properties"></game-properties>
+    <slot id="footer" name="footer" class="bar"></slot>
     <div id="selection" style="position: absolute; z-index: 1;"></div>
 </div>
 `);
