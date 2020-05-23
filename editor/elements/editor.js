@@ -1,6 +1,8 @@
 import { define, shadow, clone } from '../../shared/utilities/elements.js';
+import { configureLayout } from '../application/layout.js';
+import { configureProject } from '../application/project.js';
+import { configureServices } from '../application/services.js';
 import { editorTemplate } from '../templates/editor.js';
-import { observeStyle } from '../application/layout.js';
 import { Layout } from '../components/layout.js';
 import { Object } from '../components/object.js';
 import { Objects } from '../components/objects.js';
@@ -12,13 +14,12 @@ export class Editor extends HTMLElement {
     constructor() {
         super();
 
-        const template = clone(editorTemplate);
-        observeStyle(template, '#objects', ['width'], ['300px']);
-        observeStyle(template, '#properties', ['width'], ['300px']);
-        observeStyle(template, '#viewport', ['width', 'height'], ['300px', '300px']);
-
         const root = shadow(this);
-        root.appendChild(template);
+        root.appendChild(clone(editorTemplate));
+
+        configureLayout(root);
+        configureProject(root);
+        configureServices(root);
     }
 }
 
@@ -28,4 +29,4 @@ define('game-object', Object);
 define('game-objects', Objects);
 define('game-properties', Properties);
 define('game-property', Property);
-define('engine-viewport', Viewport);
+define('game-viewport', Viewport);

@@ -1,6 +1,6 @@
 import { query } from '../utilities/elements.js';
 
-export const enableSelection = (element) => {
+export const enableScaling = (element) => {
     let scale = 1;
     const factor = 1.2;
     const viewport = query(root, '#viewport');

@@ -1,40 +1,11 @@
 import { rectanglesOverlap } from '../../shared/geometry/shapes.js';
 import { distanceSquaredVector2Object } from '../../shared/geometry/vector2.js';
 import { mouseUpEvent, mouseMoveEvent, mouseDownEvent } from '../constants/events.js';
-import { show, hide, shown, select, deselect, selected, toggleSelection } from '../utilities/styles.js';
-import { addListener, removeListener } from '../utilities/events.js';
-import { query, queryAll } from '../utilities/elements.js';
+import { addListener, removeListener, dispatch } from '../utilities/events.js';
+import { show, hide, shown } from '../utilities/styles.js';
+import { queryAll } from '../utilities/elements.js';
 
-const selections = new Set();
-
-// TODO: Add shift selection.
-// TODO: Get user feedback about ctrl selection, feels awkward.
-// TODO: Dedupe events (click and highlight both fire if mouse is dragged and released within the click timeout window).
-const handle = (event, elements) => {
-    if (!event.ctrlKey) {
-        for (const element of selections) {
-            deselect(element);
-        }
-
-        selections.clear();
-    }
-
-    for (const element of elements) {
-        if (selected(element)) {
-            deselect(element);
-            selections.delete(element);
-        } else {
-            select(element);
-            selections.add(element);
-        }
-    }
-};
-
-// TODO: Refactor the way this is handled since reaching in from the objects panel is a hack.
-export const handleClick = (event) => handle(event, [event.target]);
-
-export const enableSelection = (root) => {
-    const selection = query(root, '#selection');
+export const enableSelection = (root, selection, selector = '[selectable]') => {
     const origin = {};
 
     const draw = (event) => {
@@ -58,8 +29,13 @@ export const enableSelection = (root) => {
         removeListener(root, mouseMoveEvent, draw);
         if (shown(selection)) {
             hide(selection);
+            const customEvent = new CustomEvent('select', { detail: event });
             const box = selection.getBoundingClientRect();
-            handle(event, queryAll(root, '[selectable]').filter(element => rectanglesOverlap(box, element.getBoundingClientRect())));
+            queryAll(root, selector).forEach(element => {
+                if (rectanglesOverlap(box, element.getBoundingClientRect())) {
+                    dispatch(element, customEvent);
+                }
+            });
         }
     };
 

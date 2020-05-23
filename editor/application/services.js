@@ -1,5 +1,6 @@
-import { enableSelection } from '../controls/selection.js';
+import { enableSelection } from '../input/selection.js';
+import { query } from '../utilities/elements.js';
 
-export const enableServices = (root) => {
-    enableSelection(root);
+export const configureServices = (root) => {
+    enableSelection(root, query(root, '#selection'));
 };

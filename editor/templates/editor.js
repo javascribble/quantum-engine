@@ -32,26 +32,6 @@ export const editorTemplate = template(`
         float: left;
     }
 
-    .menu {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .icon {
-
-    }
-
-    .icons {
-        padding: 0 5px;
-    }
-
-    input {
-        background-color: var(--secondary-background-color);
-        font-family: inherit;
-        font-size: inherit;
-        border: none;
-    }
-
     #header {
         background: linear-gradient(var(--secondary-background-color), var(--primary-background-color));
     }
@@ -68,21 +48,13 @@ export const editorTemplate = template(`
         border: 1px dashed var(--primary-highlight-color);
     }
 
-    .selection {
-        background-color: var(--primary-highlight-color);
-    }
-
-    .section {
-        border-bottom: 1px solid var(--primary-border-color);
-    }
-
     .panel {
         background-color: var(--secondary-background-color);
     }    
 </style>
 <editor-layout>
     <div id="header" slot="top" class="bar">${headerIcons}</div>
-    <game-objects id="objects" slot="left" class="panel"></game-objects>
+    <game-objects selectable id="objects" slot="left" class="panel"></game-objects>
     <div id="engine" slot="center" class="view"><slot></slot></div>
     <div id="viewport" slot="center" class="view"></div> 
     <game-properties id="properties" slot="right" class="panel"></game-properties>

@@ -11,6 +11,16 @@ export const childObject = template(`<div selectable class="menu">${controls(chi
 export const parentObject = template(`<div selectable class="menu" style="position: absolute; width: 100%;">${controls(parentObjectIcons)}</div>${container}`);
 
 export const objectsTemplate = template(`
-<div class="menu section">${objectsIcons}</div>
+<style>
+    .menu {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .selection {
+        background-color: var(--primary-highlight-color);
+    }
+</style>
+<div class="menu">${objectsIcons}</div>
 <div id="hierarchy"></div>
 `);
