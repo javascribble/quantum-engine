@@ -1,3 +1,4 @@
+import { shadow, clone } from '../../shared/utilities/elements.js';
 import { objectsTemplate } from '../templates/objects.js';
 import { parentObject, childObject } from '../templates/objects.js';
 import { addStopPropagation, addListener } from '../utilities/events.js';
@@ -12,7 +13,9 @@ const indent = styleSheet.getPropertyValue('--primary-indention-units');
 
 export class Objects extends Component {
     constructor() {
-        super(objectsTemplate);
+        super();
+
+        shadow(this).appendChild(clone(objectsTemplate));
 
         const addObjects = (objects, element, level = 0) => {
             const singleIndent = level * indent;

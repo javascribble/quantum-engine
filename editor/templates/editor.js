@@ -8,14 +8,6 @@ export const editorTemplate = template(`
         user-select: none;
     }
 
-    #editor { 
-        display: grid;
-        grid-template-rows: min-content auto min-content;
-        grid-template-columns: 50% 50%;
-        overflow: hidden;
-        height: 100%;
-    }
-
     #engine {
         padding: 0 15px;
     }
@@ -28,27 +20,9 @@ export const editorTemplate = template(`
         max-width: calc(100% - 30px);
     }
 
-    #objects {
-        grid-column: 1;
-    }
-
-    #properties {
-        grid-column: 2;
-        direction: rtl;
-        justify-self: end;
-    }
-
-    #properties:after {
-        direction: ltr;
-    }
-
     #selection {
         position: absolute;
         z-index: 2;
-    }
-
-    .bar {
-        grid-column-start: span 2;
     }
 
     .bar > div {
@@ -56,21 +30,6 @@ export const editorTemplate = template(`
         resize: horizontal;
         overflow: auto;
         float: left;
-    }
-
-    .view {
-        grid-row: 2;
-        grid-column: 1 / 3;
-    }
-
-    .panel {
-        white-space: nowrap;
-        resize: horizontal;
-        position: relative;
-        max-width: 100%;
-        overflow: auto;
-        grid-row: 2;
-        z-index: 1;
     }
 
     .menu {
@@ -99,8 +58,8 @@ export const editorTemplate = template(`
     
     #footer {
         background: linear-gradient(var(--primary-background-color), var(--secondary-background-color));
-    }    
-
+    }
+    
     #viewport {
         box-shadow: 0px 0px 1px 1px var(--primary-highlight-color);
     }
@@ -121,13 +80,13 @@ export const editorTemplate = template(`
         background-color: var(--secondary-background-color);
     }    
 </style>
-<editor-layout id="editor">
-    <div id="header" slot="header" class="bar">${headerIcons}</div>
-    <div id="engine" class="view"><slot></slot></div>
-    <div id="viewport" class="view"></div>  
-    <game-objects id="objects" class="panel"></game-objects>
-    <game-properties id="properties" class="panel"></game-properties>
-    <div id="footer" slot="header" class="bar">${footerIcons}</div>
-    <div id="selection" style="position: absolute; z-index: 1;"></div>
+<editor-layout>
+    <div id="header" slot="top" class="bar">${headerIcons}</div>
+    <game-objects id="objects" slot="left" class="panel"></game-objects>
+    <div id="engine" slot="center" class="view"><slot></slot></div>
+    <div id="viewport" slot="center" class="view"></div> 
+    <game-properties id="properties" slot="right" class="panel"></game-properties>
+    <div id="footer" slot="bottom" class="bar">${footerIcons}</div>
+    <div id="selection" slot="widgets"></div>
 </editor-layout>
 `);
