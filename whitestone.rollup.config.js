@@ -1,5 +1,6 @@
 import { terser } from "rollup-plugin-terser";
 import multi from '@rollup/plugin-multi-entry';
+import resolve from '@rollup/plugin-node-resolve';
 
 const bundles = [
 	{ name: 'engine', input: ['./editor/main.js'] },
@@ -21,5 +22,8 @@ const debug = process.argv.includes('-w');
 export default bundles.map(bundle => ({
 	input: bundle.input,
 	output: debug ? development(bundle) : production(bundle),
-	plugins: [multi()]
+	plugins: [
+		multi(),
+		resolve()
+	]
 }));

@@ -1,23 +1,16 @@
-import { shadow, clone } from '../../shared/utilities/elements.js';
-import { objectsTemplate } from '../templates/objects.js';
+import { Component, query, addListener, stopPropagation } from '@javascribble/quantum';
+import { select, deselect, selected } from '../utilities/styles.js';
 import { parentObject, childObject } from '../templates/objects.js';
-import { addStopPropagation, addListener } from '../utilities/events.js';
-import { select, deselect, selected, styleSheet } from '../utilities/styles.js';
-import { query } from '../utilities/elements.js';
+import { objectsTemplate } from '../templates/objects.js';
 import { clickEvent } from '../constants/events.js';
 import { keys, entries } from '../aliases/object.js';
-import { Component } from '../extensions/component.js';
-
-const indent = styleSheet.getPropertyValue('--primary-indention-units');
 
 export class Objects extends Component {
     constructor() {
-        super();
-
-        const root = shadow(this);
-        root.appendChild(clone(objectsTemplate));
+        super(objectsTemplate);
 
         addListener(root, 'mousedown', console.log);
+        const indent = styleSheet.getPropertyValue('--primary-indention-units');
 
 
 

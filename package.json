@@ -1,42 +1,47 @@
 {
-  "name": "whitestone",
-  "description": "web based game engine",
-  "author": "javascribble",
-  "version": "0.0.1",
-  "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
-    "@rollup/plugin-multi-entry": "^3.0.1",
-    "npm-run-all": "^4.1.5",
-    "rollup": "^1.32.1",
-    "rollup-plugin-terser": "^5.3.0",
-    "serve": "^11.3.1"
-  },
-  "scripts": {
-    "serve": "serve ./",
-    "build": "rollup -c whitestone.rollup.config.js",
-    "watch": "rollup -w -c whitestone.rollup.config.js",
-    "start": "npm-run-all --parallel serve watch",
-    "postversion": "npm publish --access public"
-  },
-  "homepage": "https://github.com/javascribble/whitestone#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/javascribble/whitestone.git"
-  },
-  "bugs": {
-    "url": "https://github.com/javascribble/whitestone/issues"
-  },
-  "keywords": [
-    "game",
-    "editor",
-    "engine"
-  ],
-  "files": [
-    "build/",
-    "editor/",
-    "engine/",
-    "interface/",
-    "plugins/"
-  ]
+    "name": "whitestone",
+    "description": "web based game engine",
+    "author": "javascribble",
+    "version": "0.0.1",
+    "license": "MIT",
+    "dependencies": {
+        "@javascribble/quantum": "^0.2.11",
+        "@javascribble/quantum-tree": "^0.0.1"
+    },
+    "devDependencies": {
+        "@rollup/plugin-multi-entry": "^3.0.1",
+        "@rollup/plugin-node-resolve": "^8.0.0",
+        "npm-run-all": "^4.1.5",
+        "rollup": "^1.32.1",
+        "rollup-plugin-terser": "^5.3.0",
+        "serve": "^11.3.1"
+    },
+    "scripts": {
+        "serve": "serve ./",
+        "build": "rollup -c whitestone.rollup.config.js",
+        "watch": "rollup -w -c whitestone.rollup.config.js",
+        "start": "npm-run-all --parallel serve watch",
+        "postversion": "npm publish --access public"
+    },
+    "main": "./source/main.js",
+    "homepage": "https://github.com/javascribble/whitestone#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/javascribble/whitestone.git"
+    },
+    "bugs": {
+        "url": "https://github.com/javascribble/whitestone/issues"
+    },
+    "keywords": [
+        "game",
+        "editor",
+        "engine"
+    ],
+    "files": [
+        "build/",
+        "editor/",
+        "engine/",
+        "interface/",
+        "plugins/"
+    ]
 }

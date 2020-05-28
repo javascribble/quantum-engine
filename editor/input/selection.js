@@ -1,9 +1,8 @@
+import { queryAll, addListener, removeListener, dispatch } from '@javascribble/quantum';
 import { rectanglesOverlap } from '../../shared/geometry/shapes.js';
 import { distanceSquaredVector2Object } from '../../shared/geometry/vector2.js';
 import { mouseUpEvent, mouseMoveEvent, mouseDownEvent } from '../constants/events.js';
-import { addListener, removeListener, dispatch } from '../utilities/events.js';
 import { show, hide, shown } from '../utilities/styles.js';
-import { queryAll } from '../utilities/elements.js';
 
 export const enableSelection = (root, selection, selector = '[selectable]') => {
     const origin = {};
