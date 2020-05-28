@@ -1,7 +1,18 @@
-import { template } from '../../shared/utilities/elements.js';
-import { headerIcons, footerIcons } from './icons.js';
+import { template, repeat } from '@javascribble/quantum';
+import { projectIcons, debugIcons, editorIcons, geometryIcons } from '../constants/icons.js';
+import { isArray } from '../aliases/array.js';
 
-export const editorTemplate = template(`
+const flatten = code => isArray(code) ? code.join(';&#') : code;
+
+export const icon = (model) => `<span class="icon" title="${model.title}">&#${flatten(model.code)};</span>`;
+
+export const icons = (models) => `<div class="icons">${repeat(icon, models, '&nbsp;')}</div>`;
+
+export const headerIcons = repeat(icons, [projectIcons, debugIcons, editorIcons]);
+
+export const footerIcons = repeat(icons, [geometryIcons]);
+
+export const editor = template(`
 <style>
     * {
         box-sizing: border-box;
@@ -52,13 +63,13 @@ export const editorTemplate = template(`
         background-color: var(--secondary-background-color);
     }    
 </style>
-<editor-layout>
+<layout-component>
     <div id="header" slot="top" class="bar">${headerIcons}</div>
-    <game-objects selectable id="objects" slot="left" class="panel"></game-objects>
+    <objects-component selectable id="objects" slot="left" class="panel"></objects-component>
     <div id="engine" slot="center" class="view"><slot></slot></div>
     <div id="viewport" slot="center" class="view"></div> 
-    <game-properties id="properties" slot="right" class="panel"></game-properties>
+    <properties-component id="properties" slot="right" class="panel"></properties-component>
     <div id="footer" slot="bottom" class="bar">${footerIcons}</div>
     <div id="selection" slot="widgets"></div>
-</editor-layout>
+</layout-component>
 `);

@@ -3,9 +3,8 @@ import multi from '@rollup/plugin-multi-entry';
 import resolve from '@rollup/plugin-node-resolve';
 
 const bundles = [
-	{ name: 'engine', input: ['./editor/main.js'] },
-	{ name: 'editor', input: ['./engine/main.js'] },
-	{ name: 'plugins', input: ['./plugins/main.js'] },	
+	{ name: 'editor', input: ['./editor/main.js', './engine/main.js', './plugins/main.js'] },
+	{ name: 'engine', input: ['./engine/main.js', './plugins/main.js'] }
 ];
 
 const output = (name, plugins = []) => ({

@@ -16,10 +16,6 @@ export const rotateIcon = { code: 128472, title: "rotate" };
 export const scaleIcon = { code: 9878, title: "scale" };
 export const geometryIcons = [transformIcon, rotateIcon, scaleIcon];
 
-export const expandIcon = { code: 8794, title: "expand" };
-export const collapseIcon = { code: 8793, title: "collapse" };
-export const hierarchyIcons = [expandIcon, collapseIcon];
-
 export const addIcon = { code: 43, title: "add" };
 export const editIcon = { code: 9998, title: "edit" };
 export const deleteIcon = { code: 215, title: "delete" };

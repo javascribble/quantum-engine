@@ -6,7 +6,7 @@
     "license": "MIT",
     "dependencies": {
         "@javascribble/quantum": "^0.2.11",
-        "@javascribble/quantum-tree": "^0.0.1"
+        "@javascribble/quantum-tree": "^0.1.2"
     },
     "devDependencies": {
         "@rollup/plugin-multi-entry": "^3.0.1",

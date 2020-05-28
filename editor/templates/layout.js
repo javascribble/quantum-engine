@@ -1,6 +1,6 @@
-import { template } from '../../shared/utilities/elements.js';
+import { template } from '@javascribble/quantum';
 
-export const layoutTemplate = template(`
+export const layout = template(`
 <style>
     :host { 
         display: grid;

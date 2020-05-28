@@ -1,4 +1,4 @@
-import { template } from '../../shared/utilities/elements.js';
+import { template } from '@javascribble/quantum';
 
 export const engine = template(`
 <style></style>
