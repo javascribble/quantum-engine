@@ -65,10 +65,10 @@ export const editor = template(`
 </style>
 <layout-component>
     <div id="header" slot="top" class="bar">${headerIcons}</div>
-    <objects-component selectable id="objects" slot="left" class="panel"></objects-component>
+    <tree-component selectable id="objects" slot="left" class="panel"></tree-component>
     <div id="engine" slot="center" class="view"><slot></slot></div>
-    <div id="viewport" slot="center" class="view"></div> 
-    <properties-component id="properties" slot="right" class="panel"></properties-component>
+    <div id="viewport" slot="center" class="view"></div>
+    <div id="properties" slot="right" class="panel">properties</div>
     <div id="footer" slot="bottom" class="bar">${footerIcons}</div>
     <div id="selection" slot="widgets"></div>
 </layout-component>

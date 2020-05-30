@@ -1,36 +1,35 @@
 {
-    "name": "whitestone",
+    "name": "@javascribble/quantum-engine",
     "description": "web based game engine",
-    "author": "javascribble",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "license": "MIT",
-    "dependencies": {
-        "@javascribble/quantum": "^0.2.11",
-        "@javascribble/quantum-tree": "^0.1.2"
-    },
+    "dependencies": {},
     "devDependencies": {
-        "@rollup/plugin-multi-entry": "^3.0.1",
-        "@rollup/plugin-node-resolve": "^8.0.0",
-        "npm-run-all": "^4.1.5",
-        "rollup": "^1.32.1",
-        "rollup-plugin-terser": "^5.3.0",
-        "serve": "^11.3.1"
+        "@javascribble/quantum": "*",
+        "@javascribble/quantum-tree": "*",
+        "@javascribble/rollup-plugin-modulify": "*",
+        "@rollup/plugin-multi-entry": "*",
+        "@rollup/plugin-node-resolve": "*",
+        "npm-run-all": "*",
+        "rollup": "*",
+        "rollup-plugin-terser": "*",
+        "serve": "*"
     },
     "scripts": {
         "serve": "serve ./",
-        "build": "rollup -c whitestone.rollup.config.js",
-        "watch": "rollup -w -c whitestone.rollup.config.js",
+        "build": "rollup -c quantum-engine.rollup.config.js",
+        "watch": "rollup -w -c quantum-engine.rollup.config.js",
         "start": "npm-run-all --parallel serve watch",
         "postversion": "npm publish --access public"
     },
     "main": "./source/main.js",
-    "homepage": "https://github.com/javascribble/whitestone#readme",
+    "homepage": "https://github.com/javascribble/quantum-engine#readme",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/javascribble/whitestone.git"
+        "url": "git+https://github.com/javascribble/quantum-engine.git"
     },
     "bugs": {
-        "url": "https://github.com/javascribble/whitestone/issues"
+        "url": "https://github.com/javascribble/quantum-engine/issues"
     },
     "keywords": [
         "game",

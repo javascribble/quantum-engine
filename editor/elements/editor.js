@@ -4,8 +4,6 @@ import { configureProject } from '../application/project.js';
 import { configureServices } from '../application/services.js';
 import { editor } from '../templates/editor.js';
 import { Layout } from './layout.js';
-import { Objects } from './objects.js';
-import { Properties } from './properties.js';
 
 export class Editor extends Component {
     constructor() {
@@ -20,5 +18,3 @@ export class Editor extends Component {
 
 define(Editor);
 define(Layout);
-define(Objects);
-define(Properties);

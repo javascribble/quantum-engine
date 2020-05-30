@@ -1,6 +1,5 @@
 export class SelectEvent extends CustomEvent {
-    constructor() {
-
-        super('select', { detail: {} });
+    constructor(event) {
+        super('select', { detail: event });
     }
 }

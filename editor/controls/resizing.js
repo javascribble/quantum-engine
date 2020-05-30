@@ -1,5 +1,5 @@
 import { query } from '@javascribble/quantum';
-import { saveStyles, loadStyles } from '../storage/local.js';
+import { saveStyles, loadStyles } from '../application/storage.js';
 
 const observables = new Map();
 

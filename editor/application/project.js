@@ -1,9 +1,9 @@
 import { query } from '@javascribble/quantum';
-import { saveJson, loadJson } from '../storage/local.js';
+import { saveJson, loadJson } from './storage.js';
 
 export const configureProject = root => {
-    //const project = loadJson('project') || [];
+    const project = loadJson('project') || [];
 
-    const objects = query(root, '#objects');
-    const properties = query(root, '#properties');
+    const tree = query(root, 'tree-component');
+    tree.add(project);
 };
