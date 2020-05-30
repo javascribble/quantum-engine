@@ -3,12 +3,10 @@ import { terser } from "rollup-plugin-terser";
 import multi from '@rollup/plugin-multi-entry';
 import resolve from '@rollup/plugin-node-resolve';
 
-const editor = './editor/main.js';
-const engine = './engine/main.js';
+const engine = './source/main.js';
 const plugins = './plugins/main.js';
 
 const bundles = [
-	{ name: 'editor', input: [editor, engine, plugins] },
 	{ name: 'engine', input: [engine, plugins] }
 ];
 

@@ -6,7 +6,6 @@
     "dependencies": {},
     "devDependencies": {
         "@javascribble/quantum": "*",
-        "@javascribble/quantum-tree": "*",
         "@javascribble/rollup-plugin-modulify": "*",
         "@rollup/plugin-multi-entry": "*",
         "@rollup/plugin-node-resolve": "*",
@@ -33,14 +32,9 @@
     },
     "keywords": [
         "game",
-        "editor",
         "engine"
     ],
     "files": [
-        "build/",
-        "editor/",
-        "engine/",
-        "interface/",
-        "plugins/"
+        "source/"
     ]
 }
