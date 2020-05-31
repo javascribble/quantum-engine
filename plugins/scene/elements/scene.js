@@ -1,6 +1,7 @@
+import { Quantum, define } from '@javascribble/quantum';
 import { loadImage } from '../network/loader.js';
 
-export class Scene extends HTMLElement {
+export class Scene extends Quantum {
     constructor() {
         super();
     }
@@ -28,4 +29,4 @@ export class Scene extends HTMLElement {
     }
 }
 
-customElements.define('scene-plugin', Scene);
+define(Scene);

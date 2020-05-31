@@ -1,17 +1,17 @@
 {
     "name": "@javascribble/quantum-engine",
-    "description": "web based game engine",
+    "description": "a web first game engine",
     "version": "0.0.0",
     "license": "MIT",
     "dependencies": {},
     "devDependencies": {
-        "@javascribble/quantum": "*",
+        "@javascribble/quantum": "^0.2.13",
         "@javascribble/rollup-plugin-modulify": "*",
         "@rollup/plugin-multi-entry": "*",
         "@rollup/plugin-node-resolve": "*",
         "npm-run-all": "*",
-        "rollup": "*",
-        "rollup-plugin-terser": "*",
+        "rollup": "^2.12.0",
+        "rollup-plugin-terser": "^6.1.0",
         "serve": "*"
     },
     "scripts": {

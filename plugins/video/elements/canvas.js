@@ -1,6 +1,7 @@
+import { Quantum, define } from '@javascribble/quantum';
 import { createCanvas, resizeCanvas, getContext } from '../output/canvas.js';
 
-export class Video extends HTMLElement {
+export class Canvas extends Quantum {
     constructor() {
         super();
 
@@ -28,4 +29,4 @@ export class Video extends HTMLElement {
     }
 }
 
-customElements.define('video-plugin', Video);
+define(Canvas);
