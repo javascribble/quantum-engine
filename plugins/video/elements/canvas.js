@@ -1,13 +1,13 @@
-import { Quantum, define } from '@javascribble/quantum';
+import { Quantum, define, query } from '@javascribble/quantum';
 import { createCanvas, resizeCanvas, getContext } from '../output/canvas.js';
+import { canvas } from '../templates/canvas.js';
 
 export class Canvas extends Quantum {
     constructor() {
-        super();
+        super(canvas);
 
-        this.canvas = createCanvas();
+        this.canvas = query(this.shadowRoot, 'canvas');
         this.context = getContext(this.canvas);
-        this.appendChild(this.canvas);
 
         this.entities = new Set();
         this.add = (entity) => this.entities.add(entity);

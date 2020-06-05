@@ -7,9 +7,6 @@
             "path": "plugins"
         },
         {
-            "path": "shared"
-        },
-        {
             "path": "test"
         }
     ]

@@ -11,7 +11,7 @@ const bundles = [
 ];
 
 const output = (name, plugins) => ({
-	file: `./build/quantum-engine.${name}.js`,
+	file: `./build/quantum-${name}.js`,
 	format: 'es',
 	plugins,
 	name

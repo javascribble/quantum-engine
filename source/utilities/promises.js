@@ -1,4 +1,4 @@
-import { all } from '../aliases/promise.js';
+import { all } from '@javascribble/quantum';
 
 export const trackPromises = (promises, update) => {
     const progress = { completed: 0, total: promises.length };

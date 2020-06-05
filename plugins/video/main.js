@@ -1,1 +1,1 @@
-export * from './elements/video.js';
+export * from './elements/canvas.js';

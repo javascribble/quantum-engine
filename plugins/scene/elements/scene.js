@@ -1,9 +1,10 @@
 import { Quantum, define } from '@javascribble/quantum';
 import { loadImage } from '../network/loader.js';
+import { scene } from '../templates/scene.js';
 
 export class Scene extends Quantum {
     constructor() {
-        super();
+        super(scene);
     }
 
     connectedCallback() {
