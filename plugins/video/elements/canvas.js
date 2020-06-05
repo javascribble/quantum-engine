@@ -1,5 +1,5 @@
 import { Quantum, define, query } from '@javascribble/quantum';
-import { createCanvas, resizeCanvas, getContext } from '../output/canvas.js';
+import { resizeCanvas, getContext } from '../output/canvas.js';
 import { canvas } from '../templates/canvas.js';
 
 export class Canvas extends Quantum {
