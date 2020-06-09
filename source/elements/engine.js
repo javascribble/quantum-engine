@@ -1,13 +1,22 @@
-import { Quantum, define } from '@javascribble/quantum';
-import { expose } from '../application/bridge.js';
+import { Quantum, define } from '../../references/quantum.js';
 import { engine } from '../templates/engine.js';
+import { change } from '../events/change.js';
 
 export class Engine extends Quantum {
     constructor() {
         super(engine);
-
-        expose(this);
     }
+
+    static attributes = {
+    };
+
+    static elements = {
+        slot: 'slot'
+    };
+
+    static events = {
+        change
+    };
 }
 
 define(Engine);

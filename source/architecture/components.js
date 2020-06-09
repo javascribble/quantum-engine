@@ -1,4 +1,4 @@
-import { defineProperty } from '@javascribble/quantum';
+import { defineProperty } from '../../references/quantum.js';
 
 export const createComponentHandler = (observers) => {
     const { addComponent, deleteComponent } = observers;

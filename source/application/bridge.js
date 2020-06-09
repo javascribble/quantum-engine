@@ -1,4 +1,4 @@
-import { assign } from '@javascribble/quantum';
+import { assign } from '../../references/quantum.js';
 import { animations, startAnimation, stopAnimation } from './browser.js';
 import { subscribe, unsubscribe, publish } from './events.js';
 import { start, stop } from './services.js';
