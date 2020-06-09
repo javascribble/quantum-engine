@@ -1,10 +1,10 @@
 {
     "folders": [
         {
-            "path": "source"
+            "path": "references"
         },
         {
-            "path": "plugins"
+            "path": "source"
         },
         {
             "path": "test"
