@@ -14,10 +14,9 @@
     const contextMenu = (event) => event.preventDefault();
 
     // TODO: Use pointer lock API.
-    const addListener = element.addEventListener;
-    addListener('mousedown', mouseDown);
-    addListener('mousemove', mouseMove);
-    addListener('mouseup', mouseUp);
-    addListener('mousewheel', mouseWheel);
-    addListener('contextmenu', contextMenu);
+    element.addEventListener('mousedown', mouseDown);
+    element.addEventListener('mousemove', mouseMove);
+    element.addEventListener('mouseup', mouseUp);
+    element.addEventListener('mousewheel', mouseWheel);
+    element.addEventListener('contextmenu', contextMenu);
 };

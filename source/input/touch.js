@@ -11,9 +11,8 @@
     const touchCancel = (event) => {
     };
 
-    const addListener = element.addEventListener;
-    addListener('touchstart', touchStart);
-    addListener('touchmove', touchMove);
-    addListener('touchend', touchEnd);
-    addListener('touchcancel', touchCancel);
+    element.addEventListener('touchstart', touchStart);
+    element.addEventListener('touchmove', touchMove);
+    element.addEventListener('touchend', touchEnd);
+    element.addEventListener('touchcancel', touchCancel);
 };

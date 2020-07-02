@@ -1,5 +1,3 @@
-import { all } from '../../references/quantum.js';
-
 export const trackPromises = (promises, update) => {
     const progress = { completed: 0, total: promises.length };
     update(progress);
@@ -11,5 +9,5 @@ export const trackPromises = (promises, update) => {
         return result;
     };
 
-    return all(promises.map(trackPromise));
+    return Promise.all(promises.map(trackPromise));
 };
