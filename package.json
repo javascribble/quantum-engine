@@ -5,8 +5,8 @@
     "license": "MIT",
     "dependencies": {},
     "devDependencies": {
-        "@javascribble/quantum": "^0.4.2",
-        "@javascribble/quantum-canvas": "^0.4.0",
+        "@javascribble/quantum": "^0.4.5",
+        "@javascribble/quantum-canvas": "^0.4.1",
         "live-server": "*"
     },
     "scripts": {

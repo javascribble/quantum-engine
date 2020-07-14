@@ -1,12 +1,9 @@
-import { Quantum, define, observeSlot } from '../../references/quantum.js';
-import { engine } from '../templates/engine.js';
+import { Component, observeSlot } from '../../references/quantum.js';
 
-export class Engine extends Quantum {
+export class Engine extends Component {
     constructor() {
-        super(engine);
-    }
+        super();
 
-    initializeShadowCallback(shadow) {
         //engine.loaders.png = loadImage;
         //engine.start();
 
@@ -19,6 +16,10 @@ export class Engine extends Quantum {
         // engine.animations.add(this);
         // engine.systems.add(this);
     }
+
+    static template = document.querySelector('#quantum-engine');
+
+    static attributes = [];
 }
 
-define(Engine);
+customElements.define('quantum-engine', Engine);
