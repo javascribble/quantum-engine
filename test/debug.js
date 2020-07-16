@@ -1,6 +1,4 @@
-const resources = [
-    '/node_modules/@javascribble/quantum-canvas/source/templates/canvas.html',
-    '/source/templates/engine.html'
-];
+import '/source/main.js';
+import '/references/quantum-canvas.js';
 
-Promise.all(resources.map(resource => fetch(resource).then(response => response.text().then(html => document.body.insertAdjacentHTML('beforeend', html)))));
+document.body.style.visibility = 'visible';

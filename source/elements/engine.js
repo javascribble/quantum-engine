@@ -1,4 +1,5 @@
-import { Component, observeSlot } from '../../references/quantum.js';
+import { Component, template, observeSlot } from '../../references/quantum.js';
+import html from '../templates/engine.js';
 
 export class Engine extends Component {
     constructor() {
@@ -17,7 +18,7 @@ export class Engine extends Component {
         // engine.systems.add(this);
     }
 
-    static template = document.querySelector('#quantum-engine');
+    static template = template(html);
 
     static attributes = [];
 }
