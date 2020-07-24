@@ -3,7 +3,7 @@ import { loaders, loadJson, loadText, loadBlob, load, loadMany } from '../networ
 import { createEntity, deleteEntity } from '../architecture/entities.js';
 import { systems } from '../architecture/systems.js';
 
-const api = {
+export const api = {
     loaders,
     loadJson,
     loadText,
@@ -19,5 +19,3 @@ const api = {
     unsubscribe,
     publish
 };
-
-export const expose = (object) => Object.assign(object, api);

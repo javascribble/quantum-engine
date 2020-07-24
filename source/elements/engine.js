@@ -1,7 +1,6 @@
-import { Component, template, observeSlot } from '../../references/quantum.js';
 import html from '../templates/engine.js';
 
-export class Engine extends Component {
+export class Engine extends quantum.Component {
     constructor() {
         super();
 
@@ -18,9 +17,7 @@ export class Engine extends Component {
         // engine.systems.add(this);
     }
 
-    static template = template(html);
-
-    static attributes = [];
+    static template = quantum.template(html);
 }
 
-customElements.define('quantum-engine', Engine);
+quantum.define('quantum-engine', Engine);
