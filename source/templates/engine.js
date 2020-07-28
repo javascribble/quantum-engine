@@ -1,3 +1,1 @@
-export default `
-<slot></slot>
-`;
+export default `<slot></slot>`;
