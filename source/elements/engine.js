@@ -5,6 +5,16 @@ export class Engine extends quantum.Component {
 
     static template = quantum.template(html);
 
+    slotChangedCallback(slot, addedElements, deletedElements) {
+        for (const element of addedElements) {
+            element.connectEngine?.(this);
+        }
+
+        for (const element of deletedElements) {
+            element.disconnectEngine?.(this);
+        }
+    }
+
     publish(topic, value) {
         if (this.#events.has(topic)) {
             for (const subscriber of this.#events.get(topic)) {

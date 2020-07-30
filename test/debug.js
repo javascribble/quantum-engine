@@ -11,22 +11,20 @@ const loadImage = (resource) => {
 }
 
 loadImage('/test/resources/kal256.png').then(image => {
+    const state = {
+        image,
+        sx: 0,
+        sy: 0,
+        sw: 256,
+        sh: 256,
+        dx: 100,
+        dy: 100,
+        dw: 256,
+        dh: 256
+    };
+
     const canvas = document.querySelector('quantum-canvas');
-    canvas.render({
-        images: [
-            {
-                image,
-                sx: 0,
-                sy: 0,
-                sw: 256,
-                sh: 256,
-                dx: 100,
-                dy: 100,
-                dw: 256,
-                dh: 256
-            }
-        ]
-    });
+    canvas.render({ images: [state] });
 });
 
-document.body.style.visibility = 'visible';
+document.body.style.visibility = 'visible'; 
