@@ -4,17 +4,17 @@ import '/node_modules/@javascribble/quantum-keyboard/source/main.js';
 import '/node_modules/@javascribble/quantum-loader/source/main.js';
 import '/source/main.js';
 
-const resources = [
-    "/test/resources/kal256.png",
-    "/test/resources/sprite.json"
-];
-
 const engine = document.querySelector('quantum-engine');
 engine.onload = () => {
-    engine.loadMany(resources, console.log).then(resources => {
+    const resources = [
+        "/test/resources/kal256.png",
+        "/test/resources/sprite.json"
+    ];
+
+    engine.loader.loadMany(resources, console.log).then(resources => {
         const state = { ...resources[1], image: resources[0] };
 
-        const keyboard = document.querySelector('quantum-keyboard');
+        const keyboard = engine.keyboard;
         keyboard.keys.set('ArrowUp', {
             down: event => state.dy -= 10
         });
@@ -31,7 +31,7 @@ engine.onload = () => {
             down: event => state.dx += 10
         });
 
-        const canvas = document.querySelector('quantum-canvas');
+        const canvas = engine.video;
         quantum.animate((delta, elapsed) => {
             canvas.drawImages([state]);
             return true;
