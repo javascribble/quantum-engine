@@ -1,6 +1,8 @@
 import html from '../templates/engine.js';
 
 export class Engine extends quantum.Component {
+    events = new quantum.EventBroker();
+
     static template = quantum.template(html);
 
     slotChangedCallback(slot, addedElements, deletedElements) {

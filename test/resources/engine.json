@@ -1,0 +1,52 @@
+{
+    "resources": [
+        "/test/resources/kal256.png"
+    ],
+    "keyboard": {
+        "schemata": [
+            {
+                "name": "test",
+                "keys": [
+                    {
+                        "name": "ArrowUp",
+                        "handlers": {
+                            "down": "MoveUp"
+                        }
+                    },
+                    {
+                        "name": "ArrowDown",
+                        "handlers": {
+                            "down": "MoveDown"
+                        }
+                    },
+                    {
+                        "name": "ArrowLeft",
+                        "handlers": {
+                            "down": "MoveLeft"
+                        }
+                    },
+                    {
+                        "name": "ArrowRight",
+                        "handlers": {
+                            "down": "MoveRight"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "sprites": [
+        {
+            "name": "test",
+            "image": 0,
+            "sx": 0,
+            "sy": 0,
+            "sw": 256,
+            "sh": 256,
+            "dx": 100,
+            "dy": 100,
+            "dw": 256,
+            "dh": 256
+        }
+    ]
+}

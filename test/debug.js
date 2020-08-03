@@ -6,35 +6,23 @@ import '/source/main.js';
 
 const engine = document.querySelector('quantum-engine');
 engine.onload = () => {
-    const resources = [
-        "/test/resources/kal256.png",
-        "/test/resources/sprite.json"
-    ];
+    engine.loader.load('/test/resources/engine.json').then(options => {
+        engine.loader.loadMany(options.resources, console.log).then(resources => {
+            const image = { ...options.sprites[0], image: resources[0] };
 
-    engine.loader.loadMany(resources, console.log).then(resources => {
-        const state = { ...resources[1], image: resources[0] };
+            engine.keyboard.loadSchemata(options.keyboard.schemata, engine.events.publish.bind(engine.events));
+            engine.keyboard.applySchema('test');
 
-        const keyboard = engine.keyboard;
-        keyboard.keys.set('ArrowUp', {
-            down: event => state.dy -= 10
-        });
+            engine.events.subscribe('MoveUp', _ => image.dy -= 10);
+            engine.events.subscribe('MoveDown', _ => image.dy += 10);
+            engine.events.subscribe('MoveLeft', _ => image.dx -= 10);
+            engine.events.subscribe('MoveRight', _ => image.dx += 10);
 
-        keyboard.keys.set('ArrowDown', {
-            down: event => state.dy += 10
-        });
-
-        keyboard.keys.set('ArrowLeft', {
-            down: event => state.dx -= 10
-        });
-
-        keyboard.keys.set('ArrowRight', {
-            down: event => state.dx += 10
-        });
-
-        const canvas = engine.video;
-        quantum.animate((delta, elapsed) => {
-            canvas.drawImages([state]);
-            return true;
+            const canvas = engine.video;
+            quantum.animate((delta, elapsed) => {
+                canvas.drawImages([image]);
+                return true;
+            });
         });
     });
 };
