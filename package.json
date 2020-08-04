@@ -4,10 +4,10 @@
     "version": "0.4.7",
     "license": "MIT",
     "dependencies": {
-        "@javascribble/quantum": "^0.4.16",
+        "@javascribble/quantum": "^0.4.17",
         "@javascribble/quantum-canvas": "^0.4.6",
         "@javascribble/quantum-keyboard": "^0.4.3",
-        "@javascribble/quantum-loader": "^0.4.3"
+        "@javascribble/quantum-loader": "^0.4.5"
     },
     "devDependencies": {
         "live-server": "*"

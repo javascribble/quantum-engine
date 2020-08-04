@@ -6,8 +6,8 @@ import '/source/main.js';
 
 const engine = document.querySelector('quantum-engine');
 engine.onload = () => {
-    engine.loader.load('/test/resources/engine.json').then(options => {
-        engine.loader.loadMany(options.resources, console.log).then(resources => {
+    quantum.load('/test/resources/engine.json').then(options => {
+        quantum.loadMany(options.resources, console.log).then(resources => {
             const image = { ...options.sprites[0], image: resources[0] };
 
             engine.keyboard.loadSchemata(options.keyboard.schemata, engine.events.publish.bind(engine.events));
