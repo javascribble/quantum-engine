@@ -1,0 +1,69 @@
+{
+    "keyboard": {
+        "defaultSchemata": [
+            0
+        ],
+        "schemata": [
+            {
+                "name": "test",
+                "keys": [
+                    {
+                        "name": "ArrowUp",
+                        "handlers": [
+                            {
+                                "name": "down",
+                                "delegate": "MoveUp"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "ArrowDown",
+                        "handlers": [
+                            {
+                                "name": "down",
+                                "delegate": "MoveDown"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "ArrowLeft",
+                        "handlers": [
+                            {
+                                "name": "down",
+                                "delegate": "MoveLeft"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "ArrowRight",
+                        "handlers": [
+                            {
+                                "name": "down",
+                                "delegate": "MoveRight"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "loader": {
+        "path": "/test/resources",
+        "resources": [
+            "/test/resources/kal256.png"
+        ]
+    },
+    "canvas": [
+        {
+            "image": 0,
+            "sx": 0,
+            "sy": 0,
+            "sw": 256,
+            "sh": 256,
+            "dx": 100,
+            "dy": 100,
+            "dw": 256,
+            "dh": 256
+        }
+    ]
+}

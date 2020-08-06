@@ -1,21 +1,5 @@
-import html from '../templates/engine.js';
-
 export class Engine extends quantum.Component {
-    events = new quantum.EventBroker();
-
-    static template = quantum.template(html);
-
-    slotChangedCallback(slot, addedElements, deletedElements) {
-        for (const element of addedElements) {
-            this[element.id] = element;
-        }
-
-        for (const element of deletedElements) {
-            delete this[element.id];
-        }
-
-        this.onload?.();
-    }
+    broker = new quantum.EventBroker();
 }
 
 quantum.define('quantum-engine', Engine);
