@@ -8,14 +8,14 @@ export class Engine extends quantum.Component {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        quantum.load(currentValue).then(configuration => this.load(configuration));
+        quantum.load(currentValue).then(options => this.load(options));
     }
 
-    load(configuration) {
+    load(options) {
         for (const [slot, elements] of this.slottedElements) {
             for (const element of elements) {
+                element.configure?.(options);
                 element.integrate?.(this.#broker);
-                element.configure?.(configuration);
             }
         }
 
