@@ -12,10 +12,10 @@ export class Engine extends quantum.Component {
     }
 
     load(options) {
+        const state = { broker: this.#broker };
         for (const [slot, elements] of this.slottedElements) {
             for (const element of elements) {
-                element.configure?.(options);
-                element.integrate?.(this.#broker);
+                element.configure?.(options, state);
             }
         }
 

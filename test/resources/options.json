@@ -1,58 +1,42 @@
 {
-    "keyboard": {
-        "defaultSchemata": [
-            0
-        ],
-        "schemata": [
-            {
-                "name": "test",
-                "keys": [
-                    {
-                        "name": "ArrowUp",
-                        "handlers": [
-                            {
-                                "name": "down",
-                                "delegate": "MoveUp"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "ArrowDown",
-                        "handlers": [
-                            {
-                                "name": "down",
-                                "delegate": "MoveDown"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "ArrowLeft",
-                        "handlers": [
-                            {
-                                "name": "down",
-                                "delegate": "MoveLeft"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "ArrowRight",
-                        "handlers": [
-                            {
-                                "name": "down",
-                                "delegate": "MoveRight"
-                            }
-                        ]
+    "debug": true,
+    "defaultSchemata": [
+        0
+    ],
+    "schemata": [
+        {
+            "name": "test",
+            "keys": [
+                {
+                    "name": "ArrowUp",
+                    "handlers": {
+                        "down": "MoveUp"
                     }
-                ]
-            }
-        ]
-    },
-    "loader": {
-        "path": "/test/resources",
-        "resources": [
-            "/test/resources/kal256.png"
-        ]
-    },
+                },
+                {
+                    "name": "ArrowDown",
+                    "handlers": {
+                        "down": "MoveDown"
+                    }
+                },
+                {
+                    "name": "ArrowLeft",
+                    "handlers": {
+                        "down": "MoveLeft"
+                    }
+                },
+                {
+                    "name": "ArrowRight",
+                    "handlers": {
+                        "down": "MoveRight"
+                    }
+                }
+            ]
+        }
+    ],
+    "resources": [
+        "/test/resources/kal256.png"
+    ],
     "canvas": [
         {
             "image": 0,
