@@ -1,7 +1,7 @@
 {
     "name": "@javascribble/quantum-engine",
     "description": "a web first game engine",
-    "version": "0.4.7",
+    "version": "0.4.8",
     "license": "MIT",
     "dependencies": {
         "@javascribble/quantum": "^0.4.18",
