@@ -5,8 +5,8 @@
     "license": "MIT",
     "dependencies": {
         "@javascribble/quantum": "^0.4.18",
-        "@javascribble/quantum-canvas": "^0.4.12",
-        "@javascribble/quantum-keyboard": "^0.4.10",
+        "@javascribble/quantum-canvas": "^0.4.13",
+        "@javascribble/quantum-keyboard": "^0.4.11",
         "@javascribble/quantum-loader": "^0.4.5"
     },
     "devDependencies": {

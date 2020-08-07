@@ -1,8 +1,1 @@
-export default `
-<style>
-    :host {
-        display: block;
-    }
-</style>
-<slot></slot>
-`;
+export default `<slot></slot>`;
