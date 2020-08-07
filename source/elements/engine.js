@@ -3,6 +3,8 @@ import html from '../templates/engine.js';
 export class Engine extends quantum.Component {
     #broker = new quantum.EventBroker();
 
+    plugins = new Set();
+
     constructor() {
         super();
 
@@ -25,20 +27,9 @@ export class Engine extends quantum.Component {
             }
         }
 
-        // Testing
-        // quantum.loadMany(options.resources, console.log).then(resources => {
-        //     const sprite = { ...options.canvas[0], image: resources[0] };
-
-        //     this.#broker.subscribe('MoveUp', _ => sprite.dy -= 10);
-        //     this.#broker.subscribe('MoveDown', _ => sprite.dy += 10);
-        //     this.#broker.subscribe('MoveLeft', _ => sprite.dx -= 10);
-        //     this.#broker.subscribe('MoveRight', _ => sprite.dx += 10);
-
-        //     quantum.animate(() => {
-        //         this.#broker.publish('drawSprite', sprite);
-        //         return true;
-        //     });
-        // });
+        for (const plugin of plugins) {
+            plugin.configure(options, state);
+        }
 
         this.#broker.publish('reset');
         this.onload?.();
