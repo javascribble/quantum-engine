@@ -3,8 +3,6 @@ import html from '../templates/engine.js';
 export class Engine extends quantum.Component {
     #broker = new quantum.EventBroker();
 
-    plugins = new Set();
-
     constructor() {
         super();
 
@@ -20,18 +18,13 @@ export class Engine extends quantum.Component {
     }
 
     load(options) {
-        const state = { broker: this.#broker };
+        const state = { options, broker: this.#broker };
         for (const [slot, elements] of this.slottedElements) {
             for (const element of elements) {
-                element.configure?.(options, state);
+                element.plugin?.(state);
             }
         }
 
-        for (const plugin of plugins) {
-            plugin.configure(options, state);
-        }
-
-        this.#broker.publish('reset');
         this.onload?.();
     }
 }
