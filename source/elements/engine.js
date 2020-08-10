@@ -19,10 +19,10 @@ export class Engine extends quantum.Component {
     }
 
     load(options) {
-        const state = { options, broker: this.#broker, ...createEntities() };
+        const api = { options, broker: this.#broker, ...createEntities() };
         for (const [slot, elements] of this.slottedElements) {
             for (const element of elements) {
-                element.configure?.(state);
+                element.integrate?.(api);
             }
         }
 
