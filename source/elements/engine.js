@@ -1,3 +1,4 @@
+import { createEntities } from '../architecture/entity.js';
 import html from '../templates/engine.js';
 
 export class Engine extends quantum.Component {
@@ -18,10 +19,10 @@ export class Engine extends quantum.Component {
     }
 
     load(options) {
-        const state = { options, broker: this.#broker };
+        const state = { options, broker: this.#broker, ...createEntities() };
         for (const [slot, elements] of this.slottedElements) {
             for (const element of elements) {
-                element.plugin?.(state);
+                element.configure?.(state);
             }
         }
 
