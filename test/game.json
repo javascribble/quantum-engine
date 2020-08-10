@@ -33,9 +33,10 @@
             ]
         }
     ],
+    "resourcePath": "/test/resources",
     "resources": [
-        "/test/resources/character.png",
-        "/test/resources/map.png"
+        "character.png",
+        "map.png"
     ],
     "sprites": [
         {
