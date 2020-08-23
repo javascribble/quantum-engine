@@ -35,7 +35,7 @@ export class Game extends HTMLElement {
             }
         };
 
-        quantum.loadMany(options.resources.map(resource => `${options.resourcePath}/${resource}`), console.log).then(resources => {
+        api.loadMany(options.resources.map(resource => `${options.resourcePath}/${resource}`), console.log).then(resources => {
             const sprite = { ...options.sprites[0], image: resources[0] };
 
             broker.subscribe('MoveUp', _ => sprite.dy -= 10);

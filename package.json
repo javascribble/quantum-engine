@@ -7,7 +7,7 @@
         "@javascribble/quantum": "^0.4.19",
         "@javascribble/quantum-canvas": "^0.4.17",
         "@javascribble/quantum-keyboard": "^0.4.14",
-        "@javascribble/quantum-loader": "^0.4.7"
+        "@javascribble/quantum-loader": "^0.4.9"
     },
     "devDependencies": {
         "live-server": "*"

@@ -15,7 +15,7 @@ export class Engine extends quantum.Component {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(options => this.load(options));
+        fetch(currentValue).then(options => options.json()).then(options => this.load(options));
     }
 
     load(options) {
