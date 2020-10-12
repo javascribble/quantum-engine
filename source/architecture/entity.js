@@ -1,6 +1,6 @@
 import { createSystemProxy } from './system.js';
 
-export const createEntities = () => {
+export const createEntityInterface = () => {
     const systems = new Map();
     const entities = new Map();
     return {
@@ -16,9 +16,9 @@ export const createEntities = () => {
 
             return proxy;
         },
-        deleteEntity: (entity) => {
-            entities.get(entity).delete();
-            entities.delete(entity);
+        deleteEntity: (proxy) => {
+            entities.get(proxy).delete();
+            entities.delete(proxy);
         }
     };
 };

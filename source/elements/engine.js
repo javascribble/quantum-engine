@@ -1,9 +1,7 @@
-import { createEntities } from '../architecture/entity.js';
+import { createEntityInterface } from '../architecture/entity.js';
 import html from '../templates/engine.js';
 
 export class Engine extends quantum.Component {
-    #broker = new quantum.EventBroker();
-
     constructor() {
         super();
 
@@ -19,14 +17,14 @@ export class Engine extends quantum.Component {
     }
 
     load(options) {
-        const api = { options, broker: this.#broker, ...createEntities() };
+        const api = { options, broker: new quantum.EventBroker(), ...createEntityInterface() };
         for (const [slot, elements] of this.slots) {
             for (const element of elements) {
                 element.integrate?.(api);
             }
         }
 
-        this.onload?.();
+        this.onload?.(api);
     }
 }
 
