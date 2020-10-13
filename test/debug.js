@@ -6,7 +6,7 @@ import '/node_modules/@javascribble/quantum-tiles/source/main.js';
 import '/source/main.js';
 
 const engine = document.querySelector('quantum-engine');
-engine.onload = api => {
+engine.onload = () => {
     api.loadMany(api.options.resources.map(resource => `${api.options.resourcePath}/${resource}`), console.log).then(resources => {
         const sprite = { ...api.options.sprites[0], image: resources[0] };
 
