@@ -1,7 +1,7 @@
 import html from '../templates/engine.js';
 
 export class Engine extends quantum.Component {
-    broker = new quantum.EventBroker();
+    #broker = new quantum.EventBroker();
 
     constructor() {
         super();
@@ -14,14 +14,14 @@ export class Engine extends quantum.Component {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(options => options.json()).then(this.load);
+        fetch(currentValue).then(options => options.json()).then(this.initialize.bind(this));
     }
 
-    async load(options) {
-        const api = { options, broker };
-        const elements = this.slots.values();
-        elements.forEach(element => element.integrate?.(api));
-        elements.forEach(element => await element.load?.(api));
+    async initialize(options) {
+        const api = { options, broker: this.#broker };
+        for (const [slot, element] of this.slots) {
+            await element.initialize?.(api);
+        }
     }
 }
 
