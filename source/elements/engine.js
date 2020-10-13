@@ -14,14 +14,22 @@ export class Engine extends quantum.Component {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(options => options.json()).then(this.initialize.bind(this));
+        fetch(currentValue).then(options => options.json()).then(this.integrate.bind(this));
     }
 
-    async initialize(options) {
+    async integrate(options) {
         const api = { options, broker: this.#broker };
-        for (const [slot, element] of this.slots) {
-            await element.initialize?.(api);
+        for (const [slot, elements] of this.slots) {
+            for (const element of elements) {
+                await element.integrate?.(api);
+            }
         }
+
+        // const resources = await api.loadResources(options.preload);
+        // quantum.animate(() => {
+        //     api.drawTiles(options.map, resources);
+        //     return true;
+        // });
     }
 }
 

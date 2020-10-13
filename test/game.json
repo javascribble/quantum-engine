@@ -33,10 +33,14 @@
             ]
         }
     ],
-    "resourcePath": "/test/resources",
+    "resourceRoot": "/test/resources",
     "resources": [
         "character.png",
         "map.png"
+    ],
+    "preload": [
+        0,
+        1
     ],
     "sprites": [
         {
