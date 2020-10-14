@@ -42,6 +42,17 @@
         0,
         1
     ],
+    "defaultScenes": [
+        0
+    ],
+    "scenes": [
+        {
+            "type": "2d",
+            "maps": [
+                0
+            ]
+        }
+    ],
     "sprites": [
         {
             "image": 0,

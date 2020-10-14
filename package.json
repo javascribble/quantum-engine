@@ -9,7 +9,7 @@
         "@javascribble/quantum-canvas": "^0.4.17",
         "@javascribble/quantum-keyboard": "^0.4.14",
         "@javascribble/quantum-loader": "^0.4.10",
-        "@javascribble/quantum-scene": "^0.4.1",
+        "@javascribble/quantum-scene": "^0.4.5",
         "@javascribble/quantum-tiles": "^0.4.6"
     },
     "devDependencies": {
