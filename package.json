@@ -5,10 +5,12 @@
     "license": "MIT",
     "dependencies": {
         "@javascribble/quantum": "^0.4.22",
+        "@javascribble/quantum-animation": "^0.4.1",
         "@javascribble/quantum-canvas": "^0.4.17",
         "@javascribble/quantum-keyboard": "^0.4.14",
         "@javascribble/quantum-loader": "^0.4.10",
-        "@javascribble/quantum-tiles": "^0.4.4"
+        "@javascribble/quantum-scene": "^0.4.1",
+        "@javascribble/quantum-tiles": "^0.4.6"
     },
     "devDependencies": {
         "live-server": "*"

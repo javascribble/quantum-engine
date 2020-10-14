@@ -24,12 +24,6 @@ export class Engine extends quantum.Component {
                 await element.integrate?.(api);
             }
         }
-
-        // const resources = await api.loadResources(options.preload);
-        // quantum.animate(() => {
-        //     api.drawTiles(options.map, resources);
-        //     return true;
-        // });
     }
 }
 
