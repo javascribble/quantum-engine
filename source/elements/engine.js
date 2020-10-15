@@ -1,8 +1,7 @@
+import { createEntityInterface } from '../architecture/entity.js';
 import html from '../templates/engine.js';
 
 export class Engine extends quantum.Component {
-    #broker = new quantum.EventBroker();
-
     constructor() {
         super();
 
@@ -18,7 +17,7 @@ export class Engine extends quantum.Component {
     }
 
     async integrate(options) {
-        const api = { options, broker: this.#broker };
+        const api = { options, broker: new quantum.EventBroker(), ...createEntityInterface };
         for (const [slot, elements] of this.slots) {
             for (const element of elements) {
                 await element.integrate?.(api);
