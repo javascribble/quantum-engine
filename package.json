@@ -5,7 +5,6 @@
     "license": "MIT",
     "dependencies": {
         "@javascribble/quantum": "*",
-        "@javascribble/quantum-animation": "*",
         "@javascribble/quantum-canvas": "*",
         "@javascribble/quantum-keyboard": "*",
         "@javascribble/quantum-loader": "*"
