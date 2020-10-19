@@ -5,4 +5,4 @@ import '/node_modules/@javascribble/quantum-keyboard/source/global.js';
 import '/source/global.js';
 import '/test/game.js';
 
-document.body.style.visibility = 'visible';
+document.body.style.visibility = 'visible'; 
