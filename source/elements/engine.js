@@ -13,10 +13,10 @@ export class Engine extends quantum.Component {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(options => options.json()).then(this.integrate.bind(this));
+        fetch(currentValue).then(options => options.json()).then(this.load.bind(this));
     }
 
-    async integrate(options) {
+    async load(options) {
         const api = { options, broker: new quantum.EventBroker(), ...createEntityInterface };
         for (const [slot, elements] of this.slots) {
             for (const element of elements) {
