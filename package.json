@@ -8,9 +8,7 @@
         "@javascribble/quantum-animation": "*",
         "@javascribble/quantum-canvas": "*",
         "@javascribble/quantum-keyboard": "*",
-        "@javascribble/quantum-loader": "*",
-        "@javascribble/quantum-scene": "*",
-        "@javascribble/quantum-tiles": "*"
+        "@javascribble/quantum-loader": "*"
     },
     "devDependencies": {
         "live-server": "*"
