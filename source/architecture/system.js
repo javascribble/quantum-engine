@@ -1,18 +1,18 @@
 import { createComponentHandler } from './component.js';
 
-export const createSystemProxy = (systems) => {
+export const createSystemProxy = systems => {
     const active = new Set();
     const inactive = new Set(systems);
     const { proxy, revoke } = Proxy.revocable({}, createComponentHandler({
-        addComponent: (entity, component) => inactive.forEach(system => {
-            if (system.validate(entity, component)) {
+        addComponent: component => inactive.forEach(system => {
+            if (system.component === component) {
                 inactive.delete(system);
                 active.add(system);
                 system.add(proxy);
             }
         }),
-        deleteComponent: (entity, component) => active.forEach(system => {
-            if (!system.validate(entity, component)) {
+        deleteComponent: component => active.forEach(system => {
+            if (system.component === component) {
                 system.delete(proxy);
                 active.delete(system);
                 inactive.add(system);

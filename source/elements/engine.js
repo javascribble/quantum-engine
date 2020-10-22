@@ -2,8 +2,6 @@ import { createEntityInterface } from '../architecture/entity.js';
 import html from '../templates/engine.js';
 
 export class Engine extends quantum.Component {
-    onload = new quantum.MulticastDelegate();
-
     constructor() {
         super();
 
@@ -19,7 +17,7 @@ export class Engine extends quantum.Component {
     }
 
     load(options) {
-        const api = { options, broker: new quantum.EventBroker(), ...createEntityInterface };
+        const api = { options, broker: new quantum.EventBroker(), ...createEntityInterface() };
         for (const [slot, elements] of this.slots) {
             for (const element of elements) {
                 element.integrate?.(api);
@@ -27,7 +25,6 @@ export class Engine extends quantum.Component {
         }
 
         this.integrate?.(api);
-        this.onload.invoke(api);
     }
 }
 

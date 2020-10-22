@@ -5,7 +5,7 @@ export const createEntityInterface = () => {
     const entities = new Map();
     return {
         systems,
-        createEntity: () => {
+        createEntity: prototype => {
             const { active, proxy, revoke } = createSystemProxy(systems);
             entities.set(proxy, {
                 delete: () => {
@@ -14,9 +14,9 @@ export const createEntityInterface = () => {
                 }
             });
 
-            return proxy;
+            return prototype ? Object.assign(proxy, prototype) : proxy;
         },
-        deleteEntity: (proxy) => {
+        deleteEntity: proxy => {
             entities.get(proxy).delete();
             entities.delete(proxy);
         }
