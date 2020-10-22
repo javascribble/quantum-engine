@@ -47,9 +47,7 @@
     ],
     "scenes": [
         {
-            "maps": [
-                0
-            ]
+            "tiles": {}
         }
     ],
     "sprites": [

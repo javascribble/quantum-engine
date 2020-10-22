@@ -1,7 +1,7 @@
 import { createSystemProxy } from './system.js';
 
 export const createEntityInterface = () => {
-    const systems = new Map();
+    const systems = new Set();
     const entities = new Map();
     return {
         systems,

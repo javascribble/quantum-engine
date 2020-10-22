@@ -16,15 +16,15 @@ export class Engine extends quantum.Component {
         fetch(currentValue).then(options => options.json()).then(this.load.bind(this));
     }
 
-    load(options) {
+    async load(options) {
         const api = { options, broker: new quantum.EventBroker(), ...createEntityInterface() };
         for (const [slot, elements] of this.slots) {
             for (const element of elements) {
-                element.integrate?.(api);
+                await element.integrate?.(api);
             }
         }
 
-        this.integrate?.(api);
+        await this.integrate?.(api);
     }
 }
 
