@@ -2,6 +2,8 @@ import { createEntityInterface } from '../architecture/entity.js';
 import html from '../templates/engine.js';
 
 export class Engine extends quantum.Component {
+    #animation;
+
     constructor() {
         super();
 
@@ -16,17 +18,17 @@ export class Engine extends quantum.Component {
         fetch(currentValue).then(options => options.json()).then(this.load.bind(this));
     }
 
-    async load(options) {
+    async load(options, plugins) {
+        this.#animation?.cancel();
+
         const api = { options, broker: new quantum.EventBroker(), ...createEntityInterface() };
-        for (const [slot, elements] of this.slots) {
-            for (const element of elements) {
-                await element.integrate?.(api);
-            }
+        for (const plugin of plugins || Array.from(this.slots.values()).flat()) {
+            await plugin.integrate?.(api);
         }
 
         await this.integrate?.(api);
 
-        quantum.animate((delta, elapsed) => {
+        this.#animation = quantum.animate((delta, elapsed) => {
             api.systems.forEach(system => system.update?.(delta, elapsed));
             return this.isConnected;
         });
