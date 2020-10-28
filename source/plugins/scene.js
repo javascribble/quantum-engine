@@ -1,18 +1,30 @@
+import { createEntityGraph, deleteEntityGraph } from '../utilities/graph.js';
+import { createGraphSystem } from '../systems/graph.js';
 import { Engine } from '../elements/engine.js';
 
 const next = Engine.prototype.integrate;
 Engine.prototype.integrate = async function (api) {
-    const { options, createEntity, deleteEntity } = api;
-    const entities = new Set();
+    const { options, systems, createEntity, deleteEntity } = api;
+    const { scenes, defaultScenes } = options;
 
-    const loadScene = index => api.loadResources(options.scenes[index].resources);
-    const applyScene = index => options.scenes[index].entities.map(entity => entities.add(createEntity(entity)));
-    const clearScene = () => entities.forEach(deleteEntity);
+    systems.set('parent', createGraphSystem());
 
-    options.defaultScenes.forEach(applyScene);
+    const scene = createEntity();
+
+    const loadScene = index => api.loadResources(scenes[index].resources);
+    const applyScene = index => createEntityGraph(scenes[index].entities, scene, createEntity);
+    const clearScene = () => deleteEntityGraph(scene, deleteEntity);
+
+    defaultScenes.forEach(applyScene);
 
     api.loadScene = loadScene;
     api.applyScene = applyScene;
     api.clearScene = clearScene;
     await next?.call(this, api);
+
+    // quantum.animate((delta, elapsed) => {
+    //     for (const child of scene.children) {
+    //         child.sprite.draw();
+    //     }
+    // });
 };

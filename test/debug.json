@@ -53,15 +53,19 @@
             ],
             "entities": [
                 {
-                    "sprite": {
-                        "type": 1,
-                        "resource": 0
+                    "prototype": {
+                        "sprite": {
+                            "type": 1,
+                            "resource": 0
+                        }
                     }
                 },
                 {
-                    "sprite": {
-                        "type": 0,
-                        "resource": 0
+                    "prototype": {
+                        "sprite": {
+                            "type": 0,
+                            "resource": 0
+                        }
                     }
                 }
             ]

@@ -1,7 +1,11 @@
 export const createComponentHandler = observers => {
-    const { addComponent, deleteComponent } = observers;
+    const { addComponent, replaceComponent, deleteComponent } = observers;
     return {
         set(target, property, value) {
+            if (target.hasOwnProperty(property)) {
+                replaceComponent(property);
+            }
+
             target[property] = value;
             addComponent(property);
             return true;
@@ -12,8 +16,8 @@ export const createComponentHandler = observers => {
             return true;
         },
         deleteProperty(target, property) {
-            delete target[property];
             deleteComponent(property);
+            delete target[property];
         }
     }
 }; 

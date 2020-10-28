@@ -30,7 +30,6 @@ export class Engine extends quantum.Component {
         await this.integrate?.(api);
 
         this.#animation = quantum.animate((delta, elapsed) => {
-            systems.forEach(system => system.update?.(delta, elapsed));
             plugins.forEach(plugin => plugin.update?.(delta, elapsed));
             return this.isConnected;
         });
