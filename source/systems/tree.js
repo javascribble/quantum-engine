@@ -1,4 +1,4 @@
-import { renderEntityGraph } from '../utilities/graph.js';
+import { renderEntityTree } from '../utilities/tree.js';
 
 export const createTreeSystem = root => ({
     add: entity => {
@@ -10,7 +10,7 @@ export const createTreeSystem = root => ({
         parent.children.add(entity);
     },
     render: (delta, elapsed) => {
-        renderEntityGraph(root, delta, elapsed);
+        renderEntityTree(root, delta, elapsed);
     },
     replace: entity => {
         entity.parent.children.delete(entity);
