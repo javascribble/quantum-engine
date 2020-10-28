@@ -21,16 +21,19 @@ export class Engine extends quantum.Component {
     async load(options, plugins = Array.from(this.slots.values()).flat()) {
         this.#animation?.cancel();
 
-        const { systems, createEntity, deleteEntity } = createEntityInterface();
-        const api = { options, broker: new quantum.EventBroker(), systems, createEntity, deleteEntity };
+        const api = { options, broker: new quantum.EventBroker(), ...createEntityInterface() };
         for (const plugin of plugins) {
             await plugin.integrate?.(api);
         }
 
         await this.integrate?.(api);
 
+        const systems = Array.from(api.systems.values());
+        const updaters = systems.filter(system => system.update !== undefined);
+        const renderers = systems.filter(system => system.render !== undefined);
         this.#animation = quantum.animate((delta, elapsed) => {
-            plugins.forEach(plugin => plugin.update?.(delta, elapsed));
+            updaters.forEach(updater => updater.update(delta, elapsed));
+            renderers.forEach(renderer => renderer.render(delta, elapsed));
             return this.isConnected;
         });
     }

@@ -15,3 +15,12 @@ export const deleteEntityGraph = (parent, deleteEntity) => {
         }
     }
 };
+
+export const renderEntityGraph = (parent, delta, elapsed) => {
+    if (parent.children) {
+        for (const child of parent.children) {
+            renderEntityGraph(child, delta, elapsed);
+            child.render();
+        }
+    }
+};

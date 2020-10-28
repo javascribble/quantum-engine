@@ -1,4 +1,6 @@
-export const createGraphSystem = () => ({
+import { renderEntityGraph } from '../utilities/graph.js';
+
+export const createGraphSystem = root => ({
     add: entity => {
         const { parent } = entity;
         if (!parent.children) {
@@ -6,6 +8,9 @@ export const createGraphSystem = () => ({
         }
 
         parent.children.add(entity);
+    },
+    render: (delta, elapsed) => {
+        renderEntityGraph(root, delta, elapsed);
     },
     replace: entity => {
         entity.parent.children.delete(entity);

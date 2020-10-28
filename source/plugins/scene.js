@@ -7,9 +7,8 @@ Engine.prototype.integrate = async function (api) {
     const { options, systems, createEntity, deleteEntity } = api;
     const { scenes, defaultScenes } = options;
 
-    systems.set('parent', createGraphSystem());
-
     const scene = createEntity();
+    systems.set('parent', createGraphSystem(scene));
 
     const loadScene = index => api.loadResources(scenes[index].resources);
     const applyScene = index => createEntityGraph(scenes[index].entities, scene, createEntity);
@@ -21,10 +20,4 @@ Engine.prototype.integrate = async function (api) {
     api.applyScene = applyScene;
     api.clearScene = clearScene;
     await next?.call(this, api);
-
-    // quantum.animate((delta, elapsed) => {
-    //     for (const child of scene.children) {
-    //         child.sprite.draw();
-    //     }
-    // });
 };
