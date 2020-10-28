@@ -1,25 +1,25 @@
-export const createEntityGraph = (entities, parent, createEntity) => {
+export const createEntityTree = (entities, parent, createEntity) => {
     for (const { prototype, children } of entities) {
         const entity = createEntity({ ...prototype, parent });
         if (children) {
-            createEntityGraph(children, entity, createEntity);
+            createEntityTree(children, entity, createEntity);
         }
     }
 };
 
-export const deleteEntityGraph = (parent, deleteEntity) => {
+export const deleteEntityTree = (parent, deleteEntity) => {
     if (parent.children) {
         for (const child of parent.children) {
-            deleteEntityGraph(child, deleteEntity);
+            deleteEntityTree(child, deleteEntity);
             deleteEntity(child);
         }
     }
 };
 
-export const renderEntityGraph = (parent, delta, elapsed) => {
+export const renderEntityTree = (parent, delta, elapsed) => {
     if (parent.children) {
         for (const child of parent.children) {
-            renderEntityGraph(child, delta, elapsed);
+            renderEntityTree(child, delta, elapsed);
             child.render();
         }
     }

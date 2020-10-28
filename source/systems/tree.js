@@ -1,6 +1,6 @@
 import { renderEntityGraph } from '../utilities/graph.js';
 
-export const createGraphSystem = root => ({
+export const createTreeSystem = root => ({
     add: entity => {
         const { parent } = entity;
         if (!parent.children) {
