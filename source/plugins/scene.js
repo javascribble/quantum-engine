@@ -14,7 +14,7 @@ Engine.prototype.integrate = async function (api) {
     const applyScene = index => createEntityTree(scenes[index].entities, root, createEntity);
     const clearScene = () => deleteEntityTree(root, deleteEntity);
 
-    defaultScenes.forEach(applyScene);
+    defaultScenes?.forEach(applyScene);
 
     api.loadScene = loadScene;
     api.applyScene = applyScene;
