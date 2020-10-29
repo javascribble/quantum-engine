@@ -17,10 +17,10 @@ export const deleteEntityTree = (parent, deleteEntity) => {
 };
 
 export const renderEntityTree = (parent, delta, elapsed) => {
+    parent.render?.();
     if (parent.children) {
         for (const child of parent.children) {
             renderEntityTree(child, delta, elapsed);
-            child.render();
         }
     }
 };
