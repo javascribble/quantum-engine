@@ -1,46 +1,8 @@
 {
-    "defaultSchemata": [
-        0
-    ],
-    "schemata": [
-        {
-            "name": "test",
-            "keys": [
-                {
-                    "name": "ArrowUp",
-                    "handlers": {
-                        "down": "MoveUp"
-                    }
-                },
-                {
-                    "name": "ArrowDown",
-                    "handlers": {
-                        "down": "MoveDown"
-                    }
-                },
-                {
-                    "name": "ArrowLeft",
-                    "handlers": {
-                        "down": "MoveLeft"
-                    }
-                },
-                {
-                    "name": "ArrowRight",
-                    "handlers": {
-                        "down": "MoveRight"
-                    }
-                }
-            ]
-        }
-    ],
     "resourceRoot": "/test/resources",
     "resources": [
         "character.png",
         "map.png"
-    ],
-    "preload": [
-        0,
-        1
     ],
     "defaultScenes": [
         0
@@ -53,19 +15,49 @@
             ],
             "entities": [
                 {
-                    "prototype": {
-                        "sprite": {
-                            "type": 1,
-                            "resource": 0
-                        }
+                    "sprite": {
+                        "type": 1,
+                        "resource": 0
                     }
                 },
                 {
-                    "prototype": {
-                        "sprite": {
-                            "type": 0,
-                            "resource": 0
-                        }
+                    "sprite": {
+                        "type": 0,
+                        "resource": 0
+                    }
+                }
+            ]
+        }
+    ],
+    "defaultSchemata": [
+        0
+    ],
+    "schemata": [
+        {
+            "name": "test",
+            "keys": [
+                {
+                    "name": "ArrowUp",
+                    "events": {
+                        "down": "MoveUp"
+                    }
+                },
+                {
+                    "name": "ArrowDown",
+                    "events": {
+                        "down": "MoveDown"
+                    }
+                },
+                {
+                    "name": "ArrowLeft",
+                    "events": {
+                        "down": "MoveLeft"
+                    }
+                },
+                {
+                    "name": "ArrowRight",
+                    "events": {
+                        "down": "MoveRight"
                     }
                 }
             ]

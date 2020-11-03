@@ -1,8 +1,8 @@
-import { createEntityInterface } from '../architecture/entity.js';
+import { integratePlugin, disintegratePlugin } from '../utilities/plugin.js';
 import html from '../templates/engine.js';
 
 export class Engine extends quantum.Component {
-    #animation;
+    broker = new quantum.EventBroker();
 
     constructor() {
         super();
@@ -14,26 +14,18 @@ export class Engine extends quantum.Component {
 
     static get observedAttributes() { return ['src']; }
 
-    attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(options => options.json()).then(this.load.bind(this));
+    slotChangedCallback(slot, addedElements, deletedElements) {
+        deletedElements.forEach(element => disintegratePlugin(this, element));
+        addedElements.forEach(element => integratePlugin(this, element));
     }
 
-    async load(options, plugins = Array.from(this.slots.values()).flat()) {
-        this.#animation?.cancel();
+    attributeChangedCallback(attribute, previousValue, currentValue) {
+        fetch(currentValue).then(response => response.json()).then(options => this.load?.(options));
+    }
 
-        const api = { options, broker: new quantum.EventBroker(), ...createEntityInterface() };
-        for (const plugin of plugins) {
-            await plugin.integrate?.(api);
-        }
-
-        await this.integrate?.(api);
-
-        const systems = Array.from(api.systems.values());
-        const updaters = systems.filter(system => system.update !== undefined);
-        const renderers = systems.filter(system => system.render !== undefined);
-        this.#animation = quantum.animate((delta, elapsed) => {
-            updaters.forEach(updater => updater.update(delta, elapsed));
-            renderers.forEach(renderer => renderer.render(delta, elapsed));
+    connectedCallback() {
+        quantum.animate((delta, elapsed) => {
+            this.update?.(delta, elapsed);
             return this.isConnected;
         });
     }
