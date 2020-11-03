@@ -2,7 +2,7 @@ import { integratePlugin, disintegratePlugin } from '../utilities/plugin.js';
 import html from '../templates/engine.js';
 
 export class Engine extends quantum.Component {
-    broker = new quantum.EventBroker();
+    #interface = { broker: new quantum.EventBroker() };
 
     constructor() {
         super();
@@ -15,17 +15,17 @@ export class Engine extends quantum.Component {
     static get observedAttributes() { return ['src']; }
 
     slotChangedCallback(slot, addedElements, deletedElements) {
-        deletedElements.forEach(element => disintegratePlugin(this, element));
-        addedElements.forEach(element => integratePlugin(this, element));
+        deletedElements.forEach(element => disintegratePlugin(this.#interface, element));
+        addedElements.forEach(element => integratePlugin(this.#interface, element));
     }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(response => response.json()).then(options => this.load?.(options));
+        fetch(currentValue).then(response => response.json()).then(this.load?.bind(this.#interface));
     }
 
     connectedCallback() {
         quantum.animate((delta, elapsed) => {
-            this.update?.(delta, elapsed);
+            this.update?.call(this.#interface, delta, elapsed);
             return this.isConnected;
         });
     }

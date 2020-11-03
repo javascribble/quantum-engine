@@ -1,6 +1,7 @@
-integrate(api) {
-    const { broker, options } = api;
+export const createInputSystem = (engine, options) => {
+    const { broker } = engine;
     const { schemata, defaultSchemata } = options;
+
     for (const schema of schemata) {
         this.schemata.set(schema.name, schema.keys.map(key => ({
             name: key.name,
@@ -13,6 +14,4 @@ integrate(api) {
     api.activateKeyboardSchema = this.activate.bind(this);
 
     // TODO: Add more control for both independent keyboard and aggregate input.
-}
-
-Object.fromEntries(Object.entries(events).map(entry => [entry[0], event => broker.publish(entry[1], event)]));
+};
