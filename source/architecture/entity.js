@@ -1,15 +1,13 @@
 import { createSystemProxy } from './system.js';
 
-export const createEntityInterface = () => {
-    const systems = new Map();
+export const createEntityInterface = systems => {
     const entities = new Map();
     return {
-        systems,
         createEntity: prototype => {
-            const { proxy, revoke } = createSystemProxy(systems);
+            const { active, proxy, revoke } = createSystemProxy(systems);
             entities.set(proxy, {
                 delete: () => {
-                    Object.getOwnPropertyNames(proxy).forEach(component => delete proxy[component]);
+                    active.forEach(system => system.delete(proxy));
                     revoke();
                 }
             });

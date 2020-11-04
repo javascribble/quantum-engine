@@ -1,8 +1,16 @@
 export const createSpriteSystem = (engine, options) => {
-    const { resources, createSpriteView, createSpriteMap } = engine;
-    const { sprites, spriteViews, spriteMaps } = options;
-
     return {
+        add: entity => {
+
+        },
+        load: async (api, options) => {
+            const { resources, createSpriteView, createSpriteMap } = api;
+            const { sprites, spriteViews, spriteMaps } = options;
+        },
+        update: (delta, elapsed) => {
+        },
+        validate: entity => {
+        },
         add: entity => {
             const { sprite } = entity;
             switch (sprite.type) {
@@ -16,7 +24,9 @@ export const createSpriteSystem = (engine, options) => {
                     break;
             };
         },
-        delete: entity => {
+        replace: entity => {
+        },
+        remove: entity => {
             delete entity.render;
         }
     };

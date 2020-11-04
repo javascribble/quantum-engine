@@ -1,14 +1,26 @@
-export const createInputSystem = (engine, options) => {
-    const { broker } = engine;
-    const { schemata, defaultSchemata } = options;
+export const createInputSystem = (createEntity, deleteEntity) => ({
+    load: async (api, options) => {
+        const { broker } = api;
+        const { schemata, defaultSchemata } = options;
 
-    defaultSchemata?.forEach(index => {
-        const schema = schemata[index];
-        engine.applyKeySchema({
-            name: schema.name,
-            handlers: Object.fromEntries(Object.entries(key.handlers).map(entry => [entry[0], event => broker.publish(entry[1], event)]))
+        // TODO: Add control for both independent keyboard and aggregate input.
+        defaultSchemata?.forEach(index => {
+            const { keys } = schemata[index];
+            for (const key of keys) {
+                key.handlers = Object.fromEntries(Object.entries(key.events).map(entry => [entry[0], event => broker.publish(entry[1], event)]))
+            }
+
+            api.applyKeySchema(keys);
         });
-    });
-
-    // TODO: Add control for both independent keyboard and aggregate input.
-};
+    },
+    update: (delta, elapsed) => {
+    },
+    validate: entity => {
+    },
+    add: entity => {
+    },
+    replace: entity => {
+    },
+    remove: entity => {
+    }
+});

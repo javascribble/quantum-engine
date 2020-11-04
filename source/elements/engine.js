@@ -1,8 +1,8 @@
-import { EventBroker, Component, template, define, animate } from '../import.js';
+import { EventBroker, Component, template, define } from '../import.js';
 import html from '../templates/engine.js';
 
 export class Engine extends Component {
-    #interface = { broker: new EventBroker() };
+    api = { broker: new EventBroker() };
 
     constructor() {
         super();
@@ -15,18 +15,15 @@ export class Engine extends Component {
     static get observedAttributes() { return ['src']; }
 
     slotChangedCallback(slot, addedElements, deletedElements) {
-        addedElements.forEach(element => element.adapt(this.#interface));
+        addedElements.forEach(element => element.adapt(this.api));
     }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(response => response.json()).then(this.load?.bind(this.#interface));
+        fetch(currentValue).then(response => response.json()).then(options => this.load(options));
     }
 
-    connectedCallback() {
-        animate((delta, elapsed) => {
-            this.update?.call(this.#interface, delta, elapsed);
-            return this.isConnected;
-        });
+    load(options) {
+        this.api.load(this.api, options);
     }
 }
 
