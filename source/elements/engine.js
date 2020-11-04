@@ -1,9 +1,8 @@
-import { Component, template, define } from '../import.js';
-import { integratePlugin, disintegratePlugin } from '../utilities/plugin.js';
+import { EventBroker, Component, template, define, animate } from '../import.js';
 import html from '../templates/engine.js';
 
 export class Engine extends Component {
-    #interface = { broker: new quantum.EventBroker() };
+    #interface = { broker: new EventBroker() };
 
     constructor() {
         super();
@@ -16,8 +15,7 @@ export class Engine extends Component {
     static get observedAttributes() { return ['src']; }
 
     slotChangedCallback(slot, addedElements, deletedElements) {
-        deletedElements.forEach(element => disintegratePlugin(this.#interface, element));
-        addedElements.forEach(element => integratePlugin(this.#interface, element));
+        addedElements.forEach(element => element.adapt(this.#interface));
     }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
@@ -25,7 +23,7 @@ export class Engine extends Component {
     }
 
     connectedCallback() {
-        quantum.animate((delta, elapsed) => {
+        animate((delta, elapsed) => {
             this.update?.call(this.#interface, delta, elapsed);
             return this.isConnected;
         });
