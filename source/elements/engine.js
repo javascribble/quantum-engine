@@ -1,7 +1,8 @@
+import { Component, template, define } from '../import.js';
 import { integratePlugin, disintegratePlugin } from '../utilities/plugin.js';
 import html from '../templates/engine.js';
 
-export class Engine extends quantum.Component {
+export class Engine extends Component {
     #interface = { broker: new quantum.EventBroker() };
 
     constructor() {
@@ -10,7 +11,7 @@ export class Engine extends quantum.Component {
         this.setAttribute('tabindex', 0);
     }
 
-    static template = quantum.template(html);
+    static template = template(html);
 
     static get observedAttributes() { return ['src']; }
 
@@ -31,4 +32,4 @@ export class Engine extends quantum.Component {
     }
 }
 
-quantum.define('quantum-engine', Engine);
+define('quantum-engine', Engine);

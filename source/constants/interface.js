@@ -1,3 +1,6 @@
 export const methods = [
-    'drawSprite'
+    'drawSprite',
+    'createSpriteView',
+    'createSpriteMap',
+    'applyKeySchema'
 ];

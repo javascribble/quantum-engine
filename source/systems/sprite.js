@@ -8,11 +8,11 @@ export const createSpriteSystem = (engine, options) => {
             switch (sprite.type) {
                 case spriteType.view:
                     sprite.drawable = createSpriteView(sprite.resource, sprites, spriteViews, resources);
-                    entity.render = () => canvas.drawImage(sprite.drawable);
+                    entity.render = () => engine.drawSprite(sprite.drawable);
                     break;
                 case spriteType.map:
                     sprite.drawable = createSpriteMap(sprite.resource, sprites, spriteMaps, resources);
-                    entity.render = () => sprite.drawable.map(drawable => canvas.drawImage(drawable));
+                    entity.render = () => sprite.drawable.map(drawable => engine.drawSprite(drawable));
                     break;
             };
         },
