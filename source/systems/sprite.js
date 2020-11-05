@@ -1,12 +1,8 @@
-export const createSpriteSystem = (engine, options) => {
-    return {
-        add: entity => {
+export const createSpriteSystem = (api, state, options) => {
+    const { resources, createSpriteView, createSpriteMap } = api;
+    const { sprites, spriteViews, spriteMaps } = options;
 
-        },
-        load: async (api, options) => {
-            const { resources, createSpriteView, createSpriteMap } = api;
-            const { sprites, spriteViews, spriteMaps } = options;
-        },
+    return {
         update: (delta, elapsed) => {
         },
         validate: entity => {

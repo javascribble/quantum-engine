@@ -1,6 +1,6 @@
 import { createComponentHandler } from './component.js';
 
-export const createSystemProxy = (systems) => {
+export const createSystemProxy = systems => {
     const active = new Set();
     const inactive = new Set(systems);
     const { proxy, revoke } = Proxy.revocable({}, createComponentHandler({

@@ -1,2 +1,2 @@
 export * from './elements/engine.js';
-export * from './elements/game.js';
+export * from './plugins/game.js';

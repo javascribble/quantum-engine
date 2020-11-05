@@ -1,8 +1,8 @@
-import { EventBroker, Component, template, define } from '../import.js';
+import { Component, template, define, animate } from '../import.js';
 import html from '../templates/engine.js';
 
 export class Engine extends Component {
-    api = { broker: new EventBroker() };
+    plugins = {};
 
     constructor() {
         super();
@@ -15,15 +15,18 @@ export class Engine extends Component {
     static get observedAttributes() { return ['src']; }
 
     slotChangedCallback(slot, addedElements, deletedElements) {
-        addedElements.forEach(element => element.adapt(this.api));
+        addedElements.forEach(element => element.adapt(this.plugins));
     }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(response => response.json()).then(options => this.load(options));
+        fetch(currentValue).then(response => response.json()).then(options => this.load?.(options));
     }
 
-    load(options) {
-        this.api.load(this.api, options);
+    connectedCallback() {
+        animate((delta, elapsed) => {
+            this.update?.(delta, elapsed);
+            return this.isConnected;
+        });
     }
 }
 
