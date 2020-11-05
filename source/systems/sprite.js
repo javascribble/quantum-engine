@@ -1,29 +1,49 @@
-export const createSpriteSystem = (api, state, options) => {
-    const { resources, createSpriteView, createSpriteMap } = api;
+const spriteType = {
+    view: 0,
+    map: 1
+};
+
+export const createSpriteSystem = (api, state, options, createEntity, deleteEntity) => {
+    const { resources, createSpriteMap, importUniformSheet } = api;
     const { sprites, spriteViews, spriteMaps } = options;
 
+    const entities = new Set();
     return {
         update: (delta, elapsed) => {
+            entities.forEach(entity => {
+                const { sprite } = entity;
+                switch (sprite.type) {
+                    case spriteType.view:
+                        api.drawSprite(entity.sprite);
+                        break;
+                    case spriteType.map:
+                        sprite.tiles.forEach(api.drawSprite);
+                        break;
+                }
+            });
         },
-        validate: entity => {
-        },
+        validate: entity => entity.hasOwnProperty('sprite'),
         add: entity => {
             const { sprite } = entity;
             switch (sprite.type) {
                 case spriteType.view:
-                    sprite.drawable = createSpriteView(sprite.resource, sprites, spriteViews, resources);
-                    entity.render = () => engine.drawSprite(sprite.drawable);
+                    const spriteViewResource = spriteViews[sprite.resource];
+                    const spriteResource = sprites[spriteViewResource.sprite];
+                    Object.assign(sprite, spriteResource, spriteViewResource, { image: resources[spriteResource.image] });
                     break;
                 case spriteType.map:
-                    sprite.drawable = createSpriteMap(sprite.resource, sprites, spriteMaps, resources);
-                    entity.render = () => sprite.drawable.map(drawable => engine.drawSprite(drawable));
+                    const spriteMapResource = spriteMaps[sprite.resource];
+                    const sheet = importUniformSheet(resources[spriteMapResource.image], spriteMapResource.width, spriteMapResource.height);
+                    sprite.tiles = createSpriteMap(sheet, spriteMapResource.sprites, spriteMapResource.divisor);
                     break;
             };
+
+            entities.add(entity);
         },
         replace: entity => {
         },
         remove: entity => {
-            delete entity.render;
+            entities.delete(entity);
         }
     };
 };

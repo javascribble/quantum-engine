@@ -1,28 +1,17 @@
 import { applyTreeAction } from '../structures/tree.js';
 
-export const createSceneSystem = async (api, state, options) => {
+export const createSceneSystem = async (api, state, options, createEntity, deleteEntity) => {
     const { scenes, defaultScenes, resources, resourceRoot } = options;
     const root = { children: new Set() };
 
-    // const resourcePaths = resources.map(resource => `${resourceRoot}/${resource}`);
-    // const activeResources = [resources.length]; // TODO: Cache invalidation.
+    api.loadScene = index => api.loadResources(scenes[index].resources);
+    api.applyScene = index => scenes[index].entities.forEach(entity => applyTreeAction(entity, createEntity));
+    api.clearScene = () => root.children.forEach(scene => applyTreeAction(scene, deleteEntity));
 
-    // engine.resources = activeResources;
-    // engine.loadResources = async indices => {
-    //     const loadedResources = await this.load(indices.map(index => resourcePaths[index]));
-    //     for (let i = 0; i < loadedResources.length; i++) {
-    //         activeResources[indices[i]] = loadedResources[i];
-    //     }
-    // };
-
-    // engine.loadScene = index => engine.loadResources(scenes[index].resources);
-    // engine.applyScene = index => scenes[index].entities.forEach(entity => applyTreeAction(entity, createEntity));
-    // engine.clearScene = () => root.children.forEach(scene => applyTreeAction(scene, deleteEntity));
-
-    // for (const scene of defaultScenes) {
-    //     await engine.loadScene(scene);
-    //     engine.applyScene(scene);
-    // }
+    for (const scene of defaultScenes) {
+        await api.loadScene(scene);
+        api.applyScene(scene);
+    }
 
     return {
         update: (delta, elapsed) => applyTreeAction(root, node => node.update?.(delta, elapsed)),

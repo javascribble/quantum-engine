@@ -1,4 +1,4 @@
-export const createInputSystem = async (api, state, options) => {
+export const createInputSystem = async (api, state, options, createEntity, deleteEntity) => {
     const { broker } = state;
     const { applyKeySchema } = api;
     const { schemata, defaultSchemata } = options;
