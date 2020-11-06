@@ -1,5 +1,5 @@
-export const createVideoSystem = (api, options, createEntity, deleteEntity) => {
-    const { resources, createSpriteMap, importUniformSheet } = api;
+export const initializeVideo = async (api, options) => {
+    const { systems, resources, createSpriteMap, importUniformSheet } = api;
     const { sprites, spriteViews, spriteMaps } = options;
 
     const spriteType = {
@@ -8,7 +8,7 @@ export const createVideoSystem = (api, options, createEntity, deleteEntity) => {
     };
 
     const entities = new Set();
-    return {
+    systems.push({
         update: (delta, elapsed) => {
             entities.forEach(entity => {
                 const { sprite } = entity;
@@ -43,5 +43,5 @@ export const createVideoSystem = (api, options, createEntity, deleteEntity) => {
         remove: entity => {
             entities.delete(entity);
         }
-    };
+    });
 };

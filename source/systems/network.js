@@ -1,17 +1,15 @@
-export const createNetworkSystem = async (api, options, createEntity, deleteEntity) => {
-    const { } = api;
+export const initializeNetwork = async (api, options) => {
+    const { systems } = api;
     const { } = options;
 
-    return {
+    systems.push({
         update: (delta, elapsed) => {
         },
         validate: entity => {
         },
         add: entity => {
         },
-        replace: entity => {
-        },
         remove: entity => {
         }
-    }
+    });
 };

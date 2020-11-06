@@ -1,23 +1,23 @@
-import { createEntityManager } from '../architecture/entity.js';
-import { createAudioSystem } from '../systems/audio.js';
-import { createInputSystem } from '../systems/input.js';
-import { createNetworkSystem } from '../systems/network.js';
-import { createResourceSystem } from '../systems/resource.js';
-import { createSceneSystem } from '../systems/scene.js';
-import { createStorageSystem } from '../systems/storage.js';
-import { createVideoSystem } from '../systems/video.js';
+import { initializeECS } from '../architecture/ecs.js';
+import { initializeAudio } from '../systems/audio.js';
+import { initializeInput } from '../systems/input.js';
+import { initializeNetwork } from '../systems/network.js';
+import { initializeResources } from '../systems/resources.js';
+import { initializeScene } from '../systems/scene.js';
+import { initializeStorage } from '../systems/storage.js';
+import { initializeVideo } from '../systems/video.js';
 import { Engine } from '../elements/engine.js';
 
 Engine.prototype.onloaded = async (api, options) => {
-    const { systems, createEntity, deleteEntity } = createEntityManager();
-    systems.add(await createResourceSystem(api, options, createEntity, deleteEntity));
-    systems.add(await createInputSystem(api, options, createEntity, deleteEntity));
-    systems.add(await createStorageSystem(api, options, createEntity, deleteEntity));
-    systems.add(await createAudioSystem(api, options, createEntity, deleteEntity));
-    systems.add(await createVideoSystem(api, options, createEntity, deleteEntity));
-    systems.add(await createNetworkSystem(api, options, createEntity, deleteEntity));
-    systems.add(await createSceneSystem(api, options, createEntity, deleteEntity));
+    Object.assign(api, initializeECS());
+    await initializeResources(api, options);
+    await initializeInput(api, options);
+    await initializeStorage(api, options);
+    await initializeAudio(api, options);
+    await initializeVideo(api, options);
+    await initializeNetwork(api, options);
+    await initializeScene(api, options);
 
-    const updaters = Array.from(systems).filter(system => system.hasOwnProperty('update'));
+    const updaters = api.systems.filter(system => system.hasOwnProperty('update'));
     return (delta, elapsed) => updaters.forEach(updater => updater.update?.(delta, elapsed));
 };
