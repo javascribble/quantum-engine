@@ -1,9 +1,17 @@
-export const applyTreeAction = (parent, action) => {
+export const applyDepthAction = async (parent, action) => {
     if (parent.children) {
         for (const child of parent.children) {
-            applyTreeAction(child, action);
+            await action(parent, child);
+            await applyDepthAction(child, action);
         }
     }
+};
 
-    action(parent);
+export const applyReverseDepthAction = async (parent, action) => {
+    if (parent.children) {
+        for (const child of parent.children) {
+            await applyReverseDepthAction(child, action);
+            await action(parent, child);
+        }
+    }
 };

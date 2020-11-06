@@ -17,7 +17,4 @@ Engine.prototype.onloaded = async (api, options) => {
     await initializeVideo(api, options);
     await initializeNetwork(api, options);
     await initializeScene(api, options);
-
-    const updaters = api.systems.filter(system => system.hasOwnProperty('update'));
-    return (delta, elapsed) => updaters.forEach(updater => updater.update?.(delta, elapsed));
 };

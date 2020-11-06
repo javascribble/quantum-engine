@@ -13,8 +13,6 @@ export const initializeInput = async (api, options) => {
     // });
 
     systems.push({
-        update: (delta, elapsed) => {
-        },
         validate: entity => {
         },
         add: entity => {

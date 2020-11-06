@@ -1,4 +1,4 @@
-import { EventBroker, Component, template, define, animate } from '../import.js';
+import { EventMap, Component, template, define, animate } from '../import.js';
 import html from '../templates/engine.js';
 
 export class Engine extends Component {
@@ -23,9 +23,10 @@ export class Engine extends Component {
     }
 
     async load(options) {
-        const update = await this.onloaded?.({ ...this.#plugins, broker: new EventBroker() }, options);
+        const broker = new EventMap();
+        await this.onloaded?.({ ...this.#plugins, broker }, options);
         return animate((delta, elapsed) => {
-            update(delta, elapsed);
+            broker.publish('animate', { delta, elapsed });
             return this.isConnected;
         });
     }

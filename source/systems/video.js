@@ -1,47 +1,29 @@
 export const initializeVideo = async (api, options) => {
-    const { systems, resources, createSpriteMap, importUniformSheet } = api;
+    const { systems, addComponent, drawSprite, createSpriteMap, importUniformSheet } = api;
     const { sprites, spriteViews, spriteMaps } = options;
 
-    const spriteType = {
-        view: 0,
-        map: 1
-    };
-
-    const entities = new Set();
     systems.push({
-        update: (delta, elapsed) => {
-            entities.forEach(entity => {
-                const { sprite } = entity;
-                switch (sprite.type) {
-                    case spriteType.view:
-                        api.drawSprite(entity.sprite);
-                        break;
-                    case spriteType.map:
-                        sprite.tiles.forEach(api.drawSprite);
-                        break;
-                }
-            });
-        },
-        validate: entity => entity.hasOwnProperty('sprite'),
-        add: entity => {
-            const { sprite } = entity;
-            switch (sprite.type) {
-                case spriteType.view:
-                    const spriteViewResource = spriteViews[sprite.resource];
-                    const spriteResource = sprites[spriteViewResource.sprite];
-                    Object.assign(sprite, spriteResource, spriteViewResource, { image: resources[spriteResource.image] });
-                    break;
-                case spriteType.map:
-                    const spriteMapResource = spriteMaps[sprite.resource];
-                    const sheet = importUniformSheet(resources[spriteMapResource.image], spriteMapResource.width, spriteMapResource.height);
-                    sprite.tiles = createSpriteMap(sheet, spriteMapResource.sprites, spriteMapResource.divisor);
-                    break;
-            };
-
-            entities.add(entity);
+        validate: entity => 'spriteView' in entity,
+        add: async entity => {
+            const spriteView = spriteViews[entity.spriteView];
+            const sprite = sprites[spriteView.sprite];
+            Object.assign(entity, sprite, spriteView, { resource: 'image', update: () => drawSprite(entity) });
+            await addComponent(entity);
         },
         remove: entity => {
-            entities.delete(entity);
+        }
+    });
+
+    systems.push({
+        validate: entity => 'spriteMap' in entity,
+        add: entity => {
+            const spriteMap = spriteMaps[entity.spriteMap];
+            // const sheet = importUniformSheet(resources[spriteMap.image], spriteMapResource.width, spriteMapResource.height);
+            // sprite.tiles = createSpriteMap(sheet, spriteMapResource.sprites, spriteMapResource.divisor);
+            // Object.assign(entity, sprite, spriteView, { resource: 'image', update: () => sprite.tiles.forEach(drawSprite) });
+            //await addComponent(entity);
+        },
+        remove: entity => {
         }
     });
 };

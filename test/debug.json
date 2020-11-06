@@ -1,35 +1,22 @@
 {
-    "resourceRoot": "/test/resources",
-    "resources": [
+    "resourceBasePath": "/test/resources",
+    "resourcePaths": [
         "character.png",
         "map.png"
     ],
-    "defaultScenes": [
-        0
-    ],
     "scenes": [
         {
-            "resources": [
-                0,
-                1
-            ],
-            "entities": [
+            "children": [
                 {
-                    "sprite": {
-                        "type": 1,
-                        "resource": 0
-                    }
+                    "spriteView": 0
                 },
                 {
-                    "sprite": {
-                        "type": 0,
-                        "resource": 0
-                    }
+                    "spriteMap": 0
                 }
             ]
         }
     ],
-    "defaultSchemata": [
+    "defaultScenes": [
         0
     ],
     "schemata": [
@@ -62,6 +49,9 @@
                 }
             ]
         }
+    ],
+    "defaultSchemata": [
+        0
     ],
     "sprites": [
         {

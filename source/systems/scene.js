@@ -1,27 +1,29 @@
-import { applyTreeAction } from '../structures/tree.js';
+import { applyReverseDepthAction } from '../structures/tree.js';
 
 export const initializeScene = async (api, options) => {
-    const { systems, createEntity, deleteEntity, loadResources } = api;
+    const { systems, createEntity, deleteEntity } = api;
     const { scenes, defaultScenes } = options;
 
-    const scene = scenes[0];
-    await createEntity(scene);
-    console.log('test');
+    const root = { children: new Set() };
+    api.applyScene = index => applyReverseDepthAction(await createEntity({ ...scenes[index], parent: root }), (parent, child) => createEntity()));
+    api.clearScene = () => applyExclusiveReverseDepthAction(root, deleteEntity);
 
-    // const root = { children: new Set() };
-    // api.loadScene = index => loadResources(scenes[index].resources);
-    // api.applyScene = index => scenes[index].entities.forEach(entity => applyTreeAction(entity, createEntity));
-    // api.clearScene = () => root.children.forEach(scene => applyTreeAction(scene, deleteEntity));
+    for (const scene of defaultScenes) {
+        await api.applyScene(scene);
+    }
 
-    // for (const scene of defaultScenes) {
-    //     await api.loadScene(scene);
-    //     api.applyScene(scene);
-    // }
+    //broker.subscribe('animate', time => applyInclusiveReverseDepthAction(root, entity => entity.update?.(time)));
 
-    // systems.push({
-    //     update: (delta, elapsed) => applyTreeAction(root, node => node.update?.(delta, elapsed)),
-    //     validate: entity => entity.hasOwnProperty('parent'),
-    //     add: entity => entity.parent.children.add(entity),
-    //     remove: entity => entity.parent.children.delete(entity)
-    // });
+    systems.push({
+        validate: entity => 'parent' in entity,
+        add: entity => {
+            const { parent } = entity;
+            if (!parent.children) {
+                parent.children = new Set();
+            }
+
+            parent.children.add(entity);
+        },
+        remove: entity => entity.parent.children.delete(entity)
+    });
 };

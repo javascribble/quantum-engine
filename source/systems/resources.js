@@ -1,17 +1,27 @@
 export const initializeResources = async (api, options) => {
     const { systems, loadOne, loadMany } = api;
-    const { resources, resourceRoot } = options;
+    const { resourceBasePath, resourcePaths } = options;
 
-    const paths = resources.map(resource => `${resourceRoot}/${resource}`);
-    const cache = [resources.length]; // TODO: Use a global cache.
+    const urls = resourcePaths.map(resourcePath => `${resourceBasePath}/${resourcePath}`);
 
     systems.push({
-        validate: entity => entity.hasOwnProperty('resources'),
+        validate: entity => 'resource' in entity,
         add: async entity => {
-            entity.resources = await loadMany(entity.resources.map(index => paths[index]));
+            const property = entity.resource;
+            entity[property] = await loadOne(urls[entity[property]])
         },
-        remove: entity => {
-            // TODO: Cache invalidation.
-        }
+        remove: entity => { }
+    });
+
+    systems.push({
+        validate: entity => 'resources' in entity,
+        add: async entity => {
+            const properties = entity.resources;
+            const resources = await loadMany(properties.map(resource => urls[entity[resource]]));
+            for (let i = 0; i < resources.length; i++) {
+                entity[properties[i]] = resources[i];
+            }
+        },
+        remove: entity => { }
     });
 };

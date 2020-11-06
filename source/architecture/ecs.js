@@ -7,6 +7,7 @@ export const initializeECS = () => {
             const active = new Set();
             const inactive = new Set();
             const entity = { ...prototype };
+            entities.set(entity, { active, inactive });
             for (const system of systems) {
                 if (system.validate(entity)) {
                     active.add(system);
@@ -16,7 +17,6 @@ export const initializeECS = () => {
                 }
             }
 
-            entities.set(entity, { active, inactive });
             return entity;
         },
         deleteEntity: async entity => {
