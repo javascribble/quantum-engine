@@ -1,11 +1,11 @@
-const spriteType = {
-    view: 0,
-    map: 1
-};
-
 export const createVideoSystem = (api, options, createEntity, deleteEntity) => {
     const { resources, createSpriteMap, importUniformSheet } = api;
     const { sprites, spriteViews, spriteMaps } = options;
+
+    const spriteType = {
+        view: 0,
+        map: 1
+    };
 
     const entities = new Set();
     return {
@@ -39,8 +39,6 @@ export const createVideoSystem = (api, options, createEntity, deleteEntity) => {
             };
 
             entities.add(entity);
-        },
-        replace: entity => {
         },
         remove: entity => {
             entities.delete(entity);

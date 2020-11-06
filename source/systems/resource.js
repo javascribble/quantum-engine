@@ -1,18 +1,13 @@
 export const createResourceSystem = async (api, options, createEntity, deleteEntity) => {
-    const { } = api;
-    const { } = options;
-
+    const { loadOne, loadMany } = api;
     const { resources, resourceRoot } = options;
-    const resourcePaths = resources.map(resource => `${resourceRoot}/${resource}`);
-    const activeResources = [resources.length]; // TODO: Cache invalidation.
 
-    api.resources = activeResources;
-    api.loadResources = async indices => {
-        const loadedResources = await api.loadMany(indices.map(index => resourcePaths[index]));
-        for (let i = 0; i < loadedResources.length; i++) {
-            activeResources[indices[i]] = loadedResources[i];
-        }
-    };
+    const paths = resources.map(resource => `${resourceRoot}/${resource}`);
+    const cache = [resources.length]; // TODO: Cache invalidation.
+
+    api.loadResource = async index => cache[index] = await loadOne(paths[index]);
+    api.loadResources = async indices => (await loadMany(indices.map(index => paths[index]))).forEach((file, index) => cache[index] = file);
+    api.resources = cache;
 
     return {
         update: (delta, elapsed) => {
@@ -20,8 +15,6 @@ export const createResourceSystem = async (api, options, createEntity, deleteEnt
         validate: entity => {
         },
         add: entity => {
-        },
-        replace: entity => {
         },
         remove: entity => {
         }

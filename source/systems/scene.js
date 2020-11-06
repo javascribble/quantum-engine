@@ -1,10 +1,11 @@
 import { applyTreeAction } from '../structures/tree.js';
 
 export const createSceneSystem = async (api, options, createEntity, deleteEntity) => {
-    const { scenes, defaultScenes, resources, resourceRoot } = options;
-    const root = { children: new Set() };
+    const { loadResources } = api;
+    const { scenes, defaultScenes } = options;
 
-    api.loadScene = index => api.loadResources(scenes[index].resources);
+    const root = { children: new Set() };
+    api.loadScene = index => loadResources(scenes[index].resources);
     api.applyScene = index => scenes[index].entities.forEach(entity => applyTreeAction(entity, createEntity));
     api.clearScene = () => root.children.forEach(scene => applyTreeAction(scene, deleteEntity));
 
@@ -17,7 +18,6 @@ export const createSceneSystem = async (api, options, createEntity, deleteEntity
         update: (delta, elapsed) => applyTreeAction(root, node => node.update?.(delta, elapsed)),
         validate: entity => entity.hasOwnProperty('parent'),
         add: entity => entity.parent.children.add(entity),
-        replace: entity => entity.parent.children.delete(entity),
         remove: entity => entity.parent.children.delete(entity)
     }
 };

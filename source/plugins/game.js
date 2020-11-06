@@ -17,5 +17,7 @@ Engine.prototype.onloaded = async (api, options) => {
     systems.add(await createVideoSystem(api, options, createEntity, deleteEntity));
     systems.add(await createNetworkSystem(api, options, createEntity, deleteEntity));
     systems.add(await createSceneSystem(api, options, createEntity, deleteEntity));
-    return (delta, elapsed) => systems.forEach(system => system.update?.(delta, elapsed));
+
+    const updaters = Array.from(systems).filter(system => system.hasOwnProperty('update'));
+    return (delta, elapsed) => updaters.forEach(updater => updater.update?.(delta, elapsed));
 };

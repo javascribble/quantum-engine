@@ -11,11 +11,6 @@ export const createSystemProxy = systems => {
                 system.add(proxy);
             }
         }),
-        replaceComponent: (entity, component) => {
-            active.forEach(system => {
-                system.replace(proxy);
-            })
-        },
         removeComponent: (entity, component) => active.forEach(system => {
             if (!system.validate(entity, component)) {
                 system.remove(proxy);

@@ -19,8 +19,6 @@ export const createInputSystem = async (api, options, createEntity, deleteEntity
         },
         add: entity => {
         },
-        replace: entity => {
-        },
         remove: entity => {
         }
     }
