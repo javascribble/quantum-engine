@@ -1,6 +1,6 @@
 import { applyTreeAction } from '../structures/tree.js';
 
-export const createSceneSystem = async (api, state, options, createEntity, deleteEntity) => {
+export const createSceneSystem = async (api, options, createEntity, deleteEntity) => {
     const { scenes, defaultScenes, resources, resourceRoot } = options;
     const root = { children: new Set() };
 

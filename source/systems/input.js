@@ -1,6 +1,5 @@
-export const createInputSystem = async (api, state, options, createEntity, deleteEntity) => {
-    const { broker } = state;
-    const { applyKeySchema } = api;
+export const createInputSystem = async (api, options, createEntity, deleteEntity) => {
+    const { broker, applyKeySchema } = api;
     const { schemata, defaultSchemata } = options;
 
     // TODO: Add control for both independent keyboard and aggregate input.

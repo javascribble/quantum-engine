@@ -3,7 +3,7 @@ const spriteType = {
     map: 1
 };
 
-export const createSpriteSystem = (api, state, options, createEntity, deleteEntity) => {
+export const createVideoSystem = (api, options, createEntity, deleteEntity) => {
     const { resources, createSpriteMap, importUniformSheet } = api;
     const { sprites, spriteViews, spriteMaps } = options;
 

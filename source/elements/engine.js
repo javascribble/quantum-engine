@@ -23,10 +23,11 @@ export class Engine extends Component {
     }
 
     async load(options) {
-        const api = { ...this.#plugins };
-        const state = { broker: new EventBroker() };
-        const update = await this.run?.(api, state, options);
-        return animate((delta, elapsed) => this.isConnected && update(delta, elapsed));
+        const update = await this.onloaded?.({ ...this.#plugins, broker: new EventBroker() }, options);
+        return animate((delta, elapsed) => {
+            update(delta, elapsed);
+            return this.isConnected;
+        });
     }
 }
 
