@@ -26,7 +26,7 @@ export class Engine extends Component {
         const broker = new EventMap();
         await this.onloaded?.({ ...this.#plugins, broker }, options);
         return animate((delta, elapsed) => {
-            broker.publish('animate', { delta, elapsed });
+            broker.publish('animate', delta, elapsed);
             return this.isConnected;
         });
     }

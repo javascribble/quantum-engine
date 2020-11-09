@@ -7,8 +7,10 @@ export const initializeVideo = async (api, options) => {
         add: async entity => {
             const spriteView = spriteViews[entity.spriteView];
             const sprite = sprites[spriteView.sprite];
-            Object.assign(entity, sprite, spriteView, { resource: 'image', update: () => drawSprite(entity) });
+            Object.assign(entity, sprite, spriteView, { resource: 'image' });
             await addComponent(entity);
+
+            entity.update = () => drawSprite(entity);
         },
         remove: entity => {
         }
@@ -16,12 +18,14 @@ export const initializeVideo = async (api, options) => {
 
     systems.push({
         validate: entity => 'spriteMap' in entity,
-        add: entity => {
+        add: async entity => {
             const spriteMap = spriteMaps[entity.spriteMap];
-            // const sheet = importUniformSheet(resources[spriteMap.image], spriteMapResource.width, spriteMapResource.height);
-            // sprite.tiles = createSpriteMap(sheet, spriteMapResource.sprites, spriteMapResource.divisor);
-            // Object.assign(entity, sprite, spriteView, { resource: 'image', update: () => sprite.tiles.forEach(drawSprite) });
-            //await addComponent(entity);
+            Object.assign(entity, spriteMap, { resource: 'image' });
+            await addComponent(entity);
+
+            const sheet = importUniformSheet(entity.image, spriteMap.width, spriteMap.height);
+            const tiles = createSpriteMap(sheet, spriteMap.sprites, spriteMap.divisor);
+            entity.update = () => tiles.forEach(drawSprite);
         },
         remove: entity => {
         }

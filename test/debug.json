@@ -6,12 +6,12 @@
     ],
     "scenes": [
         {
-            "children": [
-                {
-                    "spriteView": 0
-                },
+            "entities": [
                 {
                     "spriteMap": 0
+                },
+                {
+                    "spriteView": 0
                 }
             ]
         }
