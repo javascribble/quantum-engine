@@ -1,9 +1,8 @@
-import { EventMap, Component, template, define, animate } from '../import.js';
+import { Component, template, define, animate } from '../import.js';
+import { initializeECS } from '../architecture/ecs.js';
 import html from '../templates/engine.js';
 
 export class Engine extends Component {
-    #plugins = {};
-
     constructor() {
         super();
 
@@ -14,19 +13,20 @@ export class Engine extends Component {
 
     static get observedAttributes() { return ['src']; }
 
-    slotChangedCallback(slot, addedElements, deletedElements) {
-        addedElements.forEach(element => element.adapt(this.#plugins));
-    }
-
     attributeChangedCallback(attribute, previousValue, currentValue) {
         fetch(currentValue).then(response => response.json()).then(this.load.bind(this));
     }
 
     async load(options) {
-        const broker = new EventMap();
-        await this.onloaded?.({ ...this.#plugins, broker }, options);
-        return animate((delta, elapsed) => {
-            broker.publish('animate', delta, elapsed);
+        const api = {};
+        for (const plugin of Array.from(this.slots.values()).flat()) {
+            await plugin.adapt(api, options);
+        }
+
+        const { systems } = await import(options.entryPoint);
+        const ecs = initializeECS(systems);
+        return animate(time => {
+            //ecs.update(time);
             return this.isConnected;
         });
     }

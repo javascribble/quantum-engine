@@ -1,0 +1,64 @@
+{
+    "entryPoint": "/test/game.js",
+    "resourceBasePath": "/test/resources",
+    "resourcePaths": [
+        "character.png",
+        "map.png"
+    ],
+    "prototypes": [
+        {
+            "resources": [
+                "image"
+            ],
+            "entity": {
+                "image": 0,
+                "sx": 0,
+                "sy": 0,
+                "sw": 64,
+                "sh": 64
+            }
+        },
+        {
+            "prototype": 0,
+            "entity": {
+                "dx": 100,
+                "dy": 100,
+                "dw": 64,
+                "dh": 64
+            }
+        },
+        {
+            "resources": [
+                "image"
+            ],
+            "entity": {
+                "image": 1,
+                "width": 64,
+                "height": 64,
+                "divisor": 3,
+                "sprites": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    2
+                ]
+            }
+        },
+        {
+            "entity": {
+                "children": [
+                    0,
+                    1
+                ]
+            }
+        }
+    ],
+    "entities": [
+        3
+    ]
+}

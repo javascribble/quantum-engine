@@ -1,1 +1,1 @@
-export const { EventMap, Component, template, define, animate } = quantum;
+export const { Component, template, define, animate } = quantum;

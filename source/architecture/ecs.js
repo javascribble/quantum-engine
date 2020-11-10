@@ -1,13 +1,15 @@
 export const initializeECS = () => {
     const systems = [];
-    const entities = new Map();
+    const entities = [];
+    const map = new Map();
     return {
         systems,
+        entities,
         createEntity: async prototype => {
             const active = new Set();
             const inactive = new Set();
             const entity = { ...prototype };
-            entities.set(entity, { active, inactive });
+            map.set(entity, { active, inactive });
             for (const system of systems) {
                 if (system.validate(entity)) {
                     active.add(system);
@@ -20,13 +22,13 @@ export const initializeECS = () => {
             return entity;
         },
         deleteEntity: async entity => {
-            const { active } = entities.remove(entity);
+            const { active } = map.remove(entity);
             for (const system of active) {
                 await system.remove(entity);
             }
         },
         addComponent: async entity => {
-            const { active, inactive } = entities.get(entity);
+            const { active, inactive } = map.get(entity);
             for (const system of inactive) {
                 if (system.validate(entity)) {
                     await system.add(entity);
@@ -36,7 +38,7 @@ export const initializeECS = () => {
             }
         },
         removeComponent: async entity => {
-            const { active, inactive } = entities.get(entity);
+            const { active, inactive } = map.get(entity);
             for (const system of active) {
                 if (!system.validate(entity)) {
                     await system.remove(entity);
