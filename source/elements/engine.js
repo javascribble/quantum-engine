@@ -14,21 +14,22 @@ export class Engine extends Component {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(response => response.json()).then(this.load.bind(this));
+        fetch(currentValue).then(response => response.json()).then(this.run.bind(this));
     }
 
-    async load(options) {
-        const api = {};
-        for (const plugin of Array.from(this.slots.values()).flat()) {
-            await plugin.adapt(api, options);
+    async run(options) {
+        const api = initializeECS();
+        for (const [slot, elements] of this.slots) {
+            if (!slot.name) {
+                for (const element of elements) {
+                    Object.assign(api, element.adapt(options));
+                }
+            }
         }
 
-        const { systems } = await import(options.entryPoint);
-        const ecs = initializeECS(systems);
-        return animate(time => {
-            //ecs.update(time);
-            return this.isConnected;
-        });
+        const module = await import(options.module);
+        const execute = await module.default(api, options);
+        return animate(time => this.isConnected && execute(time));
     }
 }
 

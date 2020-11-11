@@ -1,49 +1,48 @@
 export const initializeECS = () => {
-    const systems = [];
-    const entities = [];
-    const map = new Map();
+    const systemEntities = new Map();
+    const entitySystems = new Map();
     return {
-        systems,
-        entities,
-        createEntity: async prototype => {
-            const active = new Set();
-            const inactive = new Set();
-            const entity = { ...prototype };
-            map.set(entity, { active, inactive });
-            for (const system of systems) {
+        createSystem: system => {
+            const entities = new Set();
+            for (const [entity, systems] of entitySystems) {
                 if (system.validate(entity)) {
-                    active.add(system);
-                    await system.add(entity);
-                } else {
-                    inactive.add(system);
+                    entities.add(entity);
+                    systems.add(system);
                 }
             }
 
+            systemEntities.set(system, entities);
+        },
+        deleteSystem: system => {
+            for (const entity of systemEntities.remove(system)) {
+                entitySystems.get(entity).delete(system);
+            }
+        },
+        updateSystems: time => {
+            for (const [system, entities] of systemEntities) {
+                system.update(entities, time);
+            }
+        },
+        createEntity: prototype => {
+            const entity = { ...prototype };
+            entitySystems.set(entity, new Set());
             return entity;
         },
-        deleteEntity: async entity => {
-            const { active } = map.remove(entity);
-            for (const system of active) {
-                await system.remove(entity);
+        deleteEntity: entity => {
+            for (const system of entitySystems.remove(entity)) {
+                systemEntities.get(system).delete(entity);
             }
         },
-        addComponent: async entity => {
-            const { active, inactive } = map.get(entity);
-            for (const system of inactive) {
+        updateEntity: entity => {
+            for (const [system, entities] of systemEntities) {
                 if (system.validate(entity)) {
-                    await system.add(entity);
-                    inactive.delete(system);
-                    active.add(system);
-                }
-            }
-        },
-        removeComponent: async entity => {
-            const { active, inactive } = map.get(entity);
-            for (const system of active) {
-                if (!system.validate(entity)) {
-                    await system.remove(entity);
-                    active.delete(system);
-                    inactive.add(system);
+                    if (!entities.has(entity)) {
+                        entitySystems.get(entity).add(system);
+                        entities.add(entity);
+                    }
+                } else if (entities.has(entity)) {
+                    entitySystems.get(entity).delete(system);
+                    entities.delete(entity);
                 }
             }
         }
