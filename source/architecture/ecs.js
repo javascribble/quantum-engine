@@ -30,7 +30,7 @@ export const initializeECS = () => {
 
     const createEntity = entity => {
         for (const child of entity.children) {
-
+            createEntity(child);
         }
 
         const systems = [];

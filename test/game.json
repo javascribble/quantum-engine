@@ -5,7 +5,7 @@
         "character.png",
         "map.png"
     ],
-    "defaultPrototype": 4,
+    "defaultPrototype": 6,
     "prototypes": [
         [
             {
