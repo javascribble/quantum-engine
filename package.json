@@ -6,7 +6,7 @@
     "dependencies": {
         "@javascribble/quantum": "^1.0.5",
         "@javascribble/quantum-canvas": "^1.0.3",
-        "@javascribble/quantum-input": "^1.0.3",
+        "@javascribble/quantum-input": "^1.0.4",
         "@javascribble/quantum-loader": "^1.0.6"
     },
     "devDependencies": {

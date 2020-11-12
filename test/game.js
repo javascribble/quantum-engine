@@ -38,6 +38,17 @@ export default async (api, options) => {
     });
 
     api.createSystem({
+        validate: entity => 'player' in entity,
+        update: (entities, time) => {
+            for (const entity of entities) {
+                if (api.getButton('ArrowDown')) {
+                    entity.dx += 10;
+                }
+            }
+        }
+    });
+
+    api.createSystem({
         validate: entity => 'image' in entity,
         update: (entities, time) => {
             for (const entity of entities) {
@@ -67,7 +78,6 @@ export default async (api, options) => {
 
     return time => {
         api.updateSystems(time);
-        console.log(api.getButton(' '))
         return true;
     };
 };
