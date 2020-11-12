@@ -7,78 +7,101 @@
     ],
     "defaultPrototype": 4,
     "prototypes": [
-        {
-            "resource": "image",
-            "object": {
+        [
+            {
                 "image": 0,
                 "sx": 0,
                 "sy": 0,
                 "sw": 64,
                 "sh": 64
-            }
-        },
-        {
-            "resource": "image",
-            "object": {
+            },
+            [
+                "image"
+            ],
+            [],
+            []
+        ],
+        [
+            {
                 "image": 1,
                 "sx": 0,
                 "sy": 0,
                 "sw": 64,
                 "sh": 64
-            }
-        },
-        {
-            "resource": "image",
-            "object": {
+            },
+            [
+                "image"
+            ],
+            [],
+            []
+        ],
+        [
+            {
                 "image": 1,
                 "sx": 64,
                 "sy": 0,
                 "sw": 64,
                 "sh": 64
-            }
-        },
-        {
-            "resource": "image",
-            "object": {
+            },
+            [
+                "image"
+            ],
+            [],
+            []
+        ],
+        [
+            {
                 "image": 1,
                 "sx": 128,
                 "sy": 0,
                 "sw": 64,
                 "sh": 64
-            }
-        },
-        {
-            "prototype": 0,
-            "object": {
+            },
+            [
+                "image"
+            ],
+            [],
+            []
+        ],
+        [
+            {
                 "dx": 100,
                 "dy": 100,
                 "dw": 64,
                 "dh": 64
-            }
-        },
-        {
-            "object": {
-                "divisor": 3,
-                "children": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    1,
-                    2
-                ]
-            }
-        },
-        {
-            "object": {
-                "children": [
-                    5,
-                    4
-                ]
-            }
-        }
+            },
+            [],
+            [
+                0
+            ],
+            []
+        ],
+        [
+            {
+                "divisor": 3
+            },
+            [],
+            [],
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                2,
+                3
+            ]
+        ],
+        [
+            {},
+            [],
+            [],
+            [
+                5,
+                4
+            ]
+        ]
     ]
 }

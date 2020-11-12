@@ -22,7 +22,7 @@ export class Engine extends Component {
         for (const [slot, elements] of this.slots) {
             if (!slot.name) {
                 for (const element of elements) {
-                    Object.assign(api, element.adapt(options));
+                    Object.assign(api, element.adapt?.(options));
                 }
             }
         }
