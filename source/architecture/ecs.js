@@ -29,10 +29,6 @@ export const initializeECS = () => {
     };
 
     const createEntity = entity => {
-        for (const child of entity.children) {
-            createEntity(child);
-        }
-
         const systems = [];
         for (const [system, entities] of systemEntities) {
             if (system.validate(entity)) {
