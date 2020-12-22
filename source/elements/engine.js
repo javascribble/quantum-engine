@@ -19,7 +19,7 @@ export class Engine extends Component {
 
     async run(options) {
         const api = initializeAPI();
-        for (const element of this.elements.get(this.slots.get(''))) {
+        for (const element of this.slots.get('')) {
             element.adapt?.(api, options);
         }
 
