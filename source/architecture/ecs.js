@@ -2,7 +2,7 @@ export const initializeECS = () => {
     const systemEntities = new Map();
     const entitySystems = new Map();
 
-    const createSystem = system => {
+    const attachSystem = system => {
         const entities = [];
         for (const [entity, systems] of entitySystems) {
             if (system.validate(entity)) {
@@ -15,7 +15,7 @@ export const initializeECS = () => {
         systemEntities.set(system, entities);
     };
 
-    const deleteSystem = system => {
+    const detachSystem = system => {
         for (const entity of systemEntities.remove(system)) {
             entitySystems.get(entity).remove(system);
             system.destruct?.(entity);
@@ -28,7 +28,7 @@ export const initializeECS = () => {
         }
     };
 
-    const createEntity = entity => {
+    const attachEntity = entity => {
         const systems = [];
         for (const [system, entities] of systemEntities) {
             if (system.validate(entity)) {
@@ -41,7 +41,7 @@ export const initializeECS = () => {
         entitySystems.set(entity, systems);
     };
 
-    const deleteEntity = entity => {
+    const detachEntity = entity => {
         for (const system of entitySystems.remove(entity)) {
             systemEntities.get(system).remove(entity);
             system.destruct?.(entity);
@@ -65,11 +65,11 @@ export const initializeECS = () => {
     };
 
     return {
-        createSystem,
-        deleteSystem,
+        attachSystem,
+        detachSystem,
         updateSystems,
-        createEntity,
-        deleteEntity,
+        attachEntity,
+        detachEntity,
         updateEntity
     }
 };

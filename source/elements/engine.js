@@ -1,5 +1,5 @@
 import { Component, template, define, animate } from '../import.js';
-import { initializeAPI } from '../architecture/api.js';
+import { initializeECS } from '../architecture/ecs.js';
 import html from '../templates/engine.js';
 
 export class Engine extends Component {
@@ -18,7 +18,7 @@ export class Engine extends Component {
     }
 
     async run(options) {
-        const api = initializeAPI();
+        const api = initializeECS();
         for (const element of this.slots.get('')) {
             element.adapt?.(api, options);
         }
