@@ -3,15 +3,6 @@ export default async (api, options) => {
     quantum.enableTilesPlugin(api, options);
 
     api.attachSystem({
-        validate: entity => 'camera' in entity,
-        update: (entities, time) => {
-            for (const entity of entities) {
-                api.drawSprite(entity);
-            }
-        }
-    });
-
-    api.attachSystem({
         validate: entity => 'player' in entity,
         update: (entities, time) => {
             for (const entity of entities) {
@@ -38,7 +29,7 @@ export default async (api, options) => {
     });
 
     api.attachSystem({
-        validate: entity => 'divisor' in entity,
+        validate: entity => 'map' in entity,
         construct: entity => {
             const tiles = [];
             const divisor = entity.divisor;
@@ -52,8 +43,6 @@ export default async (api, options) => {
             }
 
             api.calculateTilemap(tiles, divisor);
-        },
-        update: (entities, time) => {
         }
     });
 

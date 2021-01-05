@@ -82,7 +82,7 @@
         [
             {
                 "map": {},
-                "divisor": 3,
+                "divisor": 10,
                 "children": [
                     1,
                     2,
