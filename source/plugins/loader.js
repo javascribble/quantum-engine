@@ -3,8 +3,22 @@ export const enableLoaderPlugin = (api, options) => {
     const { resourcePath, resources, prototypes } = options;
 
     const paths = resources.map(resource => `${resourcePath}/${resource}`);
+
     const loadResource = index => loadOne(paths[index]);
     const loadResources = indices => loadMany(indices.map(index => paths[index]));
+
+    const loadEntities = async indices => {
+        const entities = await Promise.all(indices.map(loadData));
+        entities.forEach(attachEntity);
+        return entities;
+    };
+
+    const loadEntity = async index => {
+        const entity = await loadData(index);
+        attachEntity(entity);
+        return entity;
+    };
+
     const loadData = async index => {
         const [prototype, resources, references, inheritances] = prototypes[index];
         let entity = { ...prototype };
@@ -20,22 +34,9 @@ export const enableLoaderPlugin = (api, options) => {
         }
 
         for (const inheritance of inheritances) {
-            const baseObject = await loadEntity(inheritance);
-            entity = { ...baseObject, ...entity };
+            entity = { ...await loadEntity(inheritance), ...entity };
         }
 
-        return entity;
-    };
-
-    const loadEntities = async indices => {
-        const entities = await Promise.all(indices.map(loadData));
-        entities.forEach(attachEntity);
-        return entities;
-    };
-
-    const loadEntity = async index => {
-        const entity = await loadData(index);
-        attachEntity(entity);
         return entity;
     };
 
