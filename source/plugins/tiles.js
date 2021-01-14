@@ -1,4 +1,4 @@
-export const enableTilesPlugin = (api, options) => {
+export const enableTilesPlugin = api => {
     api.calculateTilemap = (tiles, divisor) => {
         for (let index = 0; index < tiles.length; index++) {
             const tile = tiles[index];

@@ -1,24 +1,13 @@
-export const enableLoaderPlugin = (api, options) => {
-    const { loadOne, loadMany, attachEntity } = api;
+import { initializeECS } from './ecs.js';
+
+export const initializeAPI = (engine, options) => {
     const { resourcePath, resources, prototypes } = options;
 
     const paths = resources.map(resource => `${resourcePath}/${resource}`);
+    const loadResource = index => engine.loadOne(paths[index]);
+    const loadResources = indices => engine.loadMany(indices.map(index => paths[index]));
 
-    const loadResource = index => loadOne(paths[index]);
-    const loadResources = indices => loadMany(indices.map(index => paths[index]));
-
-    const loadEntities = async indices => {
-        const entities = await Promise.all(indices.map(loadData));
-        entities.forEach(attachEntity);
-        return entities;
-    };
-
-    const loadEntity = async index => {
-        const entity = await loadData(index);
-        attachEntity(entity);
-        return entity;
-    };
-
+    const ecs = initializeECS();
     const loadData = async index => {
         const [prototype, resources, references, inheritances] = prototypes[index];
         let entity = { ...prototype };
@@ -40,10 +29,21 @@ export const enableLoaderPlugin = (api, options) => {
         return entity;
     };
 
-    Object.assign(api, {
-        loadResource,
-        loadResources,
+    const loadEntity = async index => {
+        const entity = await loadData(index);
+        ecs.attachEntity(entity);
+        return entity;
+    };
+
+    const loadEntities = async indices => {
+        const entities = await Promise.all(indices.map(loadData));
+        entities.forEach(ecs.attachEntity);
+        return entities;
+    };
+
+    return {
+        ...ecs,
         loadEntity,
         loadEntities
-    });
+    };
 };

@@ -1,6 +1,5 @@
-export default async (api, options) => {
-    quantum.enableLoaderPlugin(api, options);
-    quantum.enableTilesPlugin(api, options);
+export default async api => {
+    quantum.enableTilesPlugin(api);
 
     api.attachSystem({
         validate: entity => 'player' in entity,
@@ -45,10 +44,4 @@ export default async (api, options) => {
             api.calculateTilemap(tiles, divisor);
         }
     });
-
-    await api.loadEntities(options.entities);
-    return time => {
-        api.updateSystems(time);
-        return true;
-    };
 };

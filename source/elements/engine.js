@@ -1,8 +1,8 @@
-import { Component, template, define, animate } from '../import.js';
-import { initializeECS } from '../architecture/ecs.js';
+import { Loader, template, define, animate } from '../import.js';
+import { initializeAPI } from '../architecture/api.js';
 import html from '../templates/engine.js';
 
-export class Engine extends Component {
+export class Engine extends Loader {
     constructor() {
         super();
 
@@ -18,14 +18,17 @@ export class Engine extends Component {
     }
 
     async run(options) {
-        const api = initializeECS();
+        const api = initializeAPI(this, options);
         for (const element of this.slots.get('')) {
             element.adapt?.(api, options);
         }
 
-        const module = await import(options.module);
-        const execute = await module.default(api, options);
-        return animate(time => this.isConnected && execute(time));
+        (await import(options.module)).default(api);
+        await api.loadEntities(options.entities);
+        return animate(time => {
+            api.updateSystems(time);
+            return this.isConnected;
+        });
     }
 }
 
