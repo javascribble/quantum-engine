@@ -1,4 +1,3 @@
-import { Loader, template, define, animate } from '../import.js';
 import { initializeAPI } from '../architecture/api.js';
 import html from '../templates/engine.js';
 

@@ -1,1 +1,0 @@
-export const { Loader, template, define, animate } = quantum;
