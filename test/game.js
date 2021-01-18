@@ -61,11 +61,9 @@ export default async (engine, options) => {
 
     const entities = await engine.loadPrototypes(options.entities);
     entities.forEach(engine.attachEntity);
-    engine.addEventListener('click', event => {
-        if (event.target.type === 'reset') {
-            entities.forEach(engine.detachEntity);
-            entities.forEach(engine.attachEntity);
-        }
+    engine.querySelector('button').addEventListener('click', event => {
+        entities.forEach(engine.detachEntity);
+        entities.forEach(engine.attachEntity);
     });
 
     return time => {
