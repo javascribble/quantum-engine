@@ -1,15 +1,5 @@
-export default async api => {
-    api.calculateTilemap = (tiles, divisor) => {
-        for (let index = 0; index < tiles.length; index++) {
-            const tile = tiles[index];
-            tile.dx = tile.sw * (index % divisor);
-            tile.dy = tile.sh * Math.floor(index / divisor);
-            tile.dw = tile.sw;
-            tile.dh = tile.sh;
-        }
-    };
-
-    api.importUniformTilesheet = (image, sw, sh = sw) => {
+export default async (engine, options) => {
+    engine.importUniformSpritesheet = (image, sw, sh = sw) => {
         const sprites = [];
         for (let row = 0; row < image.height / sh; row++) {
             for (let column = 0; column < image.width / sw; column++) {
@@ -20,47 +10,66 @@ export default async api => {
         return sprites;
     };
 
-    api.attachSystem({
-        validate: entity => 'player' in entity,
-        update: (entities, time) => {
-            for (const entity of entities) {
-                if (api.getButton('ArrowUp')) {
-                    entity.dy -= 5;
-                } else if (api.getButton('ArrowDown')) {
-                    entity.dy += 5;
-                } else if (api.getButton('ArrowLeft')) {
-                    entity.dx -= 5;
-                } else if (api.getButton('ArrowRight')) {
-                    entity.dx += 5;
-                }
-            }
-        }
-    });
-
-    api.attachSystem({
-        validate: entity => 'image' in entity,
-        update: (entities, time) => {
-            for (const entity of entities) {
-                api.drawSprite(entity);
-            }
-        }
-    });
-
-    api.attachSystem({
+    engine.attachSystem({
         validate: entity => 'map' in entity,
         construct: entity => {
+            const { map, indices, divisor } = entity;
+            const { sheet, size } = map;
+
             const tiles = [];
-            const divisor = entity.divisor;
-            const grassTile = entity.children[0];
-            for (let i = 0; i < divisor; i++) {
-                for (let ii = 0; ii < divisor; ii++) {
-                    const grassTileClone = { ...grassTile };
-                    api.attachEntity(grassTileClone);
-                    tiles.push(grassTileClone);
-                }
+            const sprites = engine.importUniformSpritesheet(sheet, size);
+            for (let index = 0; index < indices.length; index++) {
+                const tile = { ...sprites[indices[index]] };
+                tile.dx = tile.sw * (index % divisor);
+                tile.dy = tile.sh * Math.floor(index / divisor);
+                tile.dw = tile.sw;
+                tile.dh = tile.sh;
+                tiles.push(tile);
             }
 
-            api.calculateTilemap(tiles, divisor);
+            entity.tiles = tiles;
+        },
+        update: (entities, time) => {
+            for (const entity of entities) {
+                for (const tile of entity.tiles) {
+                    engine.drawSprite(tile);
+                }
+            }
         }
     });
+
+    engine.attachSystem({
+        validate: entity => 'player' in entity,
+        construct: entity => Object.assign(entity, entity.player),
+        update: (entities, time) => {
+            for (const entity of entities) {
+                if (engine.getButton('ArrowUp')) {
+                    entity.dy -= 5;
+                } else if (engine.getButton('ArrowDown')) {
+                    entity.dy += 5;
+                } else if (engine.getButton('ArrowLeft')) {
+                    entity.dx -= 5;
+                } else if (engine.getButton('ArrowRight')) {
+                    entity.dx += 5;
+                }
+
+                engine.drawSprite(entity);
+            }
+        }
+    });
+
+
+    const entities = await engine.loadPrototypes(options.entities);
+    entities.forEach(engine.attachEntity);
+    engine.addEventListener('click', event => {
+        if (event.target.type === 'reset') {
+            entities.forEach(engine.detachEntity);
+            entities.forEach(engine.attachEntity);
+        }
+    });
+
+    return time => {
+        engine.updateSystems(time);
+        return engine.isConnected;
+    };
 };

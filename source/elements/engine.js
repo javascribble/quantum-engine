@@ -13,21 +13,16 @@ export class Engine extends Loader {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(response => response.json()).then(this.run.bind(this));
+        this.loaders.json(currentValue).then(this.run.bind(this));
     }
 
     async run(options) {
-        const api = initializeAPI(this, options);
+        initializeAPI(this, options);
         for (const element of this.slots.get('')) {
-            element.adapt?.(api, options);
+            element.adapt?.(this, options);
         }
 
-        (await import(options.module)).default(api);
-        await api.loadEntities(options.entities);
-        return animate(time => {
-            api.updateSystems(time);
-            return this.isConnected;
-        });
+        return animate(await (await import(options.module)).default(this, options));
     }
 }
 

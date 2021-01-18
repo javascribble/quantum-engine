@@ -3,58 +3,63 @@ export const initializeECS = () => {
     const entitySystems = new Map();
     return {
         attachSystem: system => {
-            const entities = [];
+            const entities = new Set();
             for (const [entity, systems] of entitySystems) {
                 if (system.validate(entity)) {
                     system.construct?.(entity);
-                    entities.push(entity);
-                    systems.push(system);
+                    entities.add(entity);
+                    systems.add(system);
                 }
             }
 
             systemEntities.set(system, entities);
         },
         detachSystem: system => {
-            for (const entity of systemEntities.remove(system)) {
-                entitySystems.get(entity).remove(system);
+            for (const entity of systemEntities.get(system)) {
+                entitySystems.get(entity).delete(system);
                 system.destruct?.(entity);
             }
+
+            systemEntities.delete(system);
         },
-        updateSystems: time => {
+        updateSystems: state => {
             for (const [system, entities] of systemEntities) {
-                system.update?.(entities, time);
+                system.update?.(entities, state);
             }
         },
         attachEntity: entity => {
-            const systems = [];
+            const systems = new Set();
             for (const [system, entities] of systemEntities) {
                 if (system.validate(entity)) {
                     system.construct?.(entity);
-                    entities.push(entity);
-                    systems.push(system);
+                    entities.add(entity);
+                    systems.add(system);
                 }
             }
 
             entitySystems.set(entity, systems);
         },
         detachEntity: entity => {
-            for (const system of entitySystems.remove(entity)) {
-                systemEntities.get(system).remove(entity);
+            for (const system of entitySystems.get(entity)) {
+                systemEntities.get(system).delete(entity);
                 system.destruct?.(entity);
             }
+
+            entitySystems.delete(entity);
         },
         updateEntity: entity => {
             for (const [system, entities] of systemEntities) {
+                const systems = entitySystems.get(entity);
                 const valid = system.validate(entity);
                 const exists = entities.has(entity);
                 if (valid && !exists) {
-                    entitySystems.get(entity).push(system);
                     system.construct?.(entity);
-                    entities.push(entity);
+                    entities.add(entity);
+                    systems.add(system);
                 } else if (!valid && exists) {
-                    entitySystems.get(entity).remove(system);
                     system.destruct?.(entity);
-                    entities.remove(entity);
+                    entities.delete(entity);
+                    systems.delete(system);
                 }
             }
         }
