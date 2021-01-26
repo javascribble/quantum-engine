@@ -17,12 +17,19 @@ export class Engine extends Loader {
     }
 
     async run(options) {
+        await this.initialize(options);
+        return animate(await this.execute(options));
+    }
+
+    async initialize(options) {
         initializeAPI(this, options);
         for (const element of this.slots.get('')) {
             element.adapt?.(this, options);
         }
+    }
 
-        return animate(await (await import(options.module)).default(this, options));
+    async execute(options) {
+        return (await import(options.module)).default(this, options);
     }
 }
 
