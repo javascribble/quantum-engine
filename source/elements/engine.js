@@ -1,7 +1,9 @@
-import { initializeAPI } from '../architecture/api.js';
+import { initialize } from '../architecture/ecs.js';
 import html from '../templates/engine.js';
 
-export class Engine extends Loader {
+const { Component, template, define, animate } = quantum;
+
+export class Engine extends Component {
     constructor() {
         super();
 
@@ -13,23 +15,16 @@ export class Engine extends Loader {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        this.loaders.json(currentValue).then(this.run.bind(this));
+        fetch(currentValue).then(response => response.json()).then(this.run.bind(this));
     }
 
-    async run(options) {
-        await this.initialize(options);
-        return animate(await this.execute(options));
-    }
-
-    async initialize(options) {
-        initializeAPI(this, options);
+    async run(options, animation) {
+        const api = initialize();
         for (const element of this.slots.get('')) {
-            element.adapt?.(this, options);
+            await element.adapt?.(api);
         }
-    }
 
-    async execute(options) {
-        return (await import(options.module)).default(this, options);
+        return animate(animation || await (await import(options.module)).default(this, api, options));
     }
 }
 

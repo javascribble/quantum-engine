@@ -1,4 +1,4 @@
-export const initializeECS = () => {
+export const initialize = () => {
     const systemEntities = new Map();
     const entitySystems = new Map();
     return {
@@ -15,12 +15,10 @@ export const initializeECS = () => {
             systemEntities.set(system, entities);
         },
         detachSystem: system => {
-            for (const entity of systemEntities.get(system)) {
+            for (const entity of systemEntities.remove(system)) {
                 entitySystems.get(entity).delete(system);
                 system.destruct?.(entity);
             }
-
-            systemEntities.delete(system);
         },
         updateSystems: state => {
             for (const [system, entities] of systemEntities) {
@@ -40,16 +38,14 @@ export const initializeECS = () => {
             entitySystems.set(entity, systems);
         },
         detachEntity: entity => {
-            for (const system of entitySystems.get(entity)) {
+            for (const system of entitySystems.remove(entity)) {
                 systemEntities.get(system).delete(entity);
                 system.destruct?.(entity);
             }
-
-            entitySystems.delete(entity);
         },
         updateEntity: entity => {
+            const systems = entitySystems.get(entity);
             for (const [system, entities] of systemEntities) {
-                const systems = entitySystems.get(entity);
                 const valid = system.validate(entity);
                 const exists = entities.has(entity);
                 if (valid && !exists) {
