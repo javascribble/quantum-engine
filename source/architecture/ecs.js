@@ -20,9 +20,9 @@ export const initializeECS = () => {
                 system.destruct?.(entity);
             }
         },
-        updateSystems: state => {
+        updateSystems: time => {
             for (const [system, entities] of systemEntities) {
-                system.update?.(entities, state);
+                system.update?.(entities, time);
             }
         },
         attachEntity: entity => {
