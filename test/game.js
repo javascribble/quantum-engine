@@ -1,42 +1,15 @@
+const importUniformSpritesheet = (image, sw, sh = sw) => {
+    const sprites = [];
+    for (let row = 0; row < image.height / sh; row++) {
+        for (let column = 0; column < image.width / sw; column++) {
+            sprites.push({ image, sx: column * sh, sy: row * sh, sw, sh });
+        }
+    }
+
+    return sprites;
+};
+
 export default async (engine, api, options) => {
-    const { resourcePath, resources, prototypes } = options;
-
-    const paths = resources.map(resource => `${resourcePath}/${resource}`);
-    const loadResources = indices => api.loadMany(indices.map(index => paths[index]));
-    const loadResource = index => api.loadOne(paths[index]);
-    const loadPrototypes = indices => Promise.all(indices.map(loadPrototype));
-    const loadPrototype = async index => {
-        const [prototype, resources, references, inheritances] = prototypes[index];
-        let clone = { ...prototype };
-
-        for (const resource of resources) {
-            const property = clone[resource];
-            clone[resource] = Array.isArray(property) ? await loadResources(property) : await loadResource(property);
-        }
-
-        for (const reference of references) {
-            const property = clone[reference];
-            clone[reference] = Array.isArray(property) ? await loadPrototypes(property) : await loadPrototype(property);
-        }
-
-        for (const inheritance of inheritances) {
-            clone = { ...await loadPrototype(inheritance), ...clone };
-        }
-
-        return clone;
-    };
-
-    api.importUniformSpritesheet = (image, sw, sh = sw) => {
-        const sprites = [];
-        for (let row = 0; row < image.height / sh; row++) {
-            for (let column = 0; column < image.width / sw; column++) {
-                sprites.push({ image, sx: column * sh, sy: row * sh, sw, sh });
-            }
-        }
-
-        return sprites;
-    };
-
     api.attachSystem({
         validate: entity => 'map' in entity,
         construct: entity => {
@@ -44,7 +17,7 @@ export default async (engine, api, options) => {
             const { sheet, size } = map;
 
             const tiles = [];
-            const sprites = api.importUniformSpritesheet(sheet, size);
+            const sprites = importUniformSpritesheet(sheet, size);
             for (let index = 0; index < indices.length; index++) {
                 const tile = { ...sprites[indices[index]] };
                 tile.dx = tile.sw * (index % divisor);
@@ -85,7 +58,7 @@ export default async (engine, api, options) => {
         }
     });
 
-    const entities = await loadPrototypes(options.entities);
+    const entities = await api.loadPrototypes(options.entities);
     entities.forEach(api.attachEntity);
     engine.querySelector('button').addEventListener('click', event => {
         entities.forEach(api.detachEntity);

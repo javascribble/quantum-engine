@@ -1,4 +1,4 @@
-export const initialize = () => {
+export const initializeECS = () => {
     const systemEntities = new Map();
     const entitySystems = new Map();
     return {

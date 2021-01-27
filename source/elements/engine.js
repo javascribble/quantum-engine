@@ -1,7 +1,7 @@
-import { initialize } from '../architecture/ecs.js';
+import { initializeAPI } from '../architecture/api.js';
 import html from '../templates/engine.js';
 
-const { Component, template, define, animate } = quantum;
+const { Component, template, define, animate, loadJson } = quantum;
 
 export class Engine extends Component {
     constructor() {
@@ -15,16 +15,20 @@ export class Engine extends Component {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        fetch(currentValue).then(response => response.json()).then(this.run.bind(this));
+        loadJson(currentValue).then(this.run.bind(this));
     }
 
-    async run(options, animation) {
-        const api = initialize();
+    async run(options) {
+        const api = initializeAPI(options);
         for (const element of this.slots.get('')) {
             await element.adapt?.(api);
         }
 
-        return animate(animation || await (await import(options.module)).default(this, api, options));
+        return animate(await this.initialize(api, options));
+    }
+
+    async initialize(api, options) {
+        return (await import(options.module)).default(this, api, options);
     }
 }
 
