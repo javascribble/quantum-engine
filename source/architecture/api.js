@@ -1,4 +1,4 @@
-const { load, loadMany } = quantum;
+const { load } = quantum;
 
 export const initializeAPI = options => {
     const { resourceRoot, resources, prototypes } = options;

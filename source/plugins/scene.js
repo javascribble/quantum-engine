@@ -59,7 +59,7 @@ const plugin = async (engine, api, options) => {
     });
 
     const prototype = await api.loadPrototype(options.prototypeRoot);
-    api.attachEntity(prototype);
+    prototype.scene.forEach(api.attachEntity);
     engine.querySelector('button').addEventListener('click', event => {
         api.detachEntity(prototype);
         api.attachEntity(prototype);
