@@ -1,15 +1,24 @@
 {
-    "module": "/test/game.js",
-    "resourcePath": "/test/resources",
+    "resourceRoot": "/test/resources",
     "resources": [
         "character.png",
         "map.png"
     ],
-    "entities": [
-        2,
-        3
-    ],
+    "prototypeRoot": 0,
     "prototypes": [
+        [
+            {
+                "scene": [
+                    3,
+                    4
+                ]
+            },
+            [],
+            [
+                "scene"
+            ],
+            []
+        ],
         [
             {
                 "image": 0,
@@ -47,14 +56,14 @@
             [],
             [],
             [
-                0
+                1
             ]
         ],
         [
             {
                 "map": 1,
                 "divisor": 4,
-                "indices": [
+                "indic es": [
                     0,
                     0,
                     0,

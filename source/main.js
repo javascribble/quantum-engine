@@ -1,3 +1,3 @@
-import * as engine from './elements/engine.js';
+import { Engine } from './elements/engine.js';
 
-Object.assign(quantum, engine);
+Quantum.Engine = Engine;

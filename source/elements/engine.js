@@ -1,16 +1,15 @@
 import { initializeAPI } from '../architecture/api.js';
+import { initializeECS } from '../architecture/ecs.js';
 import html from '../templates/engine.js';
 
-const { Component, template, define, animate, loadJson } = quantum;
+const { animate, loadJson } = quantum;
 
-export class Engine extends Component {
+export class Engine extends Quantum {
     constructor() {
         super();
 
         this.setAttribute('tabindex', 0);
     }
-
-    static template = template(html);
 
     static get observedAttributes() { return ['src']; }
 
@@ -19,17 +18,19 @@ export class Engine extends Component {
     }
 
     async run(options) {
+        const ecs = initializeECS();
         const api = initializeAPI(options);
         for (const element of this.slots.get('')) {
             await element.adapt?.(api);
         }
 
-        return animate(await this.initialize(api, options));
-    }
+        quantum.plugins(this, { ...api, ...ecs }, options);
 
-    async initialize(api, options) {
-        return (await import(options.module)).default(this, api, options);
+        return animate(time => {
+            ecs.updateSystems(time);
+            return this.isConnected;
+        });
     }
 }
 
-define('quantum-engine', Engine);
+Engine.define('quantum-engine', html);

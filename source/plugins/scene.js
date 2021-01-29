@@ -9,7 +9,7 @@ const importUniformSpritesheet = (image, sw, sh = sw) => {
     return sprites;
 };
 
-export default async (engine, api, options) => {
+const plugin = async (engine, api, options) => {
     api.attachSystem({
         validate: entity => 'map' in entity,
         construct: entity => {
@@ -58,15 +58,12 @@ export default async (engine, api, options) => {
         }
     });
 
-    const entities = await api.loadPrototypes(options.entities);
-    entities.forEach(api.attachEntity);
+    const prototype = await api.loadPrototype(options.prototypeRoot);
+    api.attachEntity(prototype);
     engine.querySelector('button').addEventListener('click', event => {
-        entities.forEach(api.detachEntity);
-        entities.forEach(api.attachEntity);
+        api.detachEntity(prototype);
+        api.attachEntity(prototype);
     });
-
-    return time => {
-        api.updateSystems(time);
-        return engine.isConnected;
-    };
 };
+
+quantum.plugins = plugin;

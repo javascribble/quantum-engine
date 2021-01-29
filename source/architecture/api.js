@@ -1,12 +1,10 @@
-import { initializeECS } from './ecs.js';
-
 const { load, loadMany } = quantum;
 
 export const initializeAPI = options => {
-    const { resourcePath, resources, prototypes } = options;
+    const { resourceRoot, resources, prototypes } = options;
 
-    const paths = resources.map(resource => `${resourcePath}/${resource}`);
-    const loadResources = indices => loadMany(indices.map(index => paths[index]));
+    const paths = resources.map(resource => `${resourceRoot}/${resource}`);
+    const loadResources = indices => Promise.all(indices.map(loadResource));
     const loadResource = index => load(paths[index]);
     const loadPrototypes = indices => Promise.all(indices.map(loadPrototype));
     const loadPrototype = async index => {
@@ -30,5 +28,5 @@ export const initializeAPI = options => {
         return clone;
     };
 
-    return { ...initializeECS(), loadPrototype, loadPrototypes };
+    return { loadPrototype, loadPrototypes };
 };
