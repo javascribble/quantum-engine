@@ -1,5 +1,4 @@
 import { initializeAPI } from '../architecture/api.js';
-import { initializeECS } from '../architecture/ecs.js';
 import html from '../templates/engine.js';
 
 const { animate, loadJson } = quantum;
@@ -11,6 +10,8 @@ export class Engine extends Quantum {
         this.setAttribute('tabindex', 0);
     }
 
+    static plugins = new Set();
+
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
@@ -18,16 +19,18 @@ export class Engine extends Quantum {
     }
 
     async run(options) {
-        const ecs = initializeECS();
         const api = initializeAPI(options);
         for (const element of this.slots.get('')) {
             await element.adapt?.(api);
         }
 
-        quantum.plugins(this, { ...api, ...ecs }, options);
+        for (const plugin of this.constructor.plugins) {
+            await plugin(api, this);
+        }
 
+        api.root = await api.loadEntity(options.prototypeRoot);
         return animate(time => {
-            ecs.updateSystems(time);
+            api.updateSystems(time);
             return this.isConnected;
         });
     }

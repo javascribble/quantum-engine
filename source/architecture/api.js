@@ -1,3 +1,5 @@
+import { initializeECS } from './ecs.js';
+
 const { load } = quantum;
 
 export const initializeAPI = options => {
@@ -28,5 +30,12 @@ export const initializeAPI = options => {
         return clone;
     };
 
-    return { loadPrototype, loadPrototypes };
+    const ecs = initializeECS();
+    const loadEntity = async index => ecs.attachEntity(await loadPrototype(index));
+    const loadEntities = async indices => {
+        const prototypes = await loadPrototypes(indices);
+        prototypes.forEach(ecs.attachEntity);
+    };
+
+    return { loadPrototype, loadPrototypes, loadEntity, loadEntities, ...ecs };
 };
