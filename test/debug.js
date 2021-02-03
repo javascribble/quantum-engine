@@ -4,6 +4,7 @@ import '/node_modules/@javascribble/quantum-input/source/main.js';
 import '/source/plugins/scene.js';
 import '/source/plugins/sprite.js';
 import '/source/plugins/tile.js';
+import '/source/plugins/game.js';
 import '/source/plugins/player.js';
 import '/source/main.js';
 

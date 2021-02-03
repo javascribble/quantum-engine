@@ -28,7 +28,7 @@ export class Engine extends Quantum {
             await plugin(api, this);
         }
 
-        api.root = await api.loadEntity(options.prototypeRoot);
+        await api.loadEntity(options.prototypeRoot);
         return animate(time => {
             api.updateSystems(time);
             return this.isConnected;
