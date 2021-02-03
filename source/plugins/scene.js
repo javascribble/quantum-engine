@@ -7,7 +7,7 @@ Engine.plugins.add((api, engine) => {
             api.attachEntity(entity.scenes[entity.default]);
             // const clone = api.cloneEntity(entity.scenes[entity.default]);
             // api.attachEntity(clone);
-            // entity.active.add(clone);
+            // entity.active.add(clone); 
         },
         destruct: entity => {
             entity.scene.forEach(api.detachEntity);

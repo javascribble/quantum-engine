@@ -15,8 +15,6 @@ Engine.plugins.add(api => {
                 } else if (api.getButton('ArrowRight')) {
                     entity.dx += 5;
                 }
-
-                api.drawSprite(entity);
             }
         }
     });

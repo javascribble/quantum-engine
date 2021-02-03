@@ -27,15 +27,15 @@ Engine.plugins.add(api => {
                 tile.dw = tile.sw;
                 tile.dh = tile.sh;
                 tiles.push(tile);
+
+                api.attachEntity(tile);
             }
 
             entity.tiles = tiles;
         },
-        update: (entities, time) => {
-            for (const entity of entities) {
-                for (const tile of entity.tiles) {
-                    api.drawSprite(tile);
-                }
+        destruct: entity => {
+            for (const tile of entity.tiles) {
+                api.detachEntity(tile);
             }
         }
     });
