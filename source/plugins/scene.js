@@ -5,6 +5,8 @@ Engine.plugins.add((api, engine) => {
         validate: entity => 'scenes' in entity,
         construct: entity => {
             api.attachEntity(entity.scenes[entity.default]);
+
+            // TODO: Add entity cloning, enforce single prototype.
             // const clone = api.cloneEntity(entity.scenes[entity.default]);
             // api.attachEntity(clone);
             // entity.active.add(clone); 

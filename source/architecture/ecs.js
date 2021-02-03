@@ -1,3 +1,4 @@
+// TODO: Build searchable entity mesh.
 export const initializeECS = () => {
     const systemEntities = new Map();
     const entitySystems = new Map();
