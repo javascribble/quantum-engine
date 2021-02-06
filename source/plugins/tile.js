@@ -1,25 +1,25 @@
 import { Engine } from '../elements/engine.js';
 
-Engine.plugins.add(api => {
-    api.importUniformSpritesheet = (image, sw, sh = sw) => {
-        const sprites = [];
-        for (let row = 0; row < image.height / sh; row++) {
-            for (let column = 0; column < image.width / sw; column++) {
-                sprites.push({ image, sx: column * sh, sy: row * sh, sw, sh });
-            }
+const importUniformSpritesheet = (image, sw, sh = sw) => {
+    const sprites = [];
+    for (let row = 0; row < image.height / sh; row++) {
+        for (let column = 0; column < image.width / sw; column++) {
+            sprites.push({ image, sx: column * sh, sy: row * sh, sw, sh });
         }
+    }
 
-        return sprites;
-    };
+    return sprites;
+};
 
+Engine.plugins.add(api => {
     api.attachSystem({
-        validate: entity => 'map' in entity,
-        construct: entity => {
-            const { map, indices, divisor } = entity;
-            const { sheet, size } = map;
+        validate: entity => 'tileset' in entity,
+        add: entity => {
+            const { tileset, indices, divisor } = entity;
+            const { sheet, size } = tileset;
 
             const tiles = [];
-            const sprites = api.importUniformSpritesheet(sheet, size);
+            const sprites = importUniformSpritesheet(sheet, size);
             for (let index = 0; index < indices.length; index++) {
                 const tile = { ...sprites[indices[index]] };
                 tile.dx = tile.sw * (index % divisor);
@@ -33,7 +33,7 @@ Engine.plugins.add(api => {
 
             entity.tiles = tiles;
         },
-        destruct: entity => {
+        remove: entity => {
             for (const tile of entity.tiles) {
                 api.detachEntity(tile);
             }

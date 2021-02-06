@@ -3,7 +3,7 @@ import { Engine } from '../elements/engine.js';
 Engine.plugins.add((api, engine) => {
     api.attachSystem({
         validate: entity => 'scenes' in entity,
-        construct: entity => {
+        add: entity => {
             api.attachEntity(entity.scenes[entity.default]);
 
             // TODO: Add entity cloning, enforce single prototype.
@@ -11,8 +11,7 @@ Engine.plugins.add((api, engine) => {
             // api.attachEntity(clone);
             // entity.active.add(clone); 
         },
-        destruct: entity => {
-            entity.scene.forEach(api.detachEntity);
+        remove: entity => {
         }
     });
 

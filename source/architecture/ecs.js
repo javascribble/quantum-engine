@@ -1,4 +1,3 @@
-// TODO: Build searchable entity mesh.
 export const initializeECS = () => {
     const systemEntities = new Map();
     const entitySystems = new Map();
@@ -7,7 +6,7 @@ export const initializeECS = () => {
             const entities = [];
             for (const [entity, systems] of entitySystems) {
                 if (system.validate(entity)) {
-                    system.construct?.(entity);
+                    system.add?.(entity);
                     entities.push(entity);
                     systems.push(system);
                 }
@@ -18,7 +17,7 @@ export const initializeECS = () => {
         detachSystem: system => {
             for (const entity of systemEntities.remove(system)) {
                 entitySystems.get(entity).remove(system);
-                system.destruct?.(entity);
+                system.remove?.(entity);
             }
         },
         updateSystems: time => {
@@ -30,7 +29,7 @@ export const initializeECS = () => {
             const systems = [];
             for (const [system, entities] of systemEntities) {
                 if (system.validate(entity)) {
-                    system.construct?.(entity);
+                    system.add?.(entity);
                     entities.push(entity);
                     systems.push(system);
                 }
@@ -41,7 +40,7 @@ export const initializeECS = () => {
         detachEntity: entity => {
             for (const system of entitySystems.remove(entity)) {
                 systemEntities.get(system).remove(entity);
-                system.destruct?.(entity);
+                system.remove?.(entity);
             }
         },
         updateEntity: entity => {
@@ -50,11 +49,11 @@ export const initializeECS = () => {
                 const valid = system.validate(entity);
                 const exists = entities.has(entity);
                 if (valid && !exists) {
-                    system.construct?.(entity);
+                    system.add?.(entity);
                     entities.push(entity);
                     systems.push(system);
                 } else if (!valid && exists) {
-                    system.destruct?.(entity);
+                    system.remove?.(entity);
                     entities.remove(entity);
                     systems.remove(system);
                 }

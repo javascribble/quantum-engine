@@ -46,7 +46,7 @@
         ],
         [
             {
-                "map": 2,
+                "tileset": 2,
                 "divisor": 4,
                 "indices": [
                     0,
@@ -69,7 +69,7 @@
             },
             [],
             [
-                "map"
+                "tileset"
             ],
             []
         ],

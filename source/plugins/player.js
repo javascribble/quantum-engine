@@ -3,7 +3,7 @@ import { Engine } from '../elements/engine.js';
 Engine.plugins.add(api => {
     api.attachSystem({
         validate: entity => 'player' in entity,
-        construct: entity => Object.assign(entity, entity.player),
+        add: entity => Object.assign(entity, entity.player),
         update: (entities, time) => {
             for (const entity of entities) {
                 if (api.getButton('ArrowUp')) {
