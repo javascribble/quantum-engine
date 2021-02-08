@@ -1,6 +1,4 @@
-import { Engine } from '../elements/engine.js';
-
-Engine.plugins.add(api => {
+Quantum.Engine.plugins.add(api => {
     api.attachSystem({
         validate: entity => 'player' in entity,
         add: entity => Object.assign(entity, entity.player),

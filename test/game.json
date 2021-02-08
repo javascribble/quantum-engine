@@ -8,7 +8,7 @@
     "prototypes": [
         [
             {
-                "default": 0,
+                "scene": 0,
                 "scenes": [
                     5
                 ]
@@ -21,14 +21,14 @@
         ],
         [
             {
-                "image": 0,
+                "source": 0,
                 "sx": 0,
                 "sy": 0,
                 "sw": 64,
                 "sh": 64
             },
             [
-                "image"
+                "source"
             ],
             [],
             []
@@ -90,14 +90,14 @@
         ],
         [
             {
-                "game": [
+                "children": [
                     3,
                     4
                 ]
             },
             [],
             [
-                "game"
+                "children"
             ],
             []
         ]

@@ -8,14 +8,3 @@ loaders.png = (url, options) => new Promise((resolve, reject) => {
     image.onerror = () => reject(image);
     image.src = url;
 });
-
-Engine.plugins.add(api => {
-    api.attachSystem({
-        validate: entity => 'image' in entity,
-        update: (entities, time) => {
-            for (const entity of entities) {
-                api.drawSprite(entity);
-            }
-        }
-    });
-});
