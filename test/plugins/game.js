@@ -1,4 +1,4 @@
-Quantum.Engine.plugins.add((api, engine) => {
+export const enableGamePlugin = (api, engine) => {
     api.attachSystem({
         validate: entity => 'children' in entity,
         add: entity => {
@@ -11,4 +11,4 @@ Quantum.Engine.plugins.add((api, engine) => {
             });
         }
     });
-}); 
+};

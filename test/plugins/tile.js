@@ -1,4 +1,4 @@
-Quantum.Engine.plugins.add(api => {
+export const enableTilePlugin = api => {
     api.attachSystem({
         validate: entity => 'tileset' in entity,
         add: entity => {
@@ -32,4 +32,4 @@ Quantum.Engine.plugins.add(api => {
             entity.children = children;
         }
     });
-});
+};

@@ -1,5 +1,3 @@
-import { Engine } from '../elements/engine.js';
-
 const { loaders } = quantum;
 
 loaders.png = (url, options) => new Promise((resolve, reject) => {

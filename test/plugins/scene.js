@@ -1,4 +1,4 @@
-Quantum.Engine.plugins.add(api => {
+export const enableScenePlugin = api => {
     api.attachSystem({
         validate: entity => 'scene' in entity,
         add: entity => {
@@ -13,4 +13,4 @@ Quantum.Engine.plugins.add(api => {
             entity.scenes.forEach(api.detachEntity);
         }
     });
-});
+};

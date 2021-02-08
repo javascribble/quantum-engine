@@ -1,4 +1,4 @@
-Quantum.Engine.plugins.add(api => {
+export const enablePlayerPlugin = api => {
     api.attachSystem({
         validate: entity => 'player' in entity,
         add: entity => Object.assign(entity, entity.player),
@@ -16,4 +16,4 @@ Quantum.Engine.plugins.add(api => {
             }
         }
     });
-});
+};
