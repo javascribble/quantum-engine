@@ -2,7 +2,6 @@ export const enablePlayerPlugin = engine => {
     const { attachSystem, input } = engine;
     attachSystem({
         validate: entity => 'player' in entity,
-        add: entity => Object.assign(entity, entity.player),
         update: (entities, time) => {
             for (const entity of entities) {
                 if (input.getButton('ArrowUp')) {

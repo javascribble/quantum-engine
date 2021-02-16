@@ -2,14 +2,16 @@ export const enableGamePlugin = engine => {
     engine.canvas.setResolution();
     engine.attachSystem({
         validate: entity => 'children' in entity,
-        add: entity => {
-            entity.children.forEach(engine.attachEntity);
+        update: (entities, time) => {
+            if (!entity.initialized) {
+                engine.attachEntity(entity.world);
+                engine.attachEntity(entity.player);
+                engine.querySelector('button').addEventListener('click', event => {
+                    Object.assign(entity.player, entity.player)
+                });
 
-            engine.querySelector('button').addEventListener('click', event => {
-                const player = entity.children[1];
-                engine.detachEntity(player);
-                engine.attachEntity(player);
-            });
+                entity.initialized = true;
+            }
         }
     });
 };

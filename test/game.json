@@ -57,7 +57,7 @@
         ],
         [
             {
-                "player": {
+                "spawn": {
                     "dx": 100,
                     "dy": 100
                 },
@@ -72,14 +72,13 @@
         ],
         [
             {
-                "children": [
-                    3,
-                    4
-                ]
+                "world": 3,
+                "player": 4
             },
             [],
             [
-                "children"
+                "world",
+                "player"
             ],
             []
         ]

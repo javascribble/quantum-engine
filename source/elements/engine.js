@@ -25,7 +25,7 @@ export class Engine extends Quantum {
     }
 
     async run(options) {
-        Object.assign(this, initializeECS(), initializeAPI(options));
+        Object.assign(this, initializeECS(), initializeAPI(this, options));
         for (const plugin of this.plugins) {
             await plugin(this);
         }

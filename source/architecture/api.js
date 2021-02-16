@@ -1,6 +1,6 @@
 const { load } = quantum;
 
-export const initializeAPI = options => {
+export const initializeAPI = (engine, options) => {
     const { resourceRoot, resources, prototypes } = options;
 
     const paths = resources.map(resource => `${resourceRoot}/${resource}`);
@@ -26,6 +26,12 @@ export const initializeAPI = options => {
         }
 
         return clone;
+    };
+
+    const loadEntity = async index => engine.attachEntity(await loadPrototype(index));
+    const loadEntities = async indices => {
+        const prototypes = await loadPrototypes(indices);
+        prototypes.forEach(engine.attachEntity);
     };
 
     return { loadPrototype, loadPrototypes };
