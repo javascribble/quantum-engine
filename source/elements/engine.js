@@ -25,13 +25,12 @@ export class Engine extends Quantum {
     }
 
     async run(options) {
-        initializeECS(this);
-        initializeAPI(this, options);
+        Object.assign(this, initializeECS(), initializeAPI(options));
         for (const plugin of this.plugins) {
             await plugin(this);
         }
 
-        await this.loadEntity(options.prototypeRoot);
+        this.attachEntity(await this.loadPrototype(options.prototypeRoot));
         return animate(time => {
             this.updateSystems(time);
             return this.isConnected;

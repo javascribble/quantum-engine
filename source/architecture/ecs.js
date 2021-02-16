@@ -1,7 +1,7 @@
-export const initializeECS = engine => {
+export const initializeECS = () => {
     const systemEntities = new Map();
     const entitySystems = new Map();
-    Object.assign(engine, {
+    return {
         attachSystem: system => {
             const entities = [];
             for (const [entity, systems] of entitySystems) {
@@ -59,5 +59,5 @@ export const initializeECS = engine => {
                 }
             }
         }
-    });
+    };
 };
