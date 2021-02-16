@@ -1,16 +1,18 @@
-export const enableScenePlugin = api => {
-    api.attachSystem({
+export const enableScenePlugin = engine => {
+    const { attachSystem, canvas } = engine;
+
+    attachSystem({
         validate: entity => 'scene' in entity,
         add: entity => {
-            entity.scenes.forEach(api.attachEntity);
+            entity.scenes.forEach(engine.attachEntity);
         },
         update: (entities, time) => {
             for (const { scene, scenes } of entities) {
-                api.drawImageTree(scenes[scene], 'children');
+                canvas.drawImageTree(scenes[scene], 'children');
             }
         },
         remove: entity => {
-            entity.scenes.forEach(api.detachEntity);
+            entity.scenes.forEach(engine.detachEntity);
         }
     });
 };

@@ -1,4 +1,3 @@
-import { Engine } from '../source/elements/engine.js';
 import { enableGamePlugin } from './plugins/game.js';
 import { enablePlayerPlugin } from './plugins/player.js';
 import { enableScenePlugin } from './plugins/scene.js';

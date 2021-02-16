@@ -1,4 +1,5 @@
 import { initializeAPI } from '../architecture/api.js';
+import { initializeECS } from '../architecture/ecs.js';
 import html from '../templates/engine.js';
 
 const { animate, loadJson } = quantum;
@@ -18,19 +19,21 @@ export class Engine extends Quantum {
         loadJson(currentValue).then(this.run.bind(this));
     }
 
+    slotChangedCallback(slot, addedElements, deletedElements, currentElements) {
+        addedElements.forEach(addedElement => this[addedElement.id] = addedElement);
+        deletedElements.forEach(deletedElement => delete this[deletedElement.id]);
+    }
+
     async run(options) {
-        const api = initializeAPI(options);
-        for (const element of this.slots.get('')) {
-            await element.adapt?.(api);
-        }
-
+        initializeECS(this);
+        initializeAPI(this, options);
         for (const plugin of this.plugins) {
-            await plugin(api, this);
+            await plugin(this);
         }
 
-        await api.loadEntity(options.prototypeRoot);
+        await this.loadEntity(options.prototypeRoot);
         return animate(time => {
-            api.updateSystems(time);
+            this.updateSystems(time);
             return this.isConnected;
         });
     }

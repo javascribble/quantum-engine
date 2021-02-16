@@ -1,5 +1,5 @@
-export const enableTilePlugin = api => {
-    api.attachSystem({
+export const enableTilePlugin = engine => {
+    engine.attachSystem({
         validate: entity => 'tileset' in entity,
         add: entity => {
             const { tileset, divisor } = entity;

@@ -1,8 +1,6 @@
-import { initializeECS } from './ecs.js';
-
 const { load } = quantum;
 
-export const initializeAPI = options => {
+export const initializeAPI = (engine, options) => {
     const { resourceRoot, resources, prototypes } = options;
 
     const paths = resources.map(resource => `${resourceRoot}/${resource}`);
@@ -30,12 +28,11 @@ export const initializeAPI = options => {
         return clone;
     };
 
-    const ecs = initializeECS();
-    const loadEntity = async index => ecs.attachEntity(await loadPrototype(index));
+    const loadEntity = async index => engine.attachEntity(await loadPrototype(index));
     const loadEntities = async indices => {
         const prototypes = await loadPrototypes(indices);
-        prototypes.forEach(ecs.attachEntity);
+        prototypes.forEach(engine.attachEntity);
     };
 
-    return { loadPrototype, loadPrototypes, loadEntity, loadEntities, ...ecs };
+    Object.assign(engine, { loadPrototype, loadPrototypes, loadEntity, loadEntities });
 };

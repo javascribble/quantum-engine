@@ -1,16 +1,17 @@
-export const enablePlayerPlugin = api => {
-    api.attachSystem({
+export const enablePlayerPlugin = engine => {
+    const { attachSystem, input } = engine;
+    attachSystem({
         validate: entity => 'player' in entity,
         add: entity => Object.assign(entity, entity.player),
         update: (entities, time) => {
             for (const entity of entities) {
-                if (api.getButton('ArrowUp')) {
+                if (input.getButton('ArrowUp')) {
                     entity.dy -= 5;
-                } else if (api.getButton('ArrowDown')) {
+                } else if (input.getButton('ArrowDown')) {
                     entity.dy += 5;
-                } else if (api.getButton('ArrowLeft')) {
+                } else if (input.getButton('ArrowLeft')) {
                     entity.dx -= 5;
-                } else if (api.getButton('ArrowRight')) {
+                } else if (input.getButton('ArrowRight')) {
                     entity.dx += 5;
                 }
             }
