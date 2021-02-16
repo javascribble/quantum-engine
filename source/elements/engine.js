@@ -4,13 +4,13 @@ import html from '../templates/engine.js';
 const { animate, loadJson } = quantum;
 
 export class Engine extends Quantum {
+    plugins = new Set();
+
     constructor() {
         super();
 
         this.setAttribute('tabindex', 0);
     }
-
-    static plugins = new Set();
 
     static get observedAttributes() { return ['src']; }
 
@@ -24,7 +24,7 @@ export class Engine extends Quantum {
             await element.adapt?.(api);
         }
 
-        for (const plugin of this.constructor.plugins) {
+        for (const plugin of this.plugins) {
             await plugin(api, this);
         }
 
