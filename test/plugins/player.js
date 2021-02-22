@@ -1,17 +1,19 @@
-export const enablePlayerPlugin = engine => {
-    const { attachSystem, input } = engine;
-    attachSystem({
+export const enablePlayerPlugin = (engine, state) => {
+    const { input } = engine;
+    const { systems } = state;
+
+    systems.push({
         validate: entity => 'player' in entity,
         update: (entities, time) => {
-            for (const entity of entities) {
+            for (const { sprite } of entities) {
                 if (input.getButton('ArrowUp')) {
-                    entity.dy -= 5;
+                    sprite.dy -= 5;
                 } else if (input.getButton('ArrowDown')) {
-                    entity.dy += 5;
+                    sprite.dy += 5;
                 } else if (input.getButton('ArrowLeft')) {
-                    entity.dx -= 5;
+                    sprite.dx -= 5;
                 } else if (input.getButton('ArrowRight')) {
-                    entity.dx += 5;
+                    sprite.dx += 5;
                 }
             }
         }

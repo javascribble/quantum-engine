@@ -4,9 +4,9 @@ import { enableScenePlugin } from './plugins/scene.js';
 import { enableTilePlugin } from './plugins/tile.js';
 
 const engine = document.querySelector('quantum-engine');
-engine.plugins.add((api, engine) => {
-    enableGamePlugin(api, engine);
-    enablePlayerPlugin(api);
-    enableScenePlugin(api);
-    enableTilePlugin(api);
+engine.plugins.push(engine => {
+    enableGamePlugin(engine);
+    enablePlayerPlugin(engine);
+    enableScenePlugin(engine);
+    enableTilePlugin(engine);
 });

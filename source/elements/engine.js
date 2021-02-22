@@ -1,11 +1,12 @@
-import { initializeAPI } from '../architecture/api.js';
-import { initializeECS } from '../architecture/ecs.js';
+import { Entity } from '../architecture/entity.js';
+import { Component } from '../architecture/component.js';
+import { System } from '../architecture/system.js';
 import html from '../templates/engine.js';
 
 const { animate, loadJson } = quantum;
 
 export class Engine extends Quantum {
-    plugins = new Set();
+    plugins = [];
 
     constructor() {
         super();
@@ -16,26 +17,30 @@ export class Engine extends Quantum {
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        loadJson(currentValue).then(this.run.bind(this));
+        loadJson(currentValue).then(this.load.bind(this));
     }
 
     slotChangedCallback(slot, addedElements, deletedElements, currentElements) {
-        addedElements.forEach(addedElement => this[addedElement.id] = addedElement);
-        deletedElements.forEach(deletedElement => delete this[deletedElement.id]);
+        for (const addedElement of addedElements) this[addedElement.id] = addedElement;
+        for (const deletedElement of deletedElements) delete this[deletedElement.id];
     }
 
-    async run(options) {
-        Object.assign(this, initializeECS(), initializeAPI(this, options));
-        for (const plugin of this.plugins) {
-            await plugin(this);
+    async load(options) {
+        if (this.animation) {
+            this.animation.cancel();
         }
 
-        this.attachEntity(await this.loadPrototype(options.prototypeRoot));
-        return animate(time => {
-            this.updateSystems(time);
+        await initializeAPI(options)
+        const state = { entities: [], components: [], systems: [] };
+        for (const plugin of this.plugins) await plugin(this, state, options);
+
+        this.animation = animate(time => {
+            for (const system of systems) system.update(time);
             return this.isConnected;
         });
     }
 }
+
+Object.assign(Engine, { Entity, Component, System });
 
 Engine.define('quantum-engine', html);

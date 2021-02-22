@@ -1,5 +1,8 @@
-export const enableTilePlugin = engine => {
-    engine.attachSystem({
+export const enableTilePlugin = (engine, state) => {
+    const { canvas } = engine;
+    const { systems } = state;
+
+    systems.push({
         validate: entity => 'tileset' in entity,
         add: entity => {
             const { tileset, divisor } = entity;
