@@ -1,44 +1,13 @@
+import { initializeECS } from '../architecture/ecs.js';
+
 export const architecturePlugin = engine => {
-    const entities = [];
-    const systems = [];
+    const { updates } = engine;
 
-    const attachEntity = entity => {
-        entity.systems = [];
-        for (const system of systems) {
-            if (system.validate(entity)) {
-                system.entities.push(entity);
-                entity.systems.push(system);
-            }
-        }
-    };
+    const { entities, systems, updateEntity } = initializeECS();
 
-    const detachEntity = entity => {
-        for (const system of entity.systems) {
-            system.entities.remove(entity);
-        }
-
-        delete entity.systems;
-    };
-
-    const updateEntity = entity => {
-        for (const system of systems) {
-            const valid = system.validate(entity);
-            const exists = system.entities.has(entity);
-            if (valid && !exists) {
-                system.entities.push(entity);
-                entity.systems.push(system);
-            } else if (!valid && exists) {
-                system.entities.remove(entity);
-                entity.systems.remove(system);
-            }
-        }
-    };
-
-    Object.assign(engine, { entities, systems, attachEntity, detachEntity, updateEntity });
-
-    const update = time => {
+    updates.push(time => {
         for (const system of systems) system.update(system.entities, time);
-    };
+    });
 
-    engine.updates.push(update);
+    Object.assign(engine, { entities, systems, updateEntity });
 };
