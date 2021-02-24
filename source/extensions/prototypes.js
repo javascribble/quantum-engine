@@ -17,8 +17,8 @@ Engine.prototype.loadPrototype = async function (index) {
     }
 
     return clone;
-}
+};
 
 Engine.prototype.loadPrototypes = function (indices) {
     return Promise.all(indices.map(this.loadPrototype.bind(this)));
-}
+};

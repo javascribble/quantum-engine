@@ -1,11 +1,10 @@
-import { initializeAnimation } from '../extensions/animation.js';
-import { initializePrototypes } from '../extensions/prototypes.js';
-
 import html from '../templates/engine.js';
 
-const { animate, loadJson } = quantum;
+const { loadJson } = quantum;
 
 export class Engine extends Quantum {
+    plugins = [];
+
     constructor() {
         super();
 
@@ -24,14 +23,9 @@ export class Engine extends Quantum {
     }
 
     async load(options) {
-        this.#animation?.cancel();
+        this.options = options;
 
         for (const plugin of this.plugins) await plugin(this);
-
-        this.#animation = animate(time => {
-
-            return this.isConnected;
-        });
     }
 }
 
