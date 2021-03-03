@@ -1,7 +1,4 @@
-import '/source/plugins/animation.js';
-import '/source/plugins/architecture.js';
-
-const gamePlugin = async engine => {
+document.querySelector('quantum-engine').plugins.push(async engine => {
     const { canvas, input, animation, entities, systems } = engine;
 
     canvas.setResolution();
@@ -78,7 +75,4 @@ const gamePlugin = async engine => {
     });
 
     animation.start();
-};
-
-const { plugins } = document.querySelector('quantum-engine');
-plugins.push(gamePlugin);
+});
