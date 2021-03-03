@@ -1,5 +1,5 @@
-import { animationPlugin } from '../source/plugins/animation.js';
-import { architecturePlugin } from '../source/plugins/architecture.js';
+import '/source/plugins/animation.js';
+import '/source/plugins/architecture.js';
 
 const gamePlugin = async engine => {
     const { canvas, input, animation, entities, systems } = engine;
@@ -81,6 +81,4 @@ const gamePlugin = async engine => {
 };
 
 const { plugins } = document.querySelector('quantum-engine');
-plugins.push(animationPlugin);
-plugins.push(architecturePlugin);
 plugins.push(gamePlugin);

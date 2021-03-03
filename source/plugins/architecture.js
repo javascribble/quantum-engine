@@ -1,13 +1,14 @@
 import { initializeECS } from '../architecture/ecs.js';
+import { Engine } from '../elements/engine.js';
 
-export const architecturePlugin = engine => {
+Engine.plugins.add(engine => {
     const { updates } = engine;
 
-    const { entities, systems, updateEntity } = initializeECS();
+    const { entities, systems } = initializeECS();
 
     updates.push(time => {
         for (const system of systems) system.update(system.entities, time);
     });
 
-    Object.assign(engine, { entities, systems, updateEntity });
-};
+    Object.assign(engine, { entities, systems });
+});

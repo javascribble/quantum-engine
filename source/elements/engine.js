@@ -11,6 +11,8 @@ export class Engine extends Quantum {
         this.setAttribute('tabindex', 0);
     }
 
+    static plugins = new Set();
+
     static get observedAttributes() { return ['src']; }
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
@@ -25,6 +27,7 @@ export class Engine extends Quantum {
     async load(options) {
         this.options = options;
 
+        for (const plugin of Engine.plugins) await plugin(this);
         for (const plugin of this.plugins) await plugin(this);
     }
 }
