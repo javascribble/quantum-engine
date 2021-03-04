@@ -1,5 +1,3 @@
-import html from '../templates/engine.js';
-
 const { loadJson } = quantum;
 
 export class Engine extends Quantum {
@@ -11,12 +9,12 @@ export class Engine extends Quantum {
         this.setAttribute('tabindex', 0);
     }
 
-    static plugins = new Set();
-
     static get observedAttributes() { return ['src']; }
 
+    static plugins = new Set();
+
     attributeChangedCallback(attribute, previousValue, currentValue) {
-        loadJson(currentValue).then(this.load.bind(this));
+        loadJson(currentValue).then(this.run.bind(this));
     }
 
     slotChangedCallback(slot, addedElements, deletedElements, currentElements) {
@@ -24,12 +22,19 @@ export class Engine extends Quantum {
         for (const deletedElement of deletedElements) delete this[deletedElement.id];
     }
 
-    async load(options) {
-        this.options = options;
+    connectedCallback() {
+        for (const plugin of Engine.plugins) plugin.connect?.(this);
+        for (const plugin of this.plugins) plugin.connect?.(this);
+    }
 
-        for (const plugin of Engine.plugins) await plugin(this);
-        for (const plugin of this.plugins) await plugin(this);
+    disconnectedCallback() {
+        for (const plugin of Engine.plugins) plugin.disconnect?.(this);
+        for (const plugin of this.plugins) plugin.disconnect?.(this);
+    }
+
+    async run(options) {
+        this.options = options;
+        for (const plugin of Engine.plugins) await plugin.run?.(this);
+        for (const plugin of this.plugins) await plugin.run?.(this);
     }
 }
-
-Engine.define('quantum-engine', html);
