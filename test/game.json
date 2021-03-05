@@ -8,48 +8,44 @@
     "prototypes": [
         [
             {
-                "scene": 0,
+                "scene": 0
+            },
+            {},
+            {
                 "scenes": [
                     5
                 ]
-            },
-            [],
-            [
-                "scenes"
-            ]
+            }
         ],
         [
             {
-                "source": 0,
                 "sx": 0,
                 "sy": 0,
                 "sw": 64,
                 "sh": 64
             },
-            [
-                "source"
-            ],
-            []
+            {
+                "source": 0
+            },
+            {}
         ],
         [
             {
-                "sheet": 1,
                 "size": 64
             },
-            [
-                "sheet"
-            ],
-            []
+            {
+                "sheet": 1
+            },
+            {}
         ],
         [
             {
-                "tileset": 2,
                 "divisor": 10
             },
-            [],
-            [
-                "tileset"
-            ]
+            {},
+            {
+                "tileset": 2
+            }
         ],
         [
             {
@@ -58,24 +54,20 @@
                     "dy": 100,
                     "dw": 64,
                     "dh": 64
-                },
-                "sprite": 1
+                }
             },
-            [],
-            [
-                "sprite"
-            ]
+            {},
+            {
+                "sprite": 1
+            }
         ],
         [
+            {},
+            {},
             {
                 "world": 3,
                 "player": 4
-            },
-            [],
-            [
-                "world",
-                "player"
-            ]
+            }
         ]
     ]
 }

@@ -11,10 +11,15 @@ Engine.plugins.add({
             for (const system of systems) system.update(system.entities, time);
         });
 
-        Object.assign(engine, { entities, systems });
+        engine.entities = entities;
+        engine.systems = systems;
     },
     disconnect: engine => {
         delete engine.entities;
         delete engine.systems;
+    },
+    run: engine => {
+        engine.entities.clear();
+        engine.systems.clear();
     }
 });

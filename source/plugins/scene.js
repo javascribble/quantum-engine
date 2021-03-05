@@ -1,14 +1,13 @@
 import { Engine } from '../elements/engine.js';
 
 Engine.plugins.add({
-    connect: engine => {
-        const { systems } = engine;
+    run: async engine => {
+        const { entities, systems } = engine;
 
-        systems.push(time => {
-            for (const system of systems) system.update(system.entities, time);
-        });
+        const root = await engine.loadPrototype();
+        entities.add(root);
 
-        Object.assign(engine, { entities, systems });
-    },
-    disconnect: engine => { }
+        const scene = await engine.loadPrototype(root.scenes[root.scene]);
+        entities.add(scene);
+    }
 });

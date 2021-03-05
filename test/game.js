@@ -1,6 +1,15 @@
 document.querySelector('quantum-engine').plugins.push({
     run: async engine => {
-        const { canvas, input, animation, entities, systems } = engine;
+        const { canvas, input, systems } = engine;
+
+        systems.add({
+            validate: entity => 'scene' in entity,
+            update: (entities, time) => {
+                for (const { scene, scenes } of entities) {
+                    canvas.drawImageTree(scenes[scene], 'children');
+                }
+            }
+        });
 
         systems.add({
             validate: entity => 'player' in entity,
@@ -19,21 +28,6 @@ document.querySelector('quantum-engine').plugins.push({
                 }
             }
         });
-
-        systems.add({
-            validate: entity => 'scene' in entity,
-            update: (entities, time) => {
-                for (const { scene, scenes } of entities) {
-                    canvas.drawImageTree(scenes[scene], 'children');
-                }
-            }
-        });
-
-        const root = await engine.loadPrototype();
-        entities.add(root);
-
-        const scene = root.scenes[0];
-        entities.add(scene);
 
         const { tileset, divisor } = scene.world;
         const { sheet, size } = tileset;

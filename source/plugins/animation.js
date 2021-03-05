@@ -9,12 +9,16 @@ Engine.plugins.add({
             for (const update of updates) update(time);
         };
 
-        Object.assign(engine, { updates, animation: animate(update) });
+        engine.updates = updates;
+        engine.animation = animate(update);
     },
     disconnect: engine => {
-        engine.animation?.stop()
+        engine.animation.stop();
+
+        delete engine.updates;
+        delete engine.animation;
     },
     run: engine => {
-        engine.animation.start()
+        engine.animation.start();
     }
 });

@@ -3,20 +3,22 @@ import { Engine } from '../elements/engine.js';
 Engine.prototype.loadPrototype = async function (index) {
     const { prototypes, prototypeRoot } = this.options;
 
-    const [prototype, resourceProperties, prototypeProperties] = prototypes[index || prototypeRoot];
-    const clone = { ...prototype };
+    const data = prototypes[index || prototypeRoot];
+    const prototype = { ...data[0] };
+    const resources = { ...data[1] };
+    const references = { ...data[2] };
 
-    for (const resourceProperty of resourceProperties) {
-        const property = clone[resourceProperty];
-        clone[resourceProperty] = Array.isArray(property) ? await this.loadResources(property) : await this.loadResource(property);
+    for (const resource of resources) {
+        const property = resources[resource];
+        resources[resource] = Array.isArray(property) ? await this.loadResources(property) : await this.loadResource(property);
     }
 
-    for (const prototypeProperty of prototypeProperties) {
-        const property = clone[prototypeProperty];
-        clone[prototypeProperty] = Array.isArray(property) ? await this.loadPrototypes(property) : await this.loadPrototype(property);
+    for (const reference of references) {
+        const property = references[reference];
+        references[reference] = Array.isArray(property) ? await this.loadPrototypes(property) : await this.loadPrototype(property);
     }
 
-    return clone;
+    return [prototype, resources, references];
 };
 
 Engine.prototype.loadPrototypes = function (indices) {
