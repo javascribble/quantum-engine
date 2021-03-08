@@ -3,22 +3,21 @@ import { Engine } from '../elements/engine.js';
 const { animate } = quantum;
 
 Engine.plugins.add({
-    connect: engine => {
+    load: engine => {
         const updates = [];
-        const update = time => {
+        const animation = animate(time => {
             for (const update of updates) update(time);
-        };
+        });
+
+        animation.start();
 
         engine.updates = updates;
-        engine.animation = animate(update);
+        engine.animation = animation;
     },
-    disconnect: engine => {
-        engine.animation.stop();
+    unload: engine => {
+        engine.animation?.stop();
 
         delete engine.updates;
         delete engine.animation;
-    },
-    run: engine => {
-        engine.animation.start();
     }
 });

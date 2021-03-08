@@ -5,7 +5,7 @@ import { Engine } from '../elements/engine.js';
 const { ObservableSet } = quantum;
 
 Engine.plugins.add({
-    connect: engine => {
+    load: engine => {
         const { updates } = engine;
 
         const systems = new ObservableSet();
@@ -14,18 +14,14 @@ Engine.plugins.add({
         initializeSystems(systems, entities);
 
         updates.push(time => {
-            for (const system of systems) system.update(system.entities, time);
+            for (const system of systems) system.update?.(system.entities, time);
         });
 
         engine.entities = entities;
         engine.systems = systems;
     },
-    disconnect: engine => {
+    unload: engine => {
         delete engine.entities;
         delete engine.systems;
-    },
-    run: engine => {
-        engine.entities.clear();
-        engine.systems.clear();
     }
 });

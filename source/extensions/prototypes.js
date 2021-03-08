@@ -7,6 +7,7 @@ Engine.prototype.loadPrototype = async function (index) {
     const prototype = data[0];
     const resources = data[1];
     const references = data[2];
+
     const clone = { ...prototype };
 
     for (const resource in resources) {
