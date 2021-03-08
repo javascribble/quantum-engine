@@ -8,5 +8,5 @@ Engine.prototype.loadResource = function (index) {
 };
 
 Engine.prototype.loadResources = function (indices) {
-    return Promise.all(indices.map(this.loadResource.bind(this)));
+    return Promise.all(indices.map(index => this.loadResource(index)));
 };

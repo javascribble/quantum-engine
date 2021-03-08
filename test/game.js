@@ -29,6 +29,7 @@ document.querySelector('quantum-engine').plugins.push({
             }
         });
 
+        const scene = engine.root.scenes[engine.root.scene];
         const { tileset, divisor } = scene.world;
         const { sheet, size } = tileset;
 

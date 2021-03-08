@@ -1,17 +1,11 @@
-const { ObservableSet } = quantum;
+import { bindComponents, unbindComponents } from './component.js';
 
-export const initializeECS = () => {
-    const systems = new ObservableSet();
-    systems.onAdd = system => system.entities = [];
-    systems.onDelete = system => delete system.entities;
-
-    const entities = new ObservableSet();
+export const initializeEntities = (entities, systems) => {
     entities.onAdd = entity => {
         entity.systems = [];
         for (const system of systems) {
             if (system.validate(entity)) {
-                system.entities.push(entity);
-                entity.systems.push(system);
+                bindComponents(entity, system);
             }
         }
 
@@ -20,11 +14,9 @@ export const initializeECS = () => {
                 const valid = system.validate(entity);
                 const exists = system.entities.has(entity);
                 if (valid && !exists) {
-                    system.entities.push(entity);
-                    entity.systems.push(system);
+                    bindComponents(entity, system);
                 } else if (!valid && exists) {
-                    system.entities.remove(entity);
-                    entity.systems.remove(system);
+                    unbindComponents(entity, system);
                 }
             }
         };
@@ -32,12 +24,10 @@ export const initializeECS = () => {
 
     entities.onDelete = entity => {
         for (const system of entity.systems) {
-            system.entities.remove(entity);
+            unbindComponents(entity, system);
         }
 
         delete entity.systems;
         delete entity.update;
     };
-
-    return { entities, systems };
 };

@@ -1,11 +1,17 @@
-import { initializeECS } from '../architecture/ecs.js';
+import { initializeEntities } from '../architecture/entity.js';
+import { initializeSystems } from '../architecture/system.js';
 import { Engine } from '../elements/engine.js';
+
+const { ObservableSet } = quantum;
 
 Engine.plugins.add({
     connect: engine => {
         const { updates } = engine;
 
-        const { entities, systems } = initializeECS();
+        const systems = new ObservableSet();
+        const entities = new ObservableSet();
+        initializeEntities(entities, systems);
+        initializeSystems(systems, entities);
 
         updates.push(time => {
             for (const system of systems) system.update(system.entities, time);

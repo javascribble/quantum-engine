@@ -6,6 +6,7 @@ import '/source/extensions/prototypes.js';
 import '/source/extensions/resources.js';
 import '/source/plugins/animation.js';
 import '/source/plugins/architecture.js';
+import '/source/plugins/scene.js';
 import '/source/utilities/loaders.js';
 import '/source/main.js';
 import '/test/game.js';

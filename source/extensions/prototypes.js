@@ -4,23 +4,24 @@ Engine.prototype.loadPrototype = async function (index) {
     const { prototypes, prototypeRoot } = this.options;
 
     const data = prototypes[index || prototypeRoot];
-    const prototype = { ...data[0] };
-    const resources = { ...data[1] };
-    const references = { ...data[2] };
+    const prototype = data[0];
+    const resources = data[1];
+    const references = data[2];
+    const clone = { ...prototype };
 
-    for (const resource of resources) {
+    for (const resource in resources) {
         const property = resources[resource];
-        resources[resource] = Array.isArray(property) ? await this.loadResources(property) : await this.loadResource(property);
+        clone[resource] = await (Array.isArray(property) ? this.loadResources(property) : this.loadResource(property));
     }
 
-    for (const reference of references) {
+    for (const reference in references) {
         const property = references[reference];
-        references[reference] = Array.isArray(property) ? await this.loadPrototypes(property) : await this.loadPrototype(property);
+        clone[reference] = await (Array.isArray(property) ? this.loadPrototypes(property) : this.loadPrototype(property));
     }
 
-    return [prototype, resources, references];
+    return clone;
 };
 
 Engine.prototype.loadPrototypes = function (indices) {
-    return Promise.all(indices.map(this.loadPrototype.bind(this)));
+    return Promise.all(indices.map(index => this.loadPrototype(index)));
 };
