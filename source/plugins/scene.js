@@ -6,13 +6,16 @@ Engine.plugins.add({
 
         const root = await engine.loadPrototype();
 
-        const scene = await engine.loadPrototype(root.scenes[root.scene]);
-        entities.add(scene);
+        let current = await engine.loadPrototype(root.scenes[root.scene]);
+        entities.add(current);
 
-        // engine.loadScene = async index => {
-        //     root.loading = true;
-        //     root.progress = 0;
-        // };
+        engine.loadScene = async index => {
+            let scene = await engine.loadPrototype(root.scenes[index]);
+            entities.delete(current);
+            entities.add(scene);
+            current = scene;
+
+        };
     },
     unload: engine => {
         delete engine.loadScene;

@@ -5,7 +5,7 @@ document.querySelector('quantum-engine').plugins.push({
         systems.add({
             validate: entity => 'player' in entity && 'world' in entity,
             construct: entity => {
-                const { world, player, children } = entity;
+                const { world, player } = entity;
                 const { tileset, divisor } = world;
                 const { sprite, spawn } = player;
                 const { sheet, size } = tileset;
@@ -24,6 +24,7 @@ document.querySelector('quantum-engine').plugins.push({
                     }
                 }
 
+                const children = [];
                 for (let index = 0; index < indices.length; index++) {
                     const tile = { ...sprites[indices[index]] };
                     tile.dx = tile.sw * (index % divisor);
@@ -39,12 +40,9 @@ document.querySelector('quantum-engine').plugins.push({
                 });
 
                 children.push(sprite);
+                entity.children = children;
             },
             update: (entities, time) => {
-                // if (engine.loading) {
-                //     console.log(engine.loading);
-                // }
-
                 for (const entity of entities) {
                     const { player } = entity;
                     const { sprite } = player;
