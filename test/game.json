@@ -7,14 +7,12 @@
     "prototypeRoot": 0,
     "prototypes": [
         [
-            {
-                "scene": 0,
-                "scenes": [
-                    5
-                ]
-            },
             {},
-            {}
+            {},
+            {
+                "world": 3,
+                "player": 4
+            }
         ],
         [
             {
@@ -58,14 +56,6 @@
             {},
             {
                 "sprite": 1
-            }
-        ],
-        [
-            {},
-            {},
-            {
-                "world": 3,
-                "player": 4
             }
         ]
     ]

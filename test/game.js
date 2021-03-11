@@ -1,6 +1,6 @@
 document.querySelector('quantum-engine').plugins.push({
     load: async engine => {
-        const { canvas, input, systems } = engine;
+        const { canvas, input, entities, systems } = engine;
 
         systems.add({
             validate: entity => 'player' in entity && 'world' in entity,
@@ -61,6 +61,8 @@ document.querySelector('quantum-engine').plugins.push({
                 }
             }
         });
+
+        entities.add(await engine.loadPrototype());
     },
     unload: engine => { }
 });
