@@ -1,14 +1,14 @@
 {
     "name": "@javascribble/quantum-engine",
     "description": "a web first game engine",
-    "version": "1.2.19",
+    "version": "1.2.20",
     "license": "MIT",
     "dependencies": {
         "@javascribble/quantum": "^1.2.13"
     },
     "devDependencies": {
         "@javascribble/quantum-canvas": "^1.2.15",
-        "@javascribble/quantum-input": "^1.2.3",	
+        "@javascribble/quantum-input": "^1.2.3",
         "@javascribble/rollup-quantum-build": "^1.1.1",
         "live-server": "*"
     },
