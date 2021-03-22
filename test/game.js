@@ -1,14 +1,17 @@
 document.querySelector('quantum-engine').plugins.push({
     load: async engine => {
-        const { canvas, input, entities, systems } = engine;
+        const { input, entities, systems } = engine;
 
         systems.add({
-            validate: entity => 'player' in entity && 'world' in entity,
+            validate: entity => entity.player && entity.world,
             construct: entity => {
                 const { world, player } = entity;
                 const { tileset, divisor } = world;
                 const { sprite, spawn } = player;
                 const { sheet, size } = tileset;
+
+                entity.camera = { x: 0, y: 0, size: 10 };
+                entity.update();
 
                 const sprites = [];
                 for (let row = 0; row < sheet.height / size; row++) {
@@ -56,8 +59,6 @@ document.querySelector('quantum-engine').plugins.push({
                     } else if (input.getButton('ArrowRight')) {
                         sprite.dx += 5;
                     }
-
-                    canvas.drawImageTree(entity, 'children');
                 }
             }
         });

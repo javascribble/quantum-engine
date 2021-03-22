@@ -1,0 +1,1 @@
+import '../plugins/camera2d.js';

@@ -1,0 +1,9 @@
+import '../extensions/math.js';
+import '../math/angle.js';
+import '../math/curve.js';
+import '../math/matrix3.js';
+import '../math/matrix4.js';
+import '../math/shape.js';
+import '../math/vector2.js';
+import '../math/vector3.js';
+import '../math/vector4.js';

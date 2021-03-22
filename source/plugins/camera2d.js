@@ -2,16 +2,20 @@ import { Engine } from '../elements/engine.js';
 
 Engine.plugins.add({
     load: engine => {
-        const { } = engine;
+        const { video, systems } = engine;
 
-        // sx: 0,
-        // sy: 0,
-        // sw: source.width,
-        // sh: source.height,
-        // dx: 100,
-        // dy: 100,
-        // dw: source.width,
-        // dh: source.height
+        systems.add({
+            validate: entity => entity.camera,
+            construct: entity => {
+                const camera = entity;
+                console.log(camera)
+            },
+            update: (entities, time) => {
+                for (const entity of entities) {
+                    video.drawImageTree(entity, 'children');
+                }
+            }
+        });
     },
     unload: engine => {
     }
