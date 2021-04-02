@@ -1,50 +1,9 @@
 document.querySelector('quantum-engine').plugins.push({
     load: async engine => {
-        const { input, entities, systems } = engine;
+        const { audio, video, input, entities, systems } = engine;
 
         systems.add({
-            validate: entity => entity.player && entity.world,
-            construct: entity => {
-                const { world, player } = entity;
-                const { tileset, divisor } = world;
-                const { sprite, spawn } = player;
-                const { sheet, size } = tileset;
-
-                entity.camera = { x: 0, y: 0, size: 10 };
-                entity.update();
-
-                const sprites = [];
-                for (let row = 0; row < sheet.height / size; row++) {
-                    for (let column = 0; column < sheet.width / size; column++) {
-                        sprites.push({ source: sheet, sx: column * size, sy: row * size, sw: size, sh: size });
-                    }
-                }
-
-                const indices = [];
-                for (let i = 0; i < divisor; i++) {
-                    for (let ii = 0; ii < divisor; ii++) {
-                        indices.push(Math.round(Math.random()));
-                    }
-                }
-
-                const children = [];
-                for (let index = 0; index < indices.length; index++) {
-                    const tile = { ...sprites[indices[index]] };
-                    tile.dx = tile.sw * (index % divisor);
-                    tile.dy = tile.sh * Math.floor(index / divisor);
-                    tile.dw = tile.sw;
-                    tile.dh = tile.sh;
-                    children.push(tile);
-                }
-
-                Object.assign(sprite, spawn);
-                engine.querySelector('button').addEventListener('click', event => {
-                    Object.assign(sprite, spawn);
-                });
-
-                children.push(sprite);
-                entity.children = children;
-            },
+            validate: entity => entity.player && entity.children,
             update: (entities, time) => {
                 for (const entity of entities) {
                     const { player } = entity;
@@ -59,11 +18,40 @@ document.querySelector('quantum-engine').plugins.push({
                     } else if (input.getButton('ArrowRight')) {
                         sprite.dx += 5;
                     }
+
+                    video.drawImageTree(entity, 'children');
                 }
             }
         });
 
-        entities.add(await engine.loadPrototype());
+        const root = await engine.loadPrototype();
+
+        const { world, player, camera } = root;
+        const { tileset, divisor } = world;
+        const { sprite, spawn } = player;
+        const { sheet, size } = tileset;
+
+        const sprites = engine.importUniformSheet(sheet, size);
+
+        root.children = [];
+        for (let i = 0; i < divisor; i++) {
+            for (let ii = 0; ii < divisor; ii++) {
+                const index = i * divisor + ii;
+                const tile = { ...sprites[Math.round(Math.random())] };
+                tile.dx = tile.sw * (index % divisor);
+                tile.dy = tile.sh * Math.floor(index / divisor);
+                tile.dw = tile.sw;
+                tile.dh = tile.sh;
+                root.children.push(tile);
+            }
+        }
+
+        root.children.push(sprite);
+
+        Object.assign(sprite, spawn);
+        engine.querySelector('button').addEventListener('click', event => Object.assign(sprite, spawn));
+
+        entities.add(root);
     },
     unload: engine => { }
 });
