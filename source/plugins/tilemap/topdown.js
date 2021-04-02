@@ -1,10 +1,10 @@
 import { Engine } from '../../elements/engine.js';
 
-const importUniformSheet = (image, width, height = width) => {
+const importUniformTiles = (image, width, height = width) => {
     const sprites = [];
     for (let row = 0; row < image.height / height; row++) {
         for (let column = 0; column < image.width / width; column++) {
-            sprites.push({ source: image, sx: column * width, sy: row * height, sw: width, sh: height });
+            sprites.push({ image, sx: column * width, sy: row * height, sw: width, sh: height });
         }
     }
 
@@ -13,9 +13,9 @@ const importUniformSheet = (image, width, height = width) => {
 
 Engine.plugins.add({
     load: engine => {
-        engine.importUniformSheet = importUniformSheet;
+        engine.importUniformTiles = importUniformTiles;
     },
     unload: engine => {
-        delete engine.importUniformSheet;
+        delete engine.importUniformTiles;
     }
 });

@@ -23,7 +23,7 @@
                 "sh": 64
             },
             {
-                "source": 0
+                "image": 0
             },
             {}
         ],
@@ -32,17 +32,17 @@
                 "size": 64
             },
             {
-                "sheet": 1
+                "image": 1
             },
             {}
         ],
         [
             {
-                "divisor": 10
+                "divisor": 20
             },
             {},
             {
-                "tileset": 2
+                "tilemap": 2
             }
         ],
         [
@@ -63,7 +63,8 @@
             {
                 "x": 0,
                 "y": 0,
-                "size": 10
+                "width": 10,
+                "height": 10
             }
         ]
     ]

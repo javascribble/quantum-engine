@@ -1,12 +1,12 @@
 document.querySelector('quantum-engine').plugins.push({
     load: async engine => {
-        const { audio, video, input, entities, systems } = engine;
+        const { input, entities, systems } = engine;
 
         systems.add({
-            validate: entity => entity.player && entity.children,
+            validate: entity => entity.player && entity.world && entity.camera,
             update: (entities, time) => {
                 for (const entity of entities) {
-                    const { player } = entity;
+                    const { player, world, camera } = entity;
                     const { sprite } = player;
 
                     if (input.getButton('ArrowUp')) {
@@ -19,21 +19,20 @@ document.querySelector('quantum-engine').plugins.push({
                         sprite.dx += 5;
                     }
 
-                    video.drawImageTree(entity, 'children');
+                    engine.renderWorld(world, camera);
                 }
             }
         });
 
         const root = await engine.loadPrototype();
 
-        const { world, player, camera } = root;
-        const { tileset, divisor } = world;
+        const { world, player } = root;
+        const { tilemap, divisor } = world;
         const { sprite, spawn } = player;
-        const { sheet, size } = tileset;
 
-        const sprites = engine.importUniformSheet(sheet, size);
+        const sprites = engine.importUniformTiles(tilemap.image, tilemap.size);
 
-        root.children = [];
+        world.children = [];
         for (let i = 0; i < divisor; i++) {
             for (let ii = 0; ii < divisor; ii++) {
                 const index = i * divisor + ii;
@@ -42,11 +41,11 @@ document.querySelector('quantum-engine').plugins.push({
                 tile.dy = tile.sh * Math.floor(index / divisor);
                 tile.dw = tile.sw;
                 tile.dh = tile.sh;
-                root.children.push(tile);
+                world.children.push(tile);
             }
         }
 
-        root.children.push(sprite);
+        world.children.push(sprite);
 
         Object.assign(sprite, spawn);
         engine.querySelector('button').addEventListener('click', event => Object.assign(sprite, spawn));
