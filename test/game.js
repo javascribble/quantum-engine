@@ -1,25 +1,26 @@
 document.querySelector('quantum-engine').plugins.push({
     load: async engine => {
-        const { input, entities, systems } = engine;
+        const { audio, video, input, entities, systems } = engine;
 
         systems.add({
             validate: entity => entity.player && entity.world && entity.camera,
             update: (entities, time) => {
                 for (const entity of entities) {
                     const { player, world, camera } = entity;
-                    const { sprite } = player;
+                    const { character } = player;
+                    const { position } = character;
 
                     if (input.getButton('ArrowUp')) {
-                        sprite.dy -= 5;
+                        position.y -= 5;
                     } else if (input.getButton('ArrowDown')) {
-                        sprite.dy += 5;
+                        position.y += 5;
                     } else if (input.getButton('ArrowLeft')) {
-                        sprite.dx -= 5;
+                        position.x -= 5;
                     } else if (input.getButton('ArrowRight')) {
-                        sprite.dx += 5;
+                        position.x += 5;
                     }
 
-                    engine.renderWorld(world, camera);
+                    video.drawImageTree(world);
                 }
             }
         });
@@ -28,27 +29,27 @@ document.querySelector('quantum-engine').plugins.push({
 
         const { world, player } = root;
         const { tilemap, divisor } = world;
-        const { sprite, spawn } = player;
+        const { character, spawn } = player;
 
-        const sprites = engine.importUniformTiles(tilemap.image, tilemap.size);
+        const sprites = engine.importUniformSprites(tilemap.image, tilemap.size);
 
         world.children = [];
         for (let i = 0; i < divisor; i++) {
             for (let ii = 0; ii < divisor; ii++) {
                 const index = i * divisor + ii;
-                const tile = { ...sprites[Math.round(Math.random())] };
-                tile.dx = tile.sw * (index % divisor);
-                tile.dy = tile.sh * Math.floor(index / divisor);
-                tile.dw = tile.sw;
-                tile.dh = tile.sh;
-                world.children.push(tile);
+                const sprite = sprites[Math.round(Math.random())];
+                world.children.push({
+                    ...sprite,
+                    position: {
+                        x: sprite.sw * (index % divisor),
+                        y: sprite.sh * Math.floor(index / divisor)
+                    }
+                });
             }
         }
 
-        world.children.push(sprite);
-
-        Object.assign(sprite, spawn);
-        engine.querySelector('button').addEventListener('click', event => Object.assign(sprite, spawn));
+        Object.assign(character, spawn);
+        world.children.push(character);
 
         entities.add(root);
     },
