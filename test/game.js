@@ -3,10 +3,10 @@ document.querySelector('quantum-engine').plugins.push({
         const { audio, video, input, entities, systems } = engine;
 
         systems.add({
-            validate: entity => entity.player && entity.world && entity.camera,
+            validate: entity => entity.player && entity.world,
             update: (entities, time) => {
                 for (const entity of entities) {
-                    const { player, world, camera } = entity;
+                    const { player, world } = entity;
                     const { character } = player;
                     const { position } = character;
 
