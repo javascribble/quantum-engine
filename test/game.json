@@ -10,8 +10,8 @@
             {},
             {},
             {
-                "world": 3,
-                "player": 4
+                "player": 3,
+                "world": 2
             }
         ],
         [
@@ -41,30 +41,16 @@
         ],
         [
             {
-                "divisor": 10
-            },
-            {},
-            {
-                "tilemap": 2
-            }
-        ],
-        [
-            {
-                "spawn": {
-                    "position": {
+                "transform": {
+                    "translation": {
                         "x": 100,
                         "y": 100
-                    },
-                    "rotation": 0,
-                    "scale": {
-                        "x": 1,
-                        "y": 1
                     }
                 }
             },
             {},
             {
-                "character": 1
+                "sprite": 1
             }
         ]
     ]

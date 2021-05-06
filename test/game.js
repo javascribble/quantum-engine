@@ -6,51 +6,61 @@ document.querySelector('quantum-engine').plugins.push({
             validate: entity => entity.player && entity.world,
             update: (entities, time) => {
                 for (const entity of entities) {
-                    const { player, world } = entity;
-                    const { character } = player;
-                    const { position } = character;
-
+                    const { translation } = entity.player.transform;
                     if (input.getButton('ArrowUp')) {
-                        position.y -= 5;
+                        translation.y -= 5;
                     } else if (input.getButton('ArrowDown')) {
-                        position.y += 5;
+                        translation.y += 5;
                     } else if (input.getButton('ArrowLeft')) {
-                        position.x -= 5;
+                        translation.x -= 5;
                     } else if (input.getButton('ArrowRight')) {
-                        position.x += 5;
+                        translation.x += 5;
                     }
 
-                    video.drawImageTree(world);
+                    video.draw(entity);
                 }
             }
         });
 
+        //(new URL(document.location)).searchParams.get('scene')
         const root = await engine.loadPrototype();
+        const { player, world } = root;
+        const { image, size } = world;
 
-        const { world, player } = root;
-        const { tilemap, divisor } = world;
-        const { character, spawn } = player;
+        const tiles = [];
+        for (let row = 0; row < image.height / size; row++) {
+            for (let column = 0; column < image.width / size; column++) {
+                tiles.push({
+                    image,
+                    sx: column * size,
+                    sy: row * size,
+                    sw: size,
+                    sh: size,
+                    dx: 0,
+                    dy: 0,
+                    dw: size,
+                    dh: size
+                });
+            }
+        }
 
-        const sprites = engine.importUniformSprites(tilemap.image, tilemap.size);
-
+        const divisor = 15;
         world.children = [];
         for (let i = 0; i < divisor; i++) {
             for (let ii = 0; ii < divisor; ii++) {
                 const index = i * divisor + ii;
-                const sprite = sprites[Math.round(Math.random())];
+                const sprite = tiles[Math.round(Math.random())];
                 world.children.push({
-                    ...sprite,
-                    position: {
-                        x: sprite.sw * (index % divisor),
-                        y: sprite.sh * Math.floor(index / divisor)
+                    sprite: {
+                        ...sprite,
+                        dx: sprite.sw * (index % divisor),
+                        dy: sprite.sh * Math.floor(index / divisor)
                     }
                 });
             }
         }
 
-        Object.assign(character, spawn);
-        world.children.push(character);
-
+        root.children = [world, player];
         entities.add(root);
     },
     unload: engine => { }

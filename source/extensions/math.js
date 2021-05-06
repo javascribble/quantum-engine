@@ -1,1 +1,0 @@
-Math.sqr = value => Math.pow(value, 2);

@@ -12,12 +12,12 @@ Engine.prototype.loadPrototype = async function (index) {
 
     for (const resource in resources) {
         const property = resources[resource];
-        clone[resource] = await (Array.isArray(property) ? this.loadResources(property) : this.loadResource(property));
+        clone[resource] = Object.assign(await (Array.isArray(property) ? this.loadResources(property) : this.loadResource(property)), clone[resource]);
     }
 
     for (const reference in references) {
         const property = references[reference];
-        clone[reference] = await (Array.isArray(property) ? this.loadPrototypes(property) : this.loadPrototype(property));
+        clone[reference] = Object.assign(await (Array.isArray(property) ? this.loadPrototypes(property) : this.loadPrototype(property)), clone[reference]);
     }
 
     return clone;
