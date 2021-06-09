@@ -2,18 +2,31 @@ document.querySelector('quantum-engine').plugins.push({
     load: async engine => {
         const { audio, video, input, entities, systems } = engine;
 
+        const controls = {
+            UP: 'UP',
+            DOWN: 'DOWN',
+            LEFT: 'LEFT',
+            RIGHT: 'RIGHT'
+        };
+
+        const { UP, DOWN, LEFT, RIGHT } = input.devices.keyboard;
+        input.controls[UP] = controls.UP;
+        input.controls[DOWN] = controls.DOWN;
+        input.controls[LEFT] = controls.LEFT;
+        input.controls[RIGHT] = controls.RIGHT;
+
         systems.add({
             validate: entity => entity.player && entity.world,
             update: (entities, time) => {
                 for (const entity of entities) {
                     const { translation } = entity.player.transform;
-                    if (input.getButton('ArrowUp')) {
+                    if (input[controls.UP]) {
                         translation.y -= 5;
-                    } else if (input.getButton('ArrowDown')) {
+                    } else if (input[controls.DOWN]) {
                         translation.y += 5;
-                    } else if (input.getButton('ArrowLeft')) {
+                    } else if (input[controls.LEFT]) {
                         translation.x -= 5;
-                    } else if (input.getButton('ArrowRight')) {
+                    } else if (input[controls.RIGHT]) {
                         translation.x += 5;
                     }
 

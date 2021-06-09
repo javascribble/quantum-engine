@@ -8,8 +8,8 @@
     },
     "devDependencies": {
         "@javascribble/quantum-canvas": "^1.2.15",
-        "@javascribble/quantum-input": "^1.2.3",
-        "@javascribble/rollup-quantum-build": "^1.1.1",
+        "@javascribble/quantum-input": "^1.2.7",
+        "@javascribble/rollup-quantum-build": "^1.1.0",
         "live-server": "*"
     },
     "scripts": {
