@@ -1,19 +1,18 @@
 {
     "name": "@javascribble/quantum-engine",
     "description": "a web first game engine",
-    "version": "1.2.23",
+    "version": "1.4.0",
     "license": "MIT",
     "dependencies": {
-        "@javascribble/quantum": "^1.2.13"
+        "@javascribble/quantum": "^1.5.0"
     },
     "devDependencies": {
-        "@javascribble/quantum-canvas": "^1.2.15",
-        "@javascribble/quantum-input": "^1.2.7",
-        "@javascribble/rollup-quantum-build": "^1.1.0",
+        "@javascribble/quantum-canvas": "^1.5.0",
+        "@javascribble/quantum-input": "^1.5.0",
         "live-server": "*"
     },
     "scripts": {
-        "build": "node ./node_modules/@javascribble/rollup-quantum-build/source/main.js ./source/main.js ./build",
+        "build": "cd ../rollup-quantum-build && npm start ../quantum-engine/source/main.js ../quantum-engine/build",
         "start": "live-server --open=/test/debug.html",
         "postversion": "npm publish --access public"
     },
