@@ -12,7 +12,7 @@
         "live-server": "*"
     },
     "scripts": {
-        "build": "cd ../rollup-quantum-build && npm start ../quantum-engine/source/main.js ../quantum-engine/build",
+        "build": "cd ../rollup-quantum-build && npm start ../quantum-engine/source ../quantum-engine/build",
         "start": "live-server --open=/test/debug.html",
         "postversion": "npm publish --access public"
     },
