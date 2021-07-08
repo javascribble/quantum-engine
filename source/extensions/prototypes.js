@@ -1,4 +1,4 @@
-import { Engine } from '../elements/engine.js';
+const { Engine } = Quantum;
 
 Engine.prototype.loadPrototype = async function (index) {
     const { prototypes, prototypeRoot } = this.options;

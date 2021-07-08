@@ -1,5 +1,6 @@
 import { initializeECS } from '../architecture/ecs.js';
-import { Engine } from '../elements/engine.js';
+
+const { Engine } = Quantum;
 
 Engine.plugins.add({
     load: engine => {

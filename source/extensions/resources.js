@@ -1,5 +1,4 @@
-import { Engine } from '../elements/engine.js';
-
+const { Engine } = Quantum;
 const { load } = quantum;
 
 Engine.prototype.loadResource = function (index) {

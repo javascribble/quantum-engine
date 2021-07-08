@@ -1,5 +1,4 @@
-import { Engine } from '../elements/engine.js';
-
+const { Engine } = Quantum;
 const { animate } = quantum;
 
 Engine.plugins.add({
