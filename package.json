@@ -4,19 +4,19 @@
     "version": "1.5.2",
     "license": "MIT",
     "dependencies": {
-        "@javascribble/quantum": "^1.5.0"
+        "@javascribble/quantum": "^1.5.8"
     },
     "devDependencies": {
-        "@javascribble/quantum-canvas": "^1.5.0",
-        "@javascribble/quantum-input": "^1.5.0",
+        "@javascribble/quantum-canvas": "^1.5.10",
+        "@javascribble/quantum-input": "^1.5.2",
         "live-server": "*"
     },
     "scripts": {
-        "build": "cd ../rollup-quantum-build && npm start ../quantum-engine/source ../quantum-engine/build",
+        "build": "cd ../rollup-quantum-build && npm start ../quantum-engine",
         "start": "live-server --open=/test/debug.html",
-        "postversion": "npm publish --access public"
+        "postversion": "npm run build && npm publish --access public"
     },
-    "main": "./source/main.js",
+    "main": "./bundles/main.js",
     "homepage": "https://github.com/javascribble/quantum-engine#readme",
     "repository": {
         "type": "git",
@@ -34,6 +34,7 @@
     ],
     "files": [
         "build",
+		"bundles",
         "source"
     ]
 }
