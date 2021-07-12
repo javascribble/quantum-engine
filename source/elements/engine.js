@@ -1,3 +1,5 @@
+import engine from '../templates/engine.js';
+
 const { loadJson } = quantum;
 
 export class Engine extends Quantum {
@@ -38,3 +40,5 @@ export class Engine extends Quantum {
         for (const plugin of this.plugins) plugin.unload(this);
     }
 }
+
+Engine.define('quantum-engine', engine);
