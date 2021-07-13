@@ -1,2 +1,2 @@
 import '../source/extensions/prototypes.js';
-import '../source/extensions/resources';
+import '../source/extensions/resources.js';

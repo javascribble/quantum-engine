@@ -4,11 +4,11 @@
     "version": "1.5.3",
     "license": "MIT",
     "dependencies": {
-        "@javascribble/quantum": "^1.5.8"
+        "@javascribble/quantum": "^1.5.10"
     },
     "devDependencies": {
-        "@javascribble/quantum-canvas": "^1.5.10",
-        "@javascribble/quantum-input": "^1.5.2",
+        "@javascribble/quantum-canvas": "^1.5.11",
+        "@javascribble/quantum-input": "^1.5.3",
         "live-server": "*"
     },
     "scripts": {
