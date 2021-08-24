@@ -2,12 +2,7 @@ const { Engine } = Quantum;
 
 Engine.prototype.loadPrototype = async function (index) {
     const { prototypes, prototypeRoot } = this.options;
-
-    const data = prototypes[index || prototypeRoot];
-    const prototype = data[0];
-    const resources = data[1];
-    const references = data[2];
-
+    const [prototype, resources, references] = prototypes[index || prototypeRoot];
     const clone = { ...prototype };
 
     for (const resource in resources) {
