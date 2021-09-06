@@ -3,7 +3,6 @@ export default `
     :host {
         position: relative;
         display: block;
-        outline: none;
     }
 </style>
 <slot></slot>
