@@ -8,7 +8,7 @@
     },
     "devDependencies": {
         "@javascribble/quantum-canvas": "^1.5.11",
-        "@javascribble/quantum-input": "^1.5.3",
+        "@javascribble/quantum-input": "^1.5.7",
         "live-server": "*"
     },
     "scripts": {

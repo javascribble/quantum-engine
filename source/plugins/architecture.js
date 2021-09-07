@@ -1,8 +1,6 @@
 import { initializeECS } from '../architecture/ecs.js';
 
-const { Engine } = Quantum;
-
-Engine.plugins.add({
+export const architecture = {
     load: engine => {
         const { updates } = engine;
 
@@ -19,4 +17,4 @@ Engine.plugins.add({
         delete engine.entities;
         delete engine.systems;
     }
-});
+};

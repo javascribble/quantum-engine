@@ -4,7 +4,6 @@ import '/node_modules/@javascribble/quantum-canvas/bundles/main-extensions.js';
 import '/node_modules/@javascribble/quantum-input/bundles/main.js';
 import '/bundles/main.js';
 import '/bundles/main-extensions.js';
-import '/bundles/main-plugins.js';
 
 document.querySelector('quantum-engine').plugins.push({
     load: async engine => {

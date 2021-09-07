@@ -1,7 +1,6 @@
-const { Engine } = Quantum;
 const { animate } = quantum;
 
-Engine.plugins.add({
+export const animation = {
     load: engine => {
         const updates = [];
         const animation = animate(time => {
@@ -19,4 +18,4 @@ Engine.plugins.add({
         delete engine.updates;
         delete engine.animation;
     }
-});
+};

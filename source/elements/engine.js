@@ -1,3 +1,5 @@
+import { animation } from '../plugins/animation.js';
+import { architecture } from '../plugins/architecture.js';
 import engine from '../templates/engine.js';
 
 const { loadJson } = quantum;
@@ -5,15 +7,9 @@ const { loadJson } = quantum;
 export class Engine extends Quantum {
     plugins = [];
 
-    constructor() {
-        super();
-
-        this.setAttribute('tabindex', 0);
-    }
-
     static get observedAttributes() { return ['src']; }
 
-    static plugins = new Set();
+    static plugins = new Set([animation, architecture]);
 
     attributeChangedCallback(attribute, previousValue, currentValue) {
         loadJson(currentValue).then(this.load.bind(this));
