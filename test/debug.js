@@ -1,13 +1,12 @@
 import '/node_modules/@javascribble/quantum/bundles/main-window.js';
 import '/node_modules/@javascribble/quantum-canvas/bundles/main.js';
-import '/node_modules/@javascribble/quantum-canvas/bundles/main-extensions.js';
 import '/node_modules/@javascribble/quantum-input/bundles/main.js';
 import '/bundles/main.js';
-import '/bundles/main-extensions.js';
 
-document.querySelector('quantum-engine').plugins.push({
-    load: async engine => {
-        const { audio, video, input, entities, systems } = engine;
+document.querySelector('quantum-engine').plugins.game = {
+    load: async (adapters, state, data) => {
+        const { video, input } = adapters;
+        const { entities, systems } = state;
 
         const controls = {
             UP: 'UP',
@@ -37,7 +36,7 @@ document.querySelector('quantum-engine').plugins.push({
                         translation.x += 5;
                     }
 
-                    video.draw(entity);
+                    video.render(entity);
                 }
             }
         });
@@ -83,7 +82,7 @@ document.querySelector('quantum-engine').plugins.push({
         root.children = [world, player];
         entities.add(root);
     },
-    unload: engine => { }
-});
+    unload: (adapters, state) => { }
+};
 
 document.body.style.visibility = 'visible';

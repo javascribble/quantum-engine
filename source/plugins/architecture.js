@@ -1,20 +1,21 @@
 import { initializeECS } from '../architecture/ecs.js';
 
 export const architecture = {
-    load: engine => {
-        const { updates } = engine;
+    load: function (adapters, plugins, data) {
+        const { animation } = plugins;
+        const { updates } = animation;
 
         const { entities, systems } = initializeECS();
 
         updates.push(time => {
-            for (const system of systems) system.update?.(system.entities, time);
+            for (const system of systems) {
+                system.update?.(system.entities, time);
+            }
         });
 
-        engine.entities = entities;
-        engine.systems = systems;
+        this.entities = entities;
+        this.systems = systems;
     },
-    unload: engine => {
-        delete engine.entities;
-        delete engine.systems;
+    unload: function (adapters, plugins) {
     }
 };

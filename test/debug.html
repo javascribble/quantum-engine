@@ -6,10 +6,12 @@
     <body>
         <div id="container">
             <quantum-engine src="debug.json">
-                <quantum-canvas id="video"></quantum-canvas>
-                <quantum-input id="input"></quantum-input>
-                <button id="menuUI" class="ui">menu</button>
-                <button id="gameUI" class="ui">game</button>
+                <quantum-canvas adapter="video"></quantum-canvas>
+                <quantum-input adapter="input"></quantum-input>
+                <div adapter="html">
+                    <button id="menuUI" class="ui">menu</button>
+                    <button id="gameUI" class="ui">game</button>
+                </div>
             </quantum-engine>
         </div>
     </body>
