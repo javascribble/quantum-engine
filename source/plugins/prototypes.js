@@ -1,7 +1,7 @@
 export class PrototypePlugin {
     bridge = {};
 
-    load(bridge, data) {
+    async load(bridge, data) {
         const { resources } = bridge;
         const { loadResource, loadResources } = resources;
         const { prototypes, prototypeRoot } = data;
@@ -24,7 +24,7 @@ export class PrototypePlugin {
             return clone;
         };
 
-        Object.assign(this.bridge, { loadPrototypes, loadPrototype });
+        Object.assign(this.bridge, { root: await loadPrototype(), loadPrototypes, loadPrototype });
     }
 
     unload() {
