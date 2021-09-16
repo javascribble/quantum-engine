@@ -1,17 +1,23 @@
 const { animate } = quantum;
 
-export const animation = {
-    load: function (adapters, plugins, data) {
-        this.updates = [];
+export class AnimationPlugin {
+    bridge = {
+        updates: []
+    }
+
+    load(bridge, data) {
+        const { updates } = this.bridge;
+
         this.animation = animate(time => {
-            for (const update of this.updates) {
+            for (const update of updates) {
                 update(time);
             }
         });
 
         this.animation.start();
-    },
-    unload: function (adapters, plugins) {
+    }
+
+    unload() {
         this.animation.stop();
     }
-};
+}

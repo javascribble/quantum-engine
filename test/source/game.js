@@ -1,36 +1,22 @@
 const game = {
-    load: async (adapters, plugins, data) => {
-        const { html, input, video } = adapters;
-        const { animation, architecture, prototypes, resources } = plugins;
-        const { controls, devices, state } = input;
+    bridge: {},
+    load: async (bridge, data) => {
+        const { html, input, video, animation, architecture, prototypes, resources } = bridge;
         const { entities, systems } = architecture;
         const { loadPrototype } = prototypes;
-
-        const actions = {
-            UP: 'UP',
-            DOWN: 'DOWN',
-            LEFT: 'LEFT',
-            RIGHT: 'RIGHT'
-        };
-
-        const { UP, DOWN, LEFT, RIGHT } = devices.keyboard;
-        controls[UP] = actions.UP;
-        controls[DOWN] = actions.DOWN;
-        controls[LEFT] = actions.LEFT;
-        controls[RIGHT] = actions.RIGHT;
 
         systems.add({
             validate: entity => entity.player && entity.world,
             update: (entities, time) => {
                 for (const entity of entities) {
                     const { translation } = entity.player.transform;
-                    if (state[actions.UP]) {
+                    if (input.getState('UP')) {
                         translation.y -= 5;
-                    } else if (state[actions.DOWN]) {
+                    } else if (input.getState('DOWN')) {
                         translation.y += 5;
-                    } else if (state[actions.LEFT]) {
+                    } else if (input.getState('LEFT')) {
                         translation.x -= 5;
-                    } else if (state[actions.RIGHT]) {
+                    } else if (input.getState('RIGHT')) {
                         translation.x += 5;
                     }
 
@@ -80,7 +66,7 @@ const game = {
         root.children = [world, player];
         entities.add(root);
     },
-    unload: (adapters, plugins) => { }
+    unload: () => { }
 };
 
-document.querySelector('quantum-engine').plugins.game = game;
+document.querySelector('quantum-engine').plugins.set('game', game);

@@ -1,67 +1,81 @@
 {
     "adapters": {
         "input": {
-            "controls": {
-                "UP": "UP",
-                "DOWN": "DOWN",
-                "LEFT": "LEFT",
-                "RIGHT": "RIGHT"
+            "controls": [
+                "UP",
+                "DOWN",
+                "LEFT",
+                "RIGHT"
+            ],
+            "devices": {
+                "keyboard": {
+                    "UP": 0,
+                    "DOWN": 1,
+                    "LEFT": 2,
+                    "RIGHT": 3
+                }
             }
         }
     },
-    "resourceRoot": "./resources",
-    "resources": [
-        "character.png",
-        "map.png"
-    ],
-    "prototypeRoot": 0,
-    "prototypes": [
-        [
-            {},
-            {},
-            {
-                "player": 3,
-                "world": 2
-            }
-        ],
-        [
-            {
-                "sx": 0,
-                "sy": 0,
-                "sw": 64,
-                "sh": 64,
-                "dx": -32,
-                "dy": -32,
-                "dw": 64,
-                "dh": 64
-            },
-            {
-                "image": 0
-            },
-            {}
-        ],
-        [
-            {
-                "size": 64
-            },
-            {
-                "image": 1
-            },
-            {}
-        ],
-        [
-            {
-                "transform": {
-                    "translation": {
-                        "x": 100,
-                        "y": 100
+    "plugins": {
+        "resources": {
+            "resourceRoot": "./resources",
+            "resources": [
+                "character.png",
+                "map.png"
+            ]
+        },
+        "prototypes": {
+            "prototypeRoot": 0,
+            "prototypes": [
+                [
+                    {},
+                    {},
+                    {
+                        "player": 3,
+                        "world": 2
                     }
-                }
-            },
-            {},
-            {
-                "sprite": 1
-            }
-        ]
-    ]
+                ],
+                [
+                    {
+                        "sx": 0,
+                        "sy": 0,
+                        "sw": 64,
+                        "sh": 64,
+                        "dx": -32,
+                        "dy": -32,
+                        "dw": 64,
+                        "dh": 64
+                    },
+                    {
+                        "image": 0
+                    },
+                    {}
+                ],
+                [
+                    {
+                        "size": 64
+                    },
+                    {
+                        "image": 1
+                    },
+                    {}
+                ],
+                [
+                    {
+                        "transform": {
+                            "translation": {
+                                "x": 100,
+                                "y": 100
+                            }
+                        }
+                    },
+                    {},
+                    {
+                        "sprite": 1
+                    }
+                ]
+            ]
+        }
+    }
 }

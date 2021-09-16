@@ -1,8 +1,13 @@
-export const html = {
-    load: function (element) {
+export class HtmlAdapter extends Set {
+    get bridge() {
+        return {};
+    }
 
-    },
-    unload: function (element) {
+    load(data) {
 
     }
-};
+
+    unload() {
+
+    }
+}

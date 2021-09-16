@@ -1,19 +1,24 @@
 const { load } = quantum;
 
-export const resources = {
-    load: function (adapters, plugins, data) {
+export class ResourcePlugin {
+    bridge = {};
+
+    load(bridge, data) {
         const { resources, resourceRoot } = data;
 
         let pending = 0;
-        this.loadResources = indices => Promise.all(indices.map(this.loadResource.bind(this)));
-        this.loadResource = index => {
+        const loadResources = indices => Promise.all(indices.map(loadResource.bind(this)));
+        const loadResource = index => {
             pending++;
             return load(`${resourceRoot}/${resources[index]}`).then(resource => {
                 pending--;
                 return resource;
             });
         };
-    },
-    unload: function (adapters, plugins) {
+
+        Object.assign(this.bridge, { loadResources, loadResource });
     }
-};
+
+    unload() {
+    }
+}

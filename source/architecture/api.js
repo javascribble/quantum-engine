@@ -1,20 +1,20 @@
-import { html } from '../adapters/html.js';
-import { input } from '../adapters/input.js';
-import { video } from '../adapters/video.js';
-import { animation } from '../plugins/animation.js';
-import { architecture } from '../plugins/architecture.js';
-import { prototypes } from '../plugins/prototypes.js';
-import { resources } from '../plugins/resources.js';
+import { HtmlAdapter } from '../adapters/html.js';
+import { InputAdapter } from '../adapters/input.js';
+import { VideoAdapter } from '../adapters/video.js';
+import { AnimationPlugin } from '../plugins/animation.js';
+import { ArchitecturePlugin } from '../plugins/architecture.js';
+import { PrototypePlugin } from '../plugins/prototypes.js';
+import { ResourcePlugin } from '../plugins/resources.js';
 
-export const adapters = {
-    html,
-    input,
-    video
-};
+export const createAdapters = () => new Map([
+    ['html', new HtmlAdapter()],
+    ['input', new InputAdapter()],
+    ['video', new VideoAdapter()]
+]);
 
-export const plugins = {
-    animation,
-    architecture,
-    resources,
-    prototypes
-};
+export const createPlugins = () => new Map([
+    ['animation', new AnimationPlugin()],
+    ['architecture', new ArchitecturePlugin()],
+    ['resources', new ResourcePlugin()],
+    ['prototypes', new PrototypePlugin()]
+]);
