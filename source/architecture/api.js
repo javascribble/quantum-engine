@@ -15,6 +15,6 @@ export const adapters = {
 export const plugins = {
     animation,
     architecture,
-    prototypes,
-    resources
+    resources,
+    prototypes
 };

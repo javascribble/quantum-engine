@@ -1,8 +1,8 @@
 export const html = {
-    load: element => {
+    load: function (element) {
 
     },
-    unload: element => {
+    unload: function (element) {
 
     }
 };

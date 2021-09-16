@@ -1,8 +1,8 @@
 export const video = {
-    load: element => {
-
+    load: function (element) {
+        this.render = entity => element.render(entity);
     },
-    unload: element => {
+    unload: function (element) {
 
     }
 };

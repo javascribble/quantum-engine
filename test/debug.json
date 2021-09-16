@@ -1,4 +1,14 @@
 {
+    "adapters": {
+        "input": {
+            "controls": {
+                "UP": "UP",
+                "DOWN": "DOWN",
+                "LEFT": "LEFT",
+                "RIGHT": "RIGHT"
+            }
+        }
+    },
     "resourceRoot": "./resources",
     "resources": [
         "character.png",
