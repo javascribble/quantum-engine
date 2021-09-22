@@ -1,21 +1,18 @@
 import { initializeECS } from '../architecture/ecs.js';
 
 export class ArchitecturePlugin {
-    bridge = initializeECS()
+    bridge = {}
 
     load(bridge, data) {
         const { animation } = bridge;
         const { updates } = animation;
 
-        const { systems } = this.bridge;
+        const { entities, systems, update } = initializeECS();
 
-        updates.push(time => {
-            for (const system of systems) {
-                system.update?.(system.entities, time);
-            }
-        });
-    }
+        updates.add(update);
 
-    unload() {
+        this.unload = () => updates.delete(update);
+
+        Object.assign(this.bridge, { entities, systems });
     }
 }

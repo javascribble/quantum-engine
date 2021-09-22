@@ -2,7 +2,7 @@ const { animate } = quantum;
 
 export class AnimationPlugin {
     bridge = {
-        updates: []
+        updates: new Set()
     }
 
     load(bridge, data) {
@@ -19,5 +19,7 @@ export class AnimationPlugin {
 
     unload() {
         this.animation.stop();
+
+        delete this.animation;
     }
 }
