@@ -9,17 +9,3 @@ body {
     width: 500px;
     height: 500px;
 }
-
-.ui {
-    position: absolute;
-}
-
-#menuUI {
-    top: 0;
-    right: 0;
-}
-
-#gameUI {
-    top: 0;
-    left: 0;
-}
