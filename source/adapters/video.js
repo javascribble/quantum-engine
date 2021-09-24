@@ -1,9 +1,7 @@
 export class VideoAdapter extends Set {
-    get bridge() {
-        return {
-            render: this.render.bind(this)
-        }
-    }
+    bridge = {
+        render: this.render.bind(this)
+    };
 
     load(data) {
 

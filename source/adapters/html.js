@@ -1,7 +1,5 @@
 export class HtmlAdapter extends Set {
-    get bridge() {
-        return {};
-    }
+    bridge = {};
 
     load(data) {
 

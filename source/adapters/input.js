@@ -1,9 +1,7 @@
 export class InputAdapter extends Set {
-    get bridge() {
-        return {
-            getState: this.getState.bind(this)
-        };
-    }
+    bridge = {
+        getState: this.getState.bind(this)
+    };
 
     load(data) {
         const { controls, devices } = data;

@@ -3,7 +3,7 @@ const { animate } = quantum;
 export class AnimationPlugin {
     bridge = {
         updates: new Set()
-    }
+    };
 
     load(bridge, data) {
         const { updates } = this.bridge;

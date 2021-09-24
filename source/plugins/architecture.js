@@ -1,7 +1,7 @@
 import { initializeECS } from '../architecture/ecs.js';
 
 export class ArchitecturePlugin {
-    bridge = {}
+    bridge = {};
 
     load(bridge, data) {
         const { animation } = bridge;
