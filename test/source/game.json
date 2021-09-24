@@ -1,4 +1,10 @@
 {
+    "imports": [
+        "/test/source/game.js"
+    ],
+    "templates": [
+        "/test/source/game.html"
+    ],
     "adapters": {
         "input": {
             "controls": [

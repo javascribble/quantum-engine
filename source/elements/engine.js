@@ -1,11 +1,14 @@
-import { createAdapters, createPlugins } from '../architecture/api.js';
-import { getAdapter } from '../utilities/adapter.js';
-import { getBridge } from '../utilities/bridge.js';
+import { createAdapters, createPlugins, createBridge } from '../architecture/api.js';
+import { getAdapter } from '../decorators/element.js';
+import { appendAll } from '../utilities/template.js';
+import { importAll } from '../utilities/window.js';
 import engine from '../templates/engine.js';
 
 const { load } = quantum;
 
 export class Engine extends Quantum {
+    #templates = new Set();
+
     adapters = createAdapters();
     plugins = createPlugins();
 
@@ -24,16 +27,19 @@ export class Engine extends Quantum {
         for (const deletedElement of deletedElements) this.adapters.get(getAdapter(deletedElement)).delete(deletedElement);
     }
 
-    async load(data) {
-        const { adapters, plugins } = data;
-        const bridge = getBridge(this.adapters, this.plugins);
+    async load({ imports, templates, adapters, plugins }) {
+        await importAll(imports);
+        await appendAll(this, this.#templates, templates);
+        const bridge = createBridge(this.adapters, this.plugins);
         for (const [name, adapter] of this.adapters) await adapter.load(adapters[name]);
         for (const [name, plugin] of this.plugins) await plugin.load(bridge, plugins[name]);
     }
 
     unload() {
-        for (const [name, adapter] of this.adapters) adapter.unload();
-        for (const [name, plugin] of this.plugins) plugin.unload();
+        for (const plugin of this.plugins.values()) plugin.unload();
+        for (const adapter of this.adapters.values()) adapter.unload();
+        for (const template of this.#templates) this.removeChild(template);
+        this.#templates.clear();
     }
 }
 

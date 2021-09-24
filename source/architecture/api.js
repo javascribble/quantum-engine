@@ -18,3 +18,5 @@ export const createPlugins = () => new Map([
     ['resources', new ResourcePlugin()],
     ['prototypes', new PrototypePlugin()]
 ]);
+
+export const createBridge = (adapters, plugins) => Object.fromEntries([...adapters, ...plugins].map(([key, value]) => [key, value.bridge]));
