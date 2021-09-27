@@ -5,18 +5,20 @@ export class ResourcePlugin {
 
     load(bridge, data) {
         const { html } = bridge;
-        const { elements } = html;
+        const { getResource } = html;
         const { resources, resourceRoot } = data;
 
         let pending = 0;
         const loadResources = indices => Promise.all(indices.map(loadResource.bind(this)));
         const loadResource = index => {
             const resource = resources[index];
-            if (elements.has(resource)) {
-                return Promise.resolve(elements.get(resource));
+            const url = `${resourceRoot}/${resource}`;
+            const element = getResource?.(resource, url);
+            if (element) {
+                return element;
             } else {
                 pending++;
-                return load(`${resourceRoot}/${resource}`).then(data => {
+                return load(url).then(data => {
                     pending--;
                     return data;
                 });

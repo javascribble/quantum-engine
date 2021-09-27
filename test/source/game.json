@@ -1,11 +1,15 @@
 {
-    "imports": [
-        "/test/source/game.js"
-    ],
-    "templates": [
-        "/test/source/game.html"
-    ],
     "adapters": {
+        "html": {
+            "scriptRoot": "/test/source",
+            "scripts": [
+                "game.js"
+            ],
+            "templateRoot": "/test/source",
+            "templates": [
+                "game.html"
+            ]
+        },
         "input": {
             "controls": [
                 "UP",

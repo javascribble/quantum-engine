@@ -3,7 +3,7 @@ export class InputAdapter extends Set {
         getState: this.getState.bind(this)
     };
 
-    load(data) {
+    load(engine, data) {
         const { controls, devices } = data;
         for (const [deviceName, controlMap] of Object.entries(devices)) {
             for (const input of this) {
@@ -17,7 +17,7 @@ export class InputAdapter extends Set {
         }
     }
 
-    unload() {
+    unload(engine) {
 
     }
 

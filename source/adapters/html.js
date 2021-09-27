@@ -1,31 +1,45 @@
+const { loadText, createTemplate, cloneTemplate } = quantum;
+
 export class HtmlAdapter extends Set {
+    #templates = new Set();
+
     bridge = {
-        elements: new Map()
+        getResource: this.getResource.bind(this)
     };
 
-    load(data) {
+    async load(engine, data) {
+        const { scripts, scriptRoot, templates, templateRoot } = data;
 
-    }
-
-    unload() {
-
-    }
-
-    add(element) {
-        const { elements } = this.bridge;
-        if (element.id) {
-            elements.set(element.id, element);
+        if (Array.isArray(scripts)) {
+            for (const script of scripts) {
+                const url = `${scriptRoot}/${script}`;
+                if (!this.getResource(script, url)) {
+                    await import(url);
+                }
+            }
         }
 
-        super.add(element);
+        if (Array.isArray(templates)) {
+            for (const template of templates) {
+                const url = `${templateRoot}/${template}`;
+                this.#templates.add(engine.appendChild(cloneTemplate(this.getResource(template, url) ?? createTemplate(await loadText(url)))));
+            }
+        }
     }
 
-    delete(element) {
-        const { elements } = this.bridge;
-        if (element.id) {
-            elements.delete(element.id);
+    unload(engine) {
+        for (const template of this.#templates) {
+            engine.removeChild(template);
         }
 
-        super.delete(element);
+        this.#templates.clear();
+    }
+
+    getResource(id, src) {
+        for (const element of this) {
+            if (element.id === id || element.src === src) {
+                return element;
+            }
+        }
     }
 }

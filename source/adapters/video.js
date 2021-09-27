@@ -3,11 +3,11 @@ export class VideoAdapter extends Set {
         render: this.render.bind(this)
     };
 
-    load(data) {
+    load(engine, data) {
 
     }
 
-    unload() {
+    unload(engine) {
 
     }
 
