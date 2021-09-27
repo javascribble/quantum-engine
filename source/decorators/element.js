@@ -1,3 +1,3 @@
 const { getAttribute } = quantum;
 
-export const getAdapter = element => getAttribute(element, 'adapter');
+export const getAdapter = element => getAttribute(element, 'adapter') || 'html';
