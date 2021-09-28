@@ -33,9 +33,9 @@ plugins.set('player', {
 
 plugins.set('world', {
     load: async (bridge, data) => {
-        const { architecture, prototypes } = bridge;
+        const { architecture, prototype } = bridge;
         const { entities } = architecture;
-        const { root } = prototypes;
+        const { root } = prototype;
         const { player, world } = root;
         const { image, size } = world;
 

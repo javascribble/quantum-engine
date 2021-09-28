@@ -1,45 +1,34 @@
+import { adapters } from '../architecture/api.js';
+
 const { loadText, createTemplate, cloneTemplate } = quantum;
 
 export class HtmlAdapter extends Set {
     #templates = new Set();
 
-    bridge = {
-        getResource: this.getResource.bind(this)
-    };
-
-    async load(engine, data) {
+    async load(bridge, data) {
+        const { engine } = bridge;
         const { scripts, scriptRoot, templates, templateRoot } = data;
 
         if (Array.isArray(scripts)) {
             for (const script of scripts) {
-                const url = `${scriptRoot}/${script}`;
-                if (!this.getResource(script, url)) {
-                    await import(url);
-                }
+                await import(`${scriptRoot}/${script}`);
             }
         }
 
         if (Array.isArray(templates)) {
             for (const template of templates) {
-                const url = `${templateRoot}/${template}`;
-                this.#templates.add(engine.appendChild(cloneTemplate(this.getResource(template, url) ?? createTemplate(await loadText(url)))));
+                this.#templates.add(engine.appendChild(cloneTemplate(createTemplate(await loadText(`${templateRoot}/${template}`)))));
             }
         }
+
+        return { elements: this };
     }
 
-    unload(engine) {
+    unload() {
         for (const template of this.#templates) {
-            engine.removeChild(template);
-        }
-
-        this.#templates.clear();
-    }
-
-    getResource(id, src) {
-        for (const element of this) {
-            if (element.id === id || element.src === src) {
-                return element;
-            }
+            template.remove();
         }
     }
 }
+
+adapters.set('html', HtmlAdapter);

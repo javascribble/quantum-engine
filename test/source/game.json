@@ -28,14 +28,14 @@
         }
     },
     "plugins": {
-        "resources": {
+        "resource": {
             "resourceRoot": "./resources",
             "resources": [
                 "character.png",
                 "map.png"
             ]
         },
-        "prototypes": {
+        "prototype": {
             "prototypeRoot": 0,
             "prototypes": [
                 [

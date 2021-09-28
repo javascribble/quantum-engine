@@ -1,4 +1,4 @@
-import { createAdapters, createPlugins, createBridge } from '../architecture/api.js';
+import { createAdapters, createPlugins } from '../architecture/api.js';
 import { getAdapter } from '../decorators/element.js';
 import engine from '../templates/engine.js';
 
@@ -24,15 +24,15 @@ export class Engine extends Quantum {
     }
 
     async load(data) {
+        const bridge = { engine: this };
         const { adapters, plugins } = data;
-        const bridge = createBridge(this.adapters, this.plugins);
-        for (const [name, adapter] of this.adapters) await adapter.load(this, adapters[name]);
-        for (const [name, plugin] of this.plugins) await plugin.load(bridge, plugins[name]);
+        for (const [name, adapter] of this.adapters) bridge[name] = await adapter.load(bridge, adapters[name]);
+        for (const [name, plugin] of this.plugins) bridge[name] = await plugin.load(bridge, plugins[name]);
     }
 
     unload() {
         for (const plugin of this.plugins.values()) plugin.unload();
-        for (const adapter of this.adapters.values()) adapter.unload(this);
+        for (const adapter of this.adapters.values()) adapter.unload();
     }
 }
 

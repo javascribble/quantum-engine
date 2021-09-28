@@ -1,19 +1,18 @@
+import { adapters } from '../architecture/api.js';
+
 export class VideoAdapter extends Set {
-    bridge = {
-        render: this.render.bind(this)
-    };
+    load(bridge, data) {
+        const render = entity => {
+            for (const renderer of this) {
+                renderer.render(entity);
+            }
+        };
 
-    load(engine, data) {
-
+        return { render };
     }
 
-    unload(engine) {
-
-    }
-
-    render(entity) {
-        for (const renderer of this) {
-            renderer.render(entity);
-        }
+    unload() {
     }
 }
+
+adapters.set('video', VideoAdapter);

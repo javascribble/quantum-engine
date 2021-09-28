@@ -1,25 +1,28 @@
+import { plugins } from '../architecture/api.js';
+
 const { animate } = quantum;
 
 export class AnimationPlugin {
-    bridge = {
-        updates: new Set()
-    };
+    #updates = new Set();
+
+    animation = animate(this.animate.bind(this));
 
     load(bridge, data) {
-        const { updates } = this.bridge;
-
-        this.animation = animate(time => {
-            for (const update of updates) {
-                update(time);
-            }
-        });
-
         this.animation.start();
+
+        return { updates: this.#updates };
     }
 
     unload() {
+        this.#updates.clear();
         this.animation.stop();
+    }
 
-        delete this.animation;
+    animate(time) {
+        for (const update of this.#updates) {
+            update(time);
+        }
     }
 }
+
+plugins.set('animation', AnimationPlugin);

@@ -1,9 +1,7 @@
-export class InputAdapter extends Set {
-    bridge = {
-        getState: this.getState.bind(this)
-    };
+import { adapters } from '../architecture/api.js';
 
-    load(engine, data) {
+export class InputAdapter extends Set {
+    load(bridge, data) {
         const { controls, devices } = data;
         for (const [deviceName, controlMap] of Object.entries(devices)) {
             for (const input of this) {
@@ -15,18 +13,21 @@ export class InputAdapter extends Set {
                 }
             }
         }
-    }
 
-    unload(engine) {
-
-    }
-
-    getState(control) {
-        for (const input of this) {
-            const state = input.state[control];
-            if (state) {
-                return state;
+        const getState = control => {
+            for (const input of this) {
+                const state = input.state[control];
+                if (state) {
+                    return state;
+                }
             }
-        }
+        };
+
+        return { getState };
+    }
+
+    unload() {
     }
 }
+
+adapters.set('input', InputAdapter);

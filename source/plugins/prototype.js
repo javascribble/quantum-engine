@@ -1,9 +1,9 @@
-export class PrototypePlugin {
-    bridge = {};
+import { plugins } from '../architecture/api.js';
 
+export class PrototypePlugin {
     async load(bridge, data) {
-        const { resources } = bridge;
-        const { loadResource, loadResources } = resources;
+        const { resource } = bridge;
+        const { loadResource, loadResources } = resource;
         const { prototypes, prototypeRoot } = data;
 
         const loadPrototypes = indices => Promise.all(indices.map(loadPrototype.bind(this)));
@@ -24,9 +24,11 @@ export class PrototypePlugin {
             return clone;
         };
 
-        Object.assign(this.bridge, { root: await loadPrototype(), loadPrototypes, loadPrototype });
+        return { root: await loadPrototype(), loadPrototypes, loadPrototype };
     }
 
     unload() {
     }
 }
+
+plugins.set('prototype', PrototypePlugin);

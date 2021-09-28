@@ -1,33 +1,33 @@
+import { plugins } from '../architecture/api.js';
+
 const { load } = quantum;
 
 export class ResourcePlugin {
-    bridge = {};
-
     load(bridge, data) {
         const { html } = bridge;
-        const { getResource } = html;
+        const { elements } = html;
         const { resources, resourceRoot } = data;
 
         let pending = 0;
-        const loadResources = indices => Promise.all(indices.map(loadResource.bind(this)));
+        const loadResources = indices => Promise.all(indices.map(loadResource));
         const loadResource = index => {
             const resource = resources[index];
-            const url = `${resourceRoot}/${resource}`;
-            const element = getResource?.(resource, url);
-            if (element) {
-                return element;
+            if (elements.has(resource)) {
+                return elements.get(resource);
             } else {
                 pending++;
-                return load(url).then(data => {
+                return load(`${resourceRoot}/${resource}`).then(data => {
                     pending--;
                     return data;
                 });
             }
         };
 
-        Object.assign(this.bridge, { loadResources, loadResource });
+        return { loadResources, loadResource };
     }
 
     unload() {
     }
 }
+
+plugins.set('resource', ResourcePlugin);
