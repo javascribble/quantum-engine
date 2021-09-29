@@ -4,6 +4,10 @@ export default `
         position: relative;
         display: block;
     }
+
+    ::slotted([resource]) {
+        display: none;
+    }
 </style>
 <slot></slot>
 `;
