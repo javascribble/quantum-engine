@@ -1,12 +1,12 @@
-import { createAdapters, createPlugins } from '../architecture/api.js';
 import { getAdapter } from '../decorators/element.js';
 import engine from '../templates/engine.js';
 
 const { load } = quantum;
 
 export class Engine extends Quantum {
-    adapters = createAdapters();
-    plugins = createPlugins();
+    extensions = new Map();
+
+    static extensions = new Map();
 
     static get observedAttributes() { return ['src']; }
 
@@ -19,20 +19,18 @@ export class Engine extends Quantum {
     }
 
     slotChangedCallback(slot, addedElements, deletedElements, currentElements) {
-        for (const addedElement of addedElements) this.adapters.get(getAdapter(addedElement)).add(addedElement);
-        for (const deletedElement of deletedElements) this.adapters.get(getAdapter(deletedElement)).delete(deletedElement);
+        for (const addedElement of addedElements) this.extensions.get(getAdapter(addedElement))?.add(addedElement);
+        for (const deletedElement of deletedElements) this.extensions.get(getAdapter(deletedElement))?.delete(deletedElement);
     }
 
-    async load(data) {
-        const bridge = { engine: this };
-        const { adapters, plugins } = data;
-        for (const [name, adapter] of this.adapters) bridge[name] = await adapter.load(bridge, adapters[name] || {});
-        for (const [name, plugin] of this.plugins) bridge[name] = await plugin.load(bridge, plugins[name] || {});
+    async load(data, bridge = {}) {
+        for (const [name, extension] of this.constructor.extensions) this.extensions.set(name, new extension(this));
+        for (const [name, extension] of this.extensions) bridge[name] = await extension.load(bridge, data[name] || {});
     }
 
     unload() {
-        for (const plugin of this.plugins.values()) plugin?.unload();
-        for (const adapter of this.adapters.values()) adapter?.unload();
+        for (const extension of this.extensions.values()) extension?.unload();
+        this.extensions.clear();
     }
 }
 

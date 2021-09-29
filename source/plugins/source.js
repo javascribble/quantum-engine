@@ -1,10 +1,14 @@
-import { plugins } from '../architecture/api.js';
 import '../decorators/loaders.js';
 
 const { load, cloneTemplate } = quantum;
 
 export class SourcePlugin {
     #templates = new Set();
+    #engine;
+
+    constructor(engine) {
+        this.#engine = engine;
+    }
 
     async load(bridge, data) {
         const { engine } = bridge;
@@ -18,7 +22,7 @@ export class SourcePlugin {
 
         if (Array.isArray(templates)) {
             for (const template of templates) {
-                this.#templates.add(engine.appendChild(cloneTemplate(await load(`${templateRoot}/${template}`))));
+                this.#templates.add(this.#engine.appendChild(cloneTemplate(await load(`${templateRoot}/${template}`))));
             }
         }
     }
@@ -29,5 +33,3 @@ export class SourcePlugin {
         }
     }
 }
-
-plugins.set('source', SourcePlugin);

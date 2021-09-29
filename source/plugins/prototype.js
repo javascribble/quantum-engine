@@ -1,5 +1,3 @@
-import { plugins } from '../architecture/api.js';
-
 export class PrototypePlugin {
     async load(bridge, data) {
         const { resource } = bridge;
@@ -27,5 +25,3 @@ export class PrototypePlugin {
         return { root: await loadPrototype(), loadPrototypes, loadPrototype };
     }
 }
-
-plugins.set('prototype', PrototypePlugin);

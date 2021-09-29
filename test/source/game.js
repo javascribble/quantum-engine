@@ -1,9 +1,9 @@
 import '/node_modules/@javascribble/quantum-canvas/bundles/main.js';
 import '/node_modules/@javascribble/quantum-input/bundles/main.js';
 
-const { plugins } = document.querySelector('quantum-engine');
+const { extensions } = document.querySelector('quantum-engine');
 
-plugins.set('player', {
+extensions.set('player', {
     load: async (bridge, data) => {
         const { input, video, architecture } = bridge;
         const { systems } = architecture;
@@ -30,7 +30,7 @@ plugins.set('player', {
     }
 });
 
-plugins.set('world', {
+extensions.set('world', {
     load: async (bridge, data) => {
         const { architecture, prototype } = bridge;
         const { entities } = architecture;

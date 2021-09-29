@@ -1,5 +1,3 @@
-import { plugins } from '../architecture/api.js';
-
 const { animate } = quantum;
 
 export class AnimationPlugin {
@@ -24,5 +22,3 @@ export class AnimationPlugin {
         }
     }
 }
-
-plugins.set('animation', AnimationPlugin);

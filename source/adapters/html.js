@@ -1,8 +1,11 @@
-import { getResource } from '../decorators/element.js';
-import { adapters } from '../architecture/api.js';
+const getResource = element => element.getAttribute('resource');
 
 export class HtmlAdapter extends Set {
     #resources = new Map();
+
+    constructor(engine) {
+        super();
+    }
 
     async load(bridge, data) {
         const getResource = resource => this.#resources.get(resource);
@@ -28,5 +31,3 @@ export class HtmlAdapter extends Set {
         }
     }
 }
-
-adapters.set('html', HtmlAdapter);

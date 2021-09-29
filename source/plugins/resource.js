@@ -1,5 +1,3 @@
-import { plugins } from '../architecture/api.js';
-
 const { load } = quantum;
 
 export class ResourcePlugin {
@@ -27,5 +25,3 @@ export class ResourcePlugin {
         return { loadResources, loadResource };
     }
 }
-
-plugins.set('resource', ResourcePlugin);

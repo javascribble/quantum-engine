@@ -1,6 +1,8 @@
-import { adapters } from '../architecture/api.js';
-
 export class VideoAdapter extends Set {
+    constructor(engine) {
+        super();
+    }
+
     load(bridge, data) {
         const render = entity => {
             for (const renderer of this) {
@@ -11,5 +13,3 @@ export class VideoAdapter extends Set {
         return { render };
     }
 }
-
-adapters.set('video', VideoAdapter);

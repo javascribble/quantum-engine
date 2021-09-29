@@ -1,6 +1,8 @@
-import { adapters } from '../architecture/api.js';
-
 export class InputAdapter extends Set {
+    constructor(engine) {
+        super();
+    }
+
     load(bridge, data) {
         const { controls, devices } = data;
         for (const [deviceName, controlMap] of Object.entries(devices)) {
@@ -26,5 +28,3 @@ export class InputAdapter extends Set {
         return { getState };
     }
 }
-
-adapters.set('input', InputAdapter);

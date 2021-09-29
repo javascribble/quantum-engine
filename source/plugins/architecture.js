@@ -1,4 +1,3 @@
-import { plugins } from '../architecture/api.js';
 import { initializeECS } from '../architecture/ecs.js';
 
 export class ArchitecturePlugin {
@@ -20,5 +19,3 @@ export class ArchitecturePlugin {
         systems.clear();
     }
 }
-
-plugins.set('architecture', ArchitecturePlugin);
