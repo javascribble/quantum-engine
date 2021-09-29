@@ -5,15 +5,16 @@ const { load } = quantum;
 export class ResourcePlugin {
     load(bridge, data) {
         const { html } = bridge;
-        const { elements } = html;
+        const { getResource } = html;
         const { resources, resourceRoot } = data;
 
         let pending = 0;
         const loadResources = indices => Promise.all(indices.map(loadResource));
         const loadResource = index => {
             const resource = resources[index];
-            if (elements.has(resource)) {
-                return elements.get(resource);
+            const element = getResource?.(resource);
+            if (element) {
+                return element;
             } else {
                 pending++;
                 return load(`${resourceRoot}/${resource}`).then(data => {
@@ -24,9 +25,6 @@ export class ResourcePlugin {
         };
 
         return { loadResources, loadResource };
-    }
-
-    unload() {
     }
 }
 

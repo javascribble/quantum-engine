@@ -26,9 +26,6 @@ export class PrototypePlugin {
 
         return { root: await loadPrototype(), loadPrototypes, loadPrototype };
     }
-
-    unload() {
-    }
 }
 
 plugins.set('prototype', PrototypePlugin);

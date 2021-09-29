@@ -10,9 +10,6 @@ export class VideoAdapter extends Set {
 
         return { render };
     }
-
-    unload() {
-    }
 }
 
 adapters.set('video', VideoAdapter);

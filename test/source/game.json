@@ -1,15 +1,5 @@
 {
     "adapters": {
-        "html": {
-            "scriptRoot": "/test/source",
-            "scripts": [
-                "game.js"
-            ],
-            "templateRoot": "/test/source",
-            "templates": [
-                "game.html"
-            ]
-        },
         "input": {
             "controls": [
                 "UP",
@@ -28,6 +18,16 @@
         }
     },
     "plugins": {
+        "source": {
+            "scriptRoot": "/test/source",
+            "scripts": [
+                "game.js"
+            ],
+            "templateRoot": "/test/source",
+            "templates": [
+                "game.html"
+            ]
+        },
         "resource": {
             "resourceRoot": "./resources",
             "resources": [

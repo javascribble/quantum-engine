@@ -25,9 +25,6 @@ export class InputAdapter extends Set {
 
         return { getState };
     }
-
-    unload() {
-    }
 }
 
 adapters.set('input', InputAdapter);

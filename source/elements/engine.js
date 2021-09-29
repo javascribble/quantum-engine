@@ -31,8 +31,8 @@ export class Engine extends Quantum {
     }
 
     unload() {
-        for (const plugin of this.plugins.values()) plugin.unload();
-        for (const adapter of this.adapters.values()) adapter.unload();
+        for (const plugin of this.plugins.values()) plugin?.unload();
+        for (const adapter of this.adapters.values()) adapter?.unload();
     }
 }
 
