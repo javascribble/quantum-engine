@@ -26,8 +26,8 @@ export class Engine extends Quantum {
     async load(data) {
         const bridge = { engine: this };
         const { adapters, plugins } = data;
-        for (const [name, adapter] of this.adapters) bridge[name] = await adapter.load(bridge, adapters[name]);
-        for (const [name, plugin] of this.plugins) bridge[name] = await plugin.load(bridge, plugins[name]);
+        for (const [name, adapter] of this.adapters) bridge[name] = await adapter.load(bridge, adapters[name] || {});
+        for (const [name, plugin] of this.plugins) bridge[name] = await plugin.load(bridge, plugins[name] || {});
     }
 
     unload() {
