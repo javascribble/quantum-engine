@@ -27,8 +27,7 @@ plugins.set('player', {
                 }
             }
         });
-    },
-    unload: () => { }
+    }
 });
 
 plugins.set('world', {
@@ -74,6 +73,5 @@ plugins.set('world', {
 
         root.children = [world, player];
         entities.add(root);
-    },
-    unload: () => { }
+    }
 });
