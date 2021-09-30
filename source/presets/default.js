@@ -8,14 +8,14 @@ import { ResourcePlugin } from '../plugins/resource.js';
 import { SourcePlugin } from '../plugins/source.js';
 import { StatePlugin } from '../plugins/state.js';
 
-import { extensions } from '../architecture/api.js';
-
-extensions.set('source', engine => new SourcePlugin(engine));
-extensions.set('html', engine => new HtmlAdapter(engine));
-extensions.set('input', engine => new InputAdapter(engine));
-extensions.set('video', engine => new VideoAdapter(engine));
-extensions.set('animation', engine => new AnimationPlugin(engine));
-extensions.set('architecture', engine => new ArchitecturePlugin(engine));
-extensions.set('resource', engine => new ResourcePlugin(engine));
-extensions.set('prototype', engine => new PrototypePlugin(engine));
-extensions.set('state', engine => new StatePlugin(engine));
+export const extensions = quantum.extensions = new Map([
+    ['source', engine => new SourcePlugin(engine)],
+    ['html', engine => new HtmlAdapter(engine)],
+    ['input', engine => new InputAdapter(engine)],
+    ['video', engine => new VideoAdapter(engine)],
+    ['animation', engine => new AnimationPlugin(engine)],
+    ['architecture', engine => new ArchitecturePlugin(engine)],
+    ['resource', engine => new ResourcePlugin(engine)],
+    ['prototype', engine => new PrototypePlugin(engine)],
+    ['state', engine => new StatePlugin(engine)]
+]);
