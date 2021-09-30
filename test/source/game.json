@@ -16,11 +16,22 @@
         }
     },
     "source": {
-        "scriptRoot": "/test/source",
-        "scripts": [
-            "game.js"
+        "imports": [
+            {
+                "scriptRoot": "/node_modules/",
+                "scripts": [
+                    "@javascribble/quantum-canvas/bundles/main.js",
+                    "@javascribble/quantum-input/bundles/main.js"
+                ]
+            },
+            {
+                "scriptRoot": "/test/source",
+                "scripts": [
+                    "game.js"
+                ]
+            }
         ],
-        "templateRoot": "/test/source",
+        "templateRoot": "./source",
         "templates": [
             "game.html"
         ]

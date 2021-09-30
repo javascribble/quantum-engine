@@ -1,12 +1,18 @@
 import { getAdapter } from '../decorators/element.js';
 import engine from '../templates/engine.js';
 
-const { load } = quantum;
+const { load, extensions } = quantum;
 
 export class Engine extends Quantum {
     extensions = new Map();
 
-    static extensions = new Map();
+    constructor(options) {
+        super(options);
+
+        for (const [name, extension] of extensions) {
+            this.extensions.set(name, new extension(this));
+        }
+    }
 
     static get observedAttributes() { return ['src']; }
 
@@ -24,13 +30,11 @@ export class Engine extends Quantum {
     }
 
     async load(data, bridge = {}) {
-        for (const [name, extension] of this.constructor.extensions) this.extensions.set(name, new extension(this));
         for (const [name, extension] of this.extensions) bridge[name] = await extension.load(bridge, data[name] || {});
     }
 
     unload() {
         for (const extension of this.extensions.values()) extension?.unload();
-        this.extensions.clear();
     }
 }
 

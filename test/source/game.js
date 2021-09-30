@@ -1,6 +1,3 @@
-import '/node_modules/@javascribble/quantum-canvas/bundles/main.js';
-import '/node_modules/@javascribble/quantum-input/bundles/main.js';
-
 const { extensions } = document.querySelector('quantum-engine');
 
 extensions.set('player', {

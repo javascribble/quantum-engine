@@ -11,12 +11,13 @@ export class SourcePlugin {
     }
 
     async load(bridge, data) {
-        const { engine } = bridge;
-        const { scripts, scriptRoot, templates, templateRoot } = data;
+        const { imports, templates, templateRoot } = data;
 
-        if (Array.isArray(scripts)) {
-            for (const script of scripts) {
-                await import(`${scriptRoot}/${script}`);
+        if (Array.isArray(imports)) {
+            for (const { scripts, scriptRoot } of imports) {
+                for (const script of scripts) {
+                    await load(`${scriptRoot}/${script}`);
+                }
             }
         }
 
