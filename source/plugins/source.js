@@ -32,5 +32,7 @@ export class SourcePlugin {
         for (const template of this.#templates) {
             template.remove();
         }
+
+        this.#templates.clear();
     }
 }

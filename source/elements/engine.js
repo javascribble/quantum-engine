@@ -1,7 +1,8 @@
+import { extensions } from '../architecture/api.js';
 import { getAdapter } from '../decorators/element.js';
 import engine from '../templates/engine.js';
 
-const { load, extensions } = quantum;
+const { load } = quantum;
 
 export class Engine extends Quantum {
     extensions = new Map();
@@ -9,9 +10,7 @@ export class Engine extends Quantum {
     constructor(options) {
         super(options);
 
-        for (const [name, extension] of extensions) {
-            this.extensions.set(name, new extension(this));
-        }
+        for (const [name, extension] of extensions) this.extensions.set(name, extension(this));
     }
 
     static get observedAttributes() { return ['src']; }
