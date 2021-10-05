@@ -6,10 +6,10 @@ const { load, presets } = quantum;
 export class Engine extends Quantum {
     extensions = new Map();
 
-    constructor(options, preset) {
+    constructor(options, preset = 'engine-preset') {
         super(options);
 
-        for (const [name, extension] of presets.get('engine-preset')) this.extensions.set(name, extension(this));
+        for (const [name, extension] of presets.get(preset)) this.extensions.set(name, extension(this));
     }
 
     static get observedAttributes() { return ['src']; }
