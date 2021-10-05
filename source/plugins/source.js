@@ -16,7 +16,10 @@ export class SourcePlugin {
         if (Array.isArray(imports)) {
             for (const { scripts, scriptRoot } of imports) {
                 for (const script of scripts) {
-                    await load(`${scriptRoot}/${script}`);
+                    const { extend } = await load(`${scriptRoot}/${script}`);
+                    if (extend) {
+                        extend(this.#engine.extensions);
+                    }
                 }
             }
         }
