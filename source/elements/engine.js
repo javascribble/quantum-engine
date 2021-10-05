@@ -37,3 +37,5 @@ export class Engine extends Quantum {
 }
 
 Engine.define('quantum-engine', engine);
+
+Quantum.Engine = Engine;
