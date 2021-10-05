@@ -8,7 +8,9 @@ import { ResourcePlugin } from '../plugins/resource.js';
 import { SourcePlugin } from '../plugins/source.js';
 import { StatePlugin } from '../plugins/state.js';
 
-export const extensions = quantum.extensions = new Map([
+const { presets } = quantum;
+
+export const preset = new Map([
     ['source', engine => new SourcePlugin(engine)],
     ['html', engine => new HtmlAdapter(engine)],
     ['input', engine => new InputAdapter(engine)],
@@ -19,3 +21,5 @@ export const extensions = quantum.extensions = new Map([
     ['prototype', engine => new PrototypePlugin(engine)],
     ['state', engine => new StatePlugin(engine)]
 ]);
+
+presets.set('engine-preset', preset);
